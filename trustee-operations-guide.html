@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Integration & Operations Guide — St. Thomas Mar Thoma Church</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:#0c1e3c; --navy2:#142d58; --gold:#c9a84c; --gold2:#e8cc78;
+      --cream:#fdf9f0; --white:#fff; --muted:#6a7a98; --border:#d8cdb0;
+      --soft:#f2ece0; --green:#1a7a4a; --green2:#eaf7ec;
+      --red:#b83232; --blue:#1a5a9a; --blue2:#eaf2fd;
+      --orange:#b86020; --orange2:#fdf4ea; --purple:#5a3a8a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.6; }
+
+    /* Header */
+    .doc-header {
+      background: linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);
+      color: var(--white); padding: 48px 24px 40px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .doc-header::before {
+      content:''; position:absolute; inset:0;
+      background: repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(201,168,76,0.03) 50px,rgba(201,168,76,0.03) 51px);
+    }
+    .doc-header-inner { position: relative; max-width: 760px; margin: 0 auto; }
+    .doc-cross { width: 64px; height: 64px; background: rgba(201,168,76,0.12); border: 1.5px solid rgba(201,168,76,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .doc-cross svg { width: 34px; height: 34px; }
+    .doc-header h1 { font-family: 'Cinzel', serif; font-size: clamp(1.2rem,3.5vw,1.8rem); font-weight: 700; letter-spacing: 0.06em; line-height: 1.2; margin-bottom: 8px; }
+    .doc-header p { font-size: 0.85rem; color: rgba(255,255,255,0.55); letter-spacing: 0.08em; text-transform: uppercase; }
+    .doc-gold-bar { height: 3px; background: linear-gradient(90deg,transparent,var(--gold),transparent); }
+
+    /* Main content */
+    .doc-body { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    /* Section */
+    .section { margin-bottom: 44px; }
+    .section-title {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--navy); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+    .section-num { background: var(--navy); color: var(--gold2); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; }
+
+    /* Architecture diagram */
+    .arch-diagram { background: var(--navy); border-radius: 16px; padding: 28px 20px; margin-bottom: 20px; overflow: hidden; }
+    .arch-row { display: flex; align-items: center; gap: 0; justify-content: center; flex-wrap: wrap; gap: 8px; }
+    .arch-node { background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 10px 14px; text-align: center; min-width: 110px; }
+    .arch-node .an-ico { font-size: 1.4rem; margin-bottom: 4px; }
+    .arch-node .an-name { font-size: 0.72rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+    .arch-node .an-sub { font-size: 0.6rem; color: rgba(255,255,255,0.4); }
+    .arch-node.gold { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.1); }
+    .arch-arrow { color: rgba(201,168,76,0.7); font-size: 1.2rem; flex-shrink: 0; }
+    .arch-center { background: linear-gradient(135deg,var(--navy2),#0c1e3c); border: 2px solid var(--gold); border-radius: 14px; padding: 16px 20px; text-align: center; min-width: 150px; }
+    .arch-center .ac-ico { font-size: 1.8rem; margin-bottom: 6px; }
+    .arch-center .ac-name { font-family: 'Cinzel', serif; font-size: 0.82rem; color: var(--gold2); font-weight: 700; letter-spacing: 0.06em; }
+    .arch-center .ac-sub { font-size: 0.62rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .arch-label { font-size: 0.65rem; color: rgba(255,255,255,0.35); text-align: center; margin-top: 10px; letter-spacing: 0.08em; }
+
+    /* Channel comparison table */
+    .ch-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 14px rgba(12,30,60,0.08); }
+    .ch-table thead tr { background: var(--navy); }
+    .ch-table thead th { padding: 12px 14px; color: rgba(255,255,255,0.8); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; text-align: left; }
+    .ch-table tbody tr { border-bottom: 1px solid var(--border); background: var(--white); }
+    .ch-table tbody tr:nth-child(even) { background: var(--soft); }
+    .ch-table td { padding: 11px 14px; font-size: 0.82rem; vertical-align: top; }
+    .ch-table td:first-child { font-weight: 700; color: var(--navy); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; }
+    .badge-web    { background:var(--blue2); color:var(--blue); }
+    .badge-fb     { background:#e8f0fd; color:#1a4d9a; }
+    .badge-wa     { background:var(--green2); color:var(--green); }
+    .badge-kiosk  { background:var(--orange2); color:var(--orange); }
+    .badge-all    { background:rgba(201,168,76,0.12); color:#8a6820; }
+
+    /* Steps */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num { width: 32px; height: 32px; background: var(--navy); color: var(--gold2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .step-content { flex: 1; }
+    .step-content h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .step-content p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+    .step-content code { background: var(--navy); color: var(--gold2); padding: 2px 7px; border-radius: 4px; font-size: 0.78rem; font-family: 'Courier New', monospace; }
+
+    /* Info cards */
+    .info-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; }
+    .info-card { background: var(--white); border-radius: 12px; padding: 18px; border-left: 4px solid; box-shadow: 0 2px 10px rgba(12,30,60,0.07); }
+    .info-card.gold   { border-color: var(--gold); }
+    .info-card.green  { border-color: var(--green); }
+    .info-card.blue   { border-color: var(--blue); }
+    .info-card.red    { border-color: var(--red); }
+    .info-card.purple { border-color: var(--purple); }
+    .ic-ico { font-size: 1.5rem; margin-bottom: 8px; }
+    .ic-title { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .ic-body { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+    /* SOP cards */
+    .sop-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 14px rgba(12,30,60,0.08); margin-bottom: 14px; }
+    .sop-hd { padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
+    .sop-hd-navy   { background: var(--navy); color: var(--white); }
+    .sop-hd-green  { background: var(--green); color: var(--white); }
+    .sop-hd-blue   { background: var(--blue); color: var(--white); }
+    .sop-hd-gold   { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); }
+    .sop-hd h3 { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.07em; font-weight: 700; }
+    .sop-hd .sop-badge { margin-left: auto; font-size: 0.6rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.07em; text-transform: uppercase; }
+    .sop-bd { padding: 16px 18px; }
+    .sop-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .sop-list li { display: flex; gap: 10px; font-size: 0.82rem; color: var(--muted); }
+    .sop-list li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .sop-list li strong { color: var(--navy); }
+
+    /* Recommendation box */
+    .rec-box { background: linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%); border-radius: 14px; padding: 24px 22px; color: var(--white); margin-bottom: 14px; }
+    .rec-box h3 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--gold2); letter-spacing: 0.08em; margin-bottom: 14px; }
+    .rec-item { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.82rem; }
+    .rec-item:last-child { margin-bottom: 0; }
+    .rec-item .ri-ico { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .rec-item p { color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .rec-item p strong { color: var(--gold2); }
+
+    /* Footer */
+    .doc-footer { background: var(--navy); color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.74rem; line-height: 1.9; }
+    .doc-footer a { color: var(--gold); text-decoration: none; }
+
+    @media(max-width:500px){ .arch-row { flex-direction: column; align-items: center; } .arch-arrow { transform: rotate(90deg); } }
+    @media print { body { background: #fff; } .arch-diagram, .rec-box, .sop-hd-navy { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  </style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-cross"><svg viewBox="0 0 36 36" fill="none"><rect x="16" y="2" width="5" height="32" rx="2" fill="#c9a84c"/><rect x="2" y="11" width="32" height="5" rx="2" fill="#c9a84c"/></svg></div>
+    <h1>INTEGRATED CONTRIBUTION SYSTEM<br/>OPERATIONS & INTEGRATION GUIDE</h1>
+    <p>St. Thomas Mar Thoma Church, Vancouver &nbsp;·&nbsp; Trustees' Reference Document &nbsp;·&nbsp; 2025</p>
+  </div>
+</div>
+<div class="doc-gold-bar"></div>
+
+<div class="doc-body">
+
+  <!-- SECTION 1: ARCHITECTURE -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">1</div>SYSTEM ARCHITECTURE</div>
+
+    <div class="arch-diagram">
+      <div class="arch-row">
+        <div class="arch-node"><div class="an-ico">🌐</div><div class="an-name">Website</div><div class="an-sub">Church website form</div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node"><div class="an-ico">📘</div><div class="an-name">Facebook</div><div class="an-sub">Church group link</div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-center"><div class="ac-ico">☁</div><div class="ac-name">GOOGLE SHEETS</div><div class="ac-sub">Central data store</div></div>
+        <div class="arch-arrow">←</div>
+        <div class="arch-node"><div class="an-ico">💬</div><div class="an-name">WhatsApp</div><div class="an-sub">Community link</div></div>
+        <div class="arch-arrow">←</div>
+        <div class="arch-node gold"><div class="an-ico">🖥</div><div class="an-name">Kiosk / Phone</div><div class="an-sub">Trustee in-person</div></div>
+      </div>
+      <div class="arch-label">All four channels feed into a single Google Sheet via Apps Script · Trustee Console reads & writes to the same sheet</div>
+    </div>
+
+    <p style="font-size:0.84rem;color:var(--muted);line-height:1.7;">All three public channels (website, Facebook, WhatsApp) share a single form URL with a <code>?source=</code> parameter that tags each submission. The trustee kiosk submits directly. A Google Apps Script web app acts as the API bridge — receiving POST requests from all channels and writing rows to one shared Google Sheet. The Trustee Console reads from that same sheet, providing a unified real-time view.</p>
+  </div>
+
+  <!-- SECTION 2: WHY GOOGLE SHEETS -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">2</div>RECOMMENDED BACKEND: GOOGLE SHEETS</div>
+
+    <div class="rec-box">
+      <h3>✝ OUR RECOMMENDATION — GOOGLE SHEETS + APPS SCRIPT</h3>
+      <div class="rec-item"><span class="ri-ico">💰</span><p><strong>Completely free.</strong> Google Sheets and Apps Script have no cost for a church's usage volume. No monthly fees, no server costs.</p></div>
+      <div class="rec-item"><span class="ri-ico">📊</span><p><strong>Familiar to all trustees.</strong> Data lives in a spreadsheet that any trustee can open on any device. No special software, no training needed.</p></div>
+      <div class="rec-item"><span class="ri-ico">🔒</span><p><strong>Secure & access-controlled.</strong> Share the Google Sheet only with the finance committee. Google handles authentication and encryption.</p></div>
+      <div class="rec-item"><span class="ri-ico">🔄</span><p><strong>Always in sync.</strong> Every submission from any channel appears in the sheet instantly. Year-end totals, receipts, and reports are always current.</p></div>
+      <div class="rec-item"><span class="ri-ico">📤</span><p><strong>Easy to export.</strong> Download as CSV or Excel for the church accountant. Works with all financial software used by Canadian churches.</p></div>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card gold"><div class="ic-ico">🆚</div><div class="ic-title">vs. Airtable</div><div class="ic-body">Airtable has a better UI but costs $20/month for more than 1,000 records. Not worth the expense for a church. Google Sheets is unlimited and free.</div></div>
+      <div class="info-card blue"><div class="ic-ico">🆚</div><div class="ic-title">vs. Supabase / Firebase</div><div class="ic-body">These require a developer to set up and maintain a database. Google Sheets requires zero infrastructure — any trustee can manage it.</div></div>
+      <div class="info-card green"><div class="ic-ico">🆚</div><div class="ic-title">vs. Stripe / PayPal only</div><div class="ic-body">Payment platforms only capture online payments. Google Sheets captures all channels including cash, cheque, and kiosk — essential for a complete picture.</div></div>
+      <div class="info-card purple"><div class="ic-ico">⬆</div><div class="ic-title">Future upgrade path</div><div class="ic-body">If the church grows, data can be migrated from Google Sheets to a proper database (Supabase, Postgres) with no changes to the forms.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SETUP STEPS -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">3</div>ONE-TIME SETUP — STEP BY STEP</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Create the Google Sheet</h4><p>Go to <code>sheets.google.com</code> · Create a new spreadsheet · Name it <strong>"TMC Vancouver Contributions"</strong> · Add a sheet tab called <code>Contributions</code>. Note the Sheet ID from the URL (the long string between <code>/d/</code> and <code>/edit</code>).</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Open Apps Script</h4><p>In your Google Sheet, go to <strong>Extensions → Apps Script</strong>. Delete any existing code. Open the <strong>Trustee Console → Settings tab</strong> and copy the provided Apps Script code. Paste it into the editor.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Enter your Sheet ID</h4><p>Replace <code>YOUR_GOOGLE_SHEET_ID_HERE</code> in line 1 of the script with your actual Sheet ID from Step 1. Click <strong>Save</strong> (Ctrl+S).</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Deploy as a Web App</h4><p>Click <strong>Deploy → New Deployment</strong>. Set type to <em>Web App</em>. Set <em>"Execute as"</em> to <strong>Me</strong>. Set <em>"Who has access"</em> to <strong>Anyone</strong>. Click Deploy. Copy the web app URL.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Paste URL into Trustee Console</h4><p>Open the <strong>Trustee Console</strong> → Settings → paste the Apps Script URL into the <strong>Google Sheets Endpoint</strong> field. Click Save. All future entries will sync automatically.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Update all three public forms</h4><p>Open each of the three public HTML files (<code>contribution.html</code>, <code>contribution-facebook.html</code>, <code>contribution-whatsapp.html</code>). Add one line near the top: <code>const ENDPOINT = 'YOUR_APPS_SCRIPT_URL';</code> and update each form's submit handler to POST to that endpoint with a <code>channel</code> field.</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><h4>Share the sheet with trustees</h4><p>In Google Sheets, click <strong>Share</strong> and add the church treasurer's and finance committee's emails with <em>Viewer</em> or <em>Editor</em> access. They can view contributions at any time without the kiosk app.</p></div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: CHANNEL COMPARISON -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">4</div>CHANNEL COMPARISON & USE CASES</div>
+    <table class="ch-table">
+      <thead>
+        <tr><th>Channel</th><th>Best For</th><th>Payment Methods</th><th>Data Captured</th><th>Trustee Action</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-web">🌐 Website</span></td>
+          <td>Members who find the church website, year-round access</td>
+          <td>PayPal, e-Transfer, Cheque</td>
+          <td>All fields, auto-synced</td>
+          <td>None — fully self-service</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-fb">📘 Facebook</span></td>
+          <td>Existing Facebook group members, announcements</td>
+          <td>PayPal, e-Transfer, Cheque</td>
+          <td>All fields, auto-synced</td>
+          <td>Post the link once per quarter</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-wa">💬 WhatsApp</span></td>
+          <td>Day-of reminders, Malayalam-speaking members</td>
+          <td>PayPal, e-Transfer, Cheque</td>
+          <td>All fields, auto-synced</td>
+          <td>Tap "Open in WhatsApp" to share</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-kiosk">🖥 Kiosk</span></td>
+          <td>In-church collection drives, members without smartphones</td>
+          <td>Cash, Cheque (recorded offline)</td>
+          <td>All fields + Trustee name</td>
+          <td>Active — trustee operates tablet</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-all">📊 All</span></td>
+          <td>Year-end tax receipts, finance committee reports</td>
+          <td colspan="3" style="color:var(--muted);">Unified view in Trustee Console and Google Sheets</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5: SOPs -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">5</div>STANDARD OPERATING PROCEDURES</div>
+
+    <div class="sop-card">
+      <div class="sop-hd sop-hd-gold"><h3>SUNDAY COLLECTION DRIVE (KIOSK)</h3><span class="sop-badge" style="background:rgba(12,30,60,0.2);">Weekly</span></div>
+      <div class="sop-bd"><ul class="sop-list">
+        <li><strong>Before service:</strong> Open Trustee Console on tablet, ensure Wi-Fi is connected (green sync dot). Verify PIN works.</li>
+        <li><strong>During collection:</strong> Hand tablet to each member. They enter their name; trustee enters amounts as told. Tap "Save Entry" after each member.</li>
+        <li><strong>Cash/cheque:</strong> Record in Trustee Notes field (e.g. "Cash $200 — Ref: Envelope #14"). Keep physical envelopes numbered.</li>
+        <li><strong>After service:</strong> Tap "📥 Export CSV" and email to treasurer. Verify sync dot is green (all entries uploaded to Sheets).</li>
+        <li><strong>Lock the console</strong> before handing the tablet back to be stored.</li>
+      </ul></div>
+    </div>
+
+    <div class="sop-card">
+      <div class="sop-hd sop-hd-green"><h3>MONTHLY DIGITAL CAMPAIGN (WEB / FB / WA)</h3><span class="sop-badge" style="background:rgba(255,255,255,0.2);">Monthly</span></div>
+      <div class="sop-bd"><ul class="sop-list">
+        <li><strong>First Sunday of month:</strong> Open the Facebook page link → copy the post text → paste into the church Facebook group. Replace <code>[PASTE YOUR LINK HERE]</code> with the hosted contribution URL.</li>
+        <li><strong>Same day:</strong> Open the WhatsApp page → tap "Open in WhatsApp" → forward to all church WhatsApp groups and the community group.</li>
+        <li><strong>Pin the post</strong> in the Facebook group and WhatsApp community so it stays visible.</li>
+        <li><strong>Follow up mid-month:</strong> Open Trustee Console → All Entries → filter by Web/Facebook/WhatsApp to see who has submitted online this month.</li>
+        <li><strong>Reminder message:</strong> Send a gentle reminder via WhatsApp to groups 2 weeks in, noting the online contribution link.</li>
+      </ul></div>
+    </div>
+
+    <div class="sop-card">
+      <div class="sop-hd sop-hd-blue"><h3>MONTHLY RECONCILIATION (TREASURER)</h3><span class="sop-badge" style="background:rgba(255,255,255,0.2);">End of Month</span></div>
+      <div class="sop-bd"><ul class="sop-list">
+        <li>Open Google Sheets → <strong>Contributions</strong> tab · Filter by the current month's date column.</li>
+        <li>Cross-reference <strong>PayPal transactions</strong> (log into PayPal, download CSV) against entries marked "PayPal" in Notes column.</li>
+        <li>Cross-reference <strong>Interac e-Transfer</strong> bank notifications against entries with "e-transfer" in Notes.</li>
+        <li>Cross-reference <strong>cash/cheques</strong> deposited against kiosk entries with Cash/Cheque in Notes.</li>
+        <li>Any discrepancy → check the member's Ref No. and contact them directly via the phone/email in the sheet row.</li>
+        <li>Create a monthly summary: <code>File → Download → .xlsx</code> for the church accounting records.</li>
+      </ul></div>
+    </div>
+
+    <div class="sop-card">
+      <div class="sop-hd sop-hd-navy"><h3>YEAR-END TAX RECEIPTS (FINANCE COMMITTEE)</h3><span class="sop-badge" style="background:rgba(201,168,76,0.25);color:var(--gold2);">Annual</span></div>
+      <div class="sop-bd"><ul class="sop-list">
+        <li>In Google Sheets: use <code>SUMIF</code> formula to total contributions per member (group by Name + Ref No).</li>
+        <li>Export master list as CSV → import into your receipt-generating software (or use a mail-merge template in Word).</li>
+        <li>CRA requires receipts for all contributions over $10. Receipts must show: church name, charity registration number, donation amount, and date.</li>
+        <li>Email receipts to members whose email is captured in the sheet. Mail paper receipts to those without email.</li>
+        <li><strong>Archive:</strong> Download the full year's Google Sheet as Excel and store on church OneDrive/Google Drive for 7 years (CRA requirement).</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: SECURITY -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">6</div>SECURITY & ACCESS CONTROL</div>
+    <div class="info-cards">
+      <div class="info-card gold"><div class="ic-ico">🔐</div><div class="ic-title">Change the Default PIN</div><div class="ic-body">The default PIN is 1234. Change it immediately in Trustee Console → Settings → Change PIN. Use a 4-digit code known only to trustees. Change it if any trustee leaves the role.</div></div>
+      <div class="info-card green"><div class="ic-ico">📋</div><div class="ic-title">Google Sheet Access</div><div class="ic-body">Share the Google Sheet only with the treasurer and finance committee. Use "Viewer" access for committee members and "Editor" only for the treasurer.</div></div>
+      <div class="info-card blue"><div class="ic-ico">📱</div><div class="ic-title">Tablet / Device Security</div><div class="ic-body">Enable device PIN/passcode on the tablet. Use "Guided Access" (iOS) or "App Pinning" (Android) to lock the browser so members can't navigate away from the kiosk.</div></div>
+      <div class="info-card red"><div class="ic-ico">⚠</div><div class="ic-title">No Sensitive Data</div><div class="ic-body">The system does not store credit card numbers. PayPal handles all card processing. For e-transfers, only the amount and name are recorded — no banking details.</div></div>
+      <div class="info-card purple"><div class="ic-ico">🍁</div><div class="ic-title">PIPEDA Compliance</div><div class="ic-body">Under Canadian privacy law, inform members their contact info is stored for contribution tracking and tax receipts only. Add a brief notice at the top of the contribution form.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: QUICK REFERENCE -->
+  <div class="section">
+    <div class="section-title"><div class="section-num">7</div>QUICK REFERENCE FOR TRUSTEES</div>
+    <table class="ch-table">
+      <thead><tr><th>Task</th><th>Tool to Use</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Record in-person contribution</td><td>Trustee Console → New Entry</td><td>Tablet / Phone</td></tr>
+        <tr><td>View all contributions</td><td>Trustee Console → All Entries</td><td>Tablet / Phone / Any browser</td></tr>
+        <tr><td>Download data for treasurer</td><td>Trustee Console → Export CSV</td><td>Tablet / Phone</td></tr>
+        <tr><td>See live totals by category</td><td>Trustee Console → Dashboard</td><td>Tablet / Phone</td></tr>
+        <tr><td>Share link on Facebook</td><td>Facebook page → Copy Post Text</td><td>Any browser</td></tr>
+        <tr><td>Share link on WhatsApp</td><td>WhatsApp page → Open in WhatsApp</td><td>Phone (WhatsApp)</td></tr>
+        <tr><td>View full contribution history</td><td>Google Sheets (Contributions tab)</td><td>Any browser (Google account)</td></tr>
+        <tr><td>Monthly reconciliation</td><td>Google Sheets + PayPal/bank CSV</td><td>Computer (treasurer)</td></tr>
+        <tr><td>Change trustee PIN</td><td>Trustee Console → Settings</td><td>Tablet / Phone</td></tr>
+        <tr><td>Connect to Google Sheets</td><td>Trustee Console → Settings → Endpoint</td><td>Tablet / Phone</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="doc-gold-bar"></div>
+<div class="doc-footer">
+  <div>✝ &nbsp;St. Thomas Mar Thoma Church, Vancouver</div>
+  <div><a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a> &nbsp;·&nbsp; <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a></div>
+  <div>Diocese of North America &amp; Europe · Mar Thoma Syrian Church of Malabar</div>
+  <div style="margin-top:8px;font-size:0.68rem;">This document is for internal trustee use only · Prepared 2025</div>
+</div>
+</body>
+</html>

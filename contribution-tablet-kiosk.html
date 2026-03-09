@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>Trustee Collection — St. Thomas Mar Thoma Church</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:   #0c1e3c;
+      --navy2:  #142d58;
+      --navy3:  #1c3a70;
+      --gold:   #c9a84c;
+      --gold2:  #e8cc78;
+      --gold3:  #f5e4a8;
+      --cream:  #fdf9f0;
+      --white:  #ffffff;
+      --muted:  #7a8aaa;
+      --border: #d0c8b0;
+      --green:  #1a7a4a;
+      --red:    #b83232;
+      --soft:   #f2ece0;
+      --shadow: 0 8px 40px rgba(12,30,60,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; touch-action: manipulation; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      height: 100svh;
+      overflow: hidden;
+    }
+
+    /* ═══════════ SCREENS ═══════════ */
+    .screen {
+      position: fixed; inset: 0;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+      transition: opacity 0.35s ease;
+    }
+    .screen.active { display: flex; }
+
+    /* ─── SHARED BG ─── */
+    .navy-bg {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%,   rgba(201,168,76,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 90% 90%,  rgba(28,58,112,0.7) 0%, transparent 60%),
+        var(--navy);
+    }
+
+    /* ════════════════════════════════
+       SCREEN 1 — PIN LOCK
+    ════════════════════════════════ */
+    #s-lock {
+      gap: 0;
+    }
+    .lock-top {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      padding-bottom: 28px; gap: 6px;
+    }
+    .lock-emblem {
+      width: 76px; height: 76px;
+      background: rgba(201,168,76,0.12);
+      border: 1.5px solid rgba(201,168,76,0.45);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 0 0 10px rgba(201,168,76,0.05), 0 0 0 22px rgba(201,168,76,0.03);
+    }
+    .lock-emblem svg { width: 40px; height: 40px; }
+    .lock-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-align: center; line-height: 1.2;
+      color: var(--white);
+    }
+    .lock-sub {
+      font-size: 0.75rem; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .lock-badge {
+      margin-top: 14px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .lock-mid {
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+      padding: 0 20px;
+    }
+    .pin-dots {
+      display: flex; gap: 14px; margin-bottom: 4px;
+    }
+    .pin-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: transparent;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .pin-dot.filled {
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: scale(1.15);
+    }
+    .pin-error { font-size: 0.78rem; color: #f88; letter-spacing: 0.05em; min-height: 18px; }
+
+    /* Numpad */
+    .numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: min(320px, 88vw);
+    }
+    .numpad-btn {
+      height: 64px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 1.4rem; font-weight: 500;
+      cursor: pointer;
+      transition: background 0.12s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .numpad-btn:active { background: rgba(201,168,76,0.25); transform: scale(0.94); }
+    .numpad-btn.del { font-size: 1.1rem; color: var(--gold); }
+    .numpad-btn.enter {
+      background: linear-gradient(135deg, var(--gold), #b8922c);
+      border-color: var(--gold);
+      color: var(--navy);
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .numpad-btn.enter:active { transform: scale(0.93); opacity: 0.85; }
+
+    .lock-bottom { flex: 0.6; display: flex; align-items: center; }
+    .hint-text { font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
+
+    /* ════════════════════════════════
+       SCREEN 2 — TRUSTEE FORM
+    ════════════════════════════════ */
+    #s-form {
+      background: var(--cream);
+      color: var(--navy);
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Top bar */
+    .topbar {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      padding: 0 18px;
+      height: 56px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 12px rgba(12,30,60,0.25);
+      z-index: 10;
+    }
+    .topbar-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .topbar-cross {
+      width: 32px; height: 32px;
+      border: 1.5px solid rgba(201,168,76,0.5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .topbar-cross svg { width: 18px; height: 18px; }
+    .topbar-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.72rem, 1.8vw, 0.9rem);
+      font-weight: 700; letter-spacing: 0.06em;
+      color: var(--white); line-height: 1.2;
+    }
+    .topbar-sub { font-size: 0.62rem; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; }
+
+    .topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .session-pill {
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--gold2); letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .tb-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; padding: 6px 12px;
+      color: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; font-weight: 600; cursor: pointer;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tb-btn:active { background: rgba(255,255,255,0.1); }
+
+    /* Gold divider */
+    .gold-div { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); flex-shrink: 0; }
+
+    /* Main content area */
+    .form-scroll {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 14px 14px 100px;
+    }
+
+    /* Two-column layout on tablet landscape */
+    .form-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    /* Cards */
+    .fc {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 3px 16px rgba(12,30,60,0.09);
+    }
+    .fc-full { grid-column: 1 / -1; }
+    .fc-hd {
+      background: var(--navy);
+      color: var(--white);
+      padding: 11px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fc-hd h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.07em;
+    }
+    .fc-chip {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.6rem; font-weight: 700;
+      padding: 3px 9px; border-radius: 20px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .fc-bd { padding: 14px; }
+
+    /* Form fields */
+    .fg { margin-bottom: 12px; }
+    .fg:last-child { margin-bottom: 0; }
+    .fg label {
+      display: block; font-size: 0.66rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--muted); margin-bottom: 5px;
+    }
+    .fg label .req { color: var(--red); }
+    .fg input, .fg select {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--border); border-radius: 9px;
+      font-family: 'Jost', sans-serif; font-size: 1rem;
+      color: var(--navy); background: var(--soft);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .fg input:focus, .fg select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.18);
+      background: #fff;
+    }
+    .row2i { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Categories grid — big tap targets */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+    }
+    .cat-item {
+      display: flex; align-items: center;
+      background: var(--soft); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 10px 12px; gap: 10px;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+    .cat-item.has-value { border-color: var(--gold); background: #fff8e8; }
+    .cat-num {
+      width: 26px; height: 26px; flex-shrink: 0;
+      background: var(--navy); color: var(--gold2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 700;
+    }
+    .cat-label {
+      flex: 1; font-size: 0.8rem; font-weight: 500; color: var(--navy);
+      line-height: 1.25;
+    }
+    .cat-amount {
+      width: 80px; text-align: right;
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 7px 8px;
+      font-family: 'Jost', sans-serif; font-size: 0.9rem;
+      color: var(--navy); background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .cat-amount:focus { border-color: var(--gold); }
+    .cat-amount::placeholder { color: #c0b89a; font-size: 0.8rem; }
+
+    /* Total bar */
+    .total-bar {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 4px;
+    }
+    .total-bar .lbl { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .total-bar .amt {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--gold2); letter-spacing: 0.04em;
+    }
+
+    /* Bottom action bar */
+    .action-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 10px 16px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      display: flex; gap: 10px; z-index: 20;
+      box-shadow: 0 -4px 20px rgba(12,30,60,0.12);
+    }
+    .action-btn {
+      flex: 1; padding: 14px;
+      border-radius: 12px; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: opacity 0.15s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .action-btn:active { transform: scale(0.97); opacity: 0.85; }
+    .btn-clear {
+      background: var(--soft); color: var(--muted);
+      border: 1.5px solid var(--border);
+      max-width: 120px;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--gold), #b0882a);
+      color: var(--navy);
+      box-shadow: 0 4px 18px rgba(201,168,76,0.35);
+    }
+    .btn-log {
+      background: var(--navy); color: var(--white);
+      max-width: 130px;
+    }
+
+    /* ════════════════════════════════
+       SCREEN 3 — CONFIRMATION
+    ════════════════════════════════ */
+    #s-confirm {
+      background: var(--navy); gap: 0; overflow: hidden;
+    }
+    .confirm-inner {
+      max-width: 560px; width: 92%;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center; gap: 0;
+    }
+    .confirm-icon {
+      width: 80px; height: 80px;
+      background: rgba(26,122,74,0.15);
+      border: 2px solid #1a7a4a;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; margin-bottom: 18px;
+      animation: pop-in 0.4s ease both;
+    }
+    @keyframes pop-in { from{transform:scale(0.6);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .confirm-inner h2 {
+      font-family: 'Cinzel', serif; font-size: 1.6rem;
+      margin-bottom: 6px; color: var(--white);
+    }
+    .confirm-inner .c-name {
+      font-size: 1rem; color: var(--gold2); margin-bottom: 4px; font-weight: 600;
+    }
+    .confirm-inner .c-total {
+      font-family: 'Cinzel', serif; font-size: 2rem;
+      color: var(--gold); margin: 10px 0 18px;
+    }
+    .confirm-list {
+      width: 100%; background: rgba(255,255,255,0.06);
+      border-radius: 12px; overflow: hidden;
+      margin-bottom: 22px; text-align: left;
+      max-height: 220px; overflow-y: auto;
+    }
+    .confirm-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.83rem;
+    }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-row .cr-cat { color: rgba(255,255,255,0.7); }
+    .confirm-row .cr-amt { color: var(--gold2); font-weight: 600; font-size: 0.88rem; }
+
+    .confirm-btns {
+      display: flex; gap: 12px; width: 100%;
+    }
+    .cbtn {
+      flex: 1; padding: 15px; border-radius: 12px; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 700;
+      transition: opacity 0.15s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cbtn:active { transform: scale(0.96); opacity: 0.85; }
+    .cbtn-next { background: linear-gradient(135deg, var(--gold), #b0882a); color: var(--navy); }
+    .cbtn-log  { background: rgba(255,255,255,0.1); color: var(--white); border: 1.5px solid rgba(255,255,255,0.2); }
+
+    /* ════════════════════════════════
+       SCREEN 4 — SESSION LOG
+    ════════════════════════════════ */
+    #s-log {
+      background: var(--cream); color: var(--navy);
+      flex-direction: column; overflow: hidden;
+    }
+    .log-topbar {
+      width: 100%; background: var(--navy); color: var(--white);
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .log-topbar h2 {
+      font-family: 'Cinzel', serif; font-size: 1rem;
+      letter-spacing: 0.07em;
+    }
+    .log-topbar-right { display: flex; gap: 8px; }
+
+    .log-summary {
+      background: var(--navy2); color: var(--white);
+      padding: 14px 20px;
+      display: flex; gap: 24px; flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .log-stat { display: flex; flex-direction: column; gap: 2px; }
+    .log-stat .ls-val {
+      font-family: 'Cinzel', serif; font-size: 1.2rem;
+      color: var(--gold2); font-weight: 700;
+    }
+    .log-stat .ls-lbl { font-size: 0.65rem; color: rgba(255,255,255,0.45); letter-spacing: 0.09em; text-transform: uppercase; }
+
+    .log-scroll {
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      padding: 14px;
+    }
+    .log-entry {
+      background: var(--white); border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(12,30,60,0.07);
+      animation: slide-in 0.3s ease both;
+    }
+    @keyframes slide-in { from{transform:translateY(12px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .log-entry-hd {
+      background: var(--navy); padding: 10px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .log-entry-hd .le-name { font-weight: 700; font-size: 0.9rem; color: var(--white); }
+    .log-entry-hd .le-ref  { font-size: 0.7rem; color: rgba(255,255,255,0.45); }
+    .log-entry-hd .le-total { font-family: 'Cinzel', serif; color: var(--gold2); font-size: 1rem; }
+    .log-entry-bd {
+      padding: 8px 14px 10px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .log-tag {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 9px;
+      font-size: 0.73rem; color: var(--navy); font-weight: 500;
+    }
+    .log-tag span { color: var(--green); font-weight: 700; }
+
+    .log-empty {
+      text-align: center; padding: 60px 20px;
+      color: var(--muted); font-size: 0.9rem;
+    }
+
+    .log-actions {
+      padding: 12px 14px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      display: flex; gap: 10px;
+      flex-shrink: 0;
+    }
+    .la-btn {
+      flex: 1; padding: 13px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 700;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
+    }
+    .la-btn:active { opacity: 0.8; }
+    .la-back  { background: var(--navy); color: var(--white); }
+    .la-print { background: linear-gradient(135deg, var(--gold), #b0882a); color: var(--navy); }
+    .la-lock  { background: var(--soft); color: var(--muted); border: 1.5px solid var(--border); max-width: 100px; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      .form-cols { grid-template-columns: 1fr; }
+      .fc-full { grid-column: 1; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .session-pill { display: none; }
+    }
+    @media (orientation: landscape) and (max-height: 500px) {
+      .topbar { height: 46px; }
+      .cat-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: #fff; color: #000; overflow: visible; }
+      .screen { position: static; display: block !important; }
+      #s-lock, #s-form, #s-confirm { display: none !important; }
+      #s-log {
+        display: block !important; position: static;
+        overflow: visible; height: auto;
+      }
+      .log-topbar { background: #000; }
+      .log-actions, .tb-btn, .la-btn { display: none !important; }
+      .log-scroll { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     SCREEN 1 — PIN LOCK
+══════════════════════════════════ -->
+<div class="screen active navy-bg" id="s-lock">
+  <div class="lock-top">
+    <div class="lock-emblem">
+      <svg viewBox="0 0 44 44" fill="none">
+        <rect x="19" y="3"  width="6" height="38" rx="2.5" fill="#c9a84c"/>
+        <rect x="3"  y="14" width="38" height="6"  rx="2.5" fill="#c9a84c"/>
+        <circle cx="22" cy="22" r="20" stroke="#c9a84c" stroke-width="1.3" fill="none"/>
+      </svg>
+    </div>
+    <div class="lock-title">ST. THOMAS MAR THOMA CHURCH<br/>VANCOUVER</div>
+    <div class="lock-sub">Trustee Collection Portal</div>
+    <div class="lock-badge">🔒 Trustee Access Only</div>
+  </div>
+
+  <div class="lock-mid">
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-error" id="pin-err"></div>
+
+    <div class="numpad" id="numpad">
+      <button class="numpad-btn" data-val="1" onclick="pinKey('1')">1</button>
+      <button class="numpad-btn" data-val="2" onclick="pinKey('2')">2</button>
+      <button class="numpad-btn" data-val="3" onclick="pinKey('3')">3</button>
+      <button class="numpad-btn" data-val="4" onclick="pinKey('4')">4</button>
+      <button class="numpad-btn" data-val="5" onclick="pinKey('5')">5</button>
+      <button class="numpad-btn" data-val="6" onclick="pinKey('6')">6</button>
+      <button class="numpad-btn" data-val="7" onclick="pinKey('7')">7</button>
+      <button class="numpad-btn" data-val="8" onclick="pinKey('8')">8</button>
+      <button class="numpad-btn" data-val="9" onclick="pinKey('9')">9</button>
+      <div></div>
+      <button class="numpad-btn" data-val="0" onclick="pinKey('0')">0</button>
+      <button class="numpad-btn del" onclick="pinDel()">⌫</button>
+    </div>
+    <button class="numpad-btn enter" style="width:min(320px,88vw);height:52px;border-radius:14px;" onclick="pinEnter()">
+      UNLOCK
+    </button>
+  </div>
+
+  <div class="lock-bottom">
+    <div class="hint-text">Default PIN: 1234 — Change in settings after first login</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SCREEN 2 — ENTRY FORM
+══════════════════════════════════ -->
+<div class="screen" id="s-form">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-cross">
+        <svg viewBox="0 0 20 20" fill="none">
+          <rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="#c9a84c"/>
+          <rect x="1"   y="6" width="18" height="3"  rx="1.2" fill="#c9a84c"/>
+        </svg>
+      </div>
+      <div>
+        <div class="topbar-title">MEMBER'S CONTRIBUTION</div>
+        <div class="topbar-sub">St. Thomas Mar Thoma Church, Vancouver</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="session-pill" id="session-pill">Session: 0 entries · CAD $0.00</div>
+      <button class="tb-btn" onclick="goLog()">📋 Log</button>
+      <button class="tb-btn" onclick="goLock()">🔒 Lock</button>
+    </div>
+  </div>
+  <div class="gold-div"></div>
+
+  <!-- Scrollable form -->
+  <div class="form-scroll" id="form-scroll">
+    <div class="form-cols">
+
+      <!-- Member Info -->
+      <div class="fc">
+        <div class="fc-hd"><h3>MEMBER DETAILS</h3><span class="fc-chip">Step 1</span></div>
+        <div class="fc-bd">
+          <div class="row2i">
+            <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="fname" placeholder="Thomas" autocomplete="given-name"/></div>
+            <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="lname" placeholder="Varghese" autocomplete="family-name"/></div>
+          </div>
+          <div class="row2i">
+            <div class="fg"><label>Ref. No.</label><input type="text" id="refno" placeholder="TMC-001"/></div>
+            <div class="fg"><label>Date</label><input type="date" id="cdate"/></div>
+          </div>
+          <div class="fg"><label>Prayer Group</label><input type="text" id="prayer" placeholder="e.g. Bethel Prayer Group"/></div>
+          <div class="row2i">
+            <div class="fg"><label>Mobile</label><input type="tel" id="phone" placeholder="+1 (604) 000-0000"/></div>
+            <div class="fg"><label>Email</label><input type="email" id="email" placeholder="name@email.com"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right col: Totals + Notes on large screens -->
+      <div class="fc" style="display:flex;flex-direction:column;">
+        <div class="fc-hd"><h3>CONTRIBUTION SUMMARY</h3><span class="fc-chip">Live Total</span></div>
+        <div class="fc-bd" style="flex:1;display:flex;flex-direction:column;gap:10px;">
+          <div class="total-bar">
+            <div>
+              <div class="lbl">Total This Entry</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px;" id="item-count">0 categories</div>
+            </div>
+            <div class="amt" id="live-total">CAD $0.00</div>
+          </div>
+          <div style="background:var(--soft);border-radius:10px;padding:12px;font-size:0.78rem;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--navy);display:block;margin-bottom:4px;">💡 Trustee Notes</strong>
+            Fill member details above, then enter amounts for each contribution category below.<br/><br/>
+            Tap <strong>Record Entry</strong> to save and move to the next member.
+          </div>
+          <div class="fg">
+            <label>Trustee Notes (optional)</label>
+            <input type="text" id="notes" placeholder="e.g. Paid by cheque, receipt #…"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories — full width -->
+      <div class="fc fc-full">
+        <div class="fc-hd"><h3>CONTRIBUTION CATEGORIES</h3><span class="fc-chip">Step 2</span></div>
+        <div class="fc-bd">
+          <div class="cat-grid" id="cat-grid">
+            <!-- injected by JS -->
+          </div>
+          <!-- Extra rows -->
+          <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;" id="extra-grid"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom action bar -->
+  <div class="action-bar">
+    <button class="action-btn btn-clear" onclick="clearForm()">Clear</button>
+    <button class="action-btn btn-log" onclick="goLog()">📋 View Log</button>
+    <button class="action-btn btn-submit" onclick="submitEntry()">✓ Record Entry</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SCREEN 3 — CONFIRMATION
+══════════════════════════════════ -->
+<div class="screen navy-bg" id="s-confirm">
+  <div class="confirm-inner">
+    <div class="confirm-icon">✓</div>
+    <h2>Entry Recorded!</h2>
+    <div class="c-name" id="c-name"></div>
+    <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;">Total Contribution</div>
+    <div class="c-total" id="c-total"></div>
+    <div class="confirm-list" id="c-list"></div>
+    <div class="confirm-btns">
+      <button class="cbtn cbtn-log" onclick="goLog()">📋 View Session Log</button>
+      <button class="cbtn cbtn-next" onclick="nextMember()">Next Member →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SCREEN 4 — SESSION LOG
+══════════════════════════════════ -->
+<div class="screen" id="s-log">
+  <div class="log-topbar">
+    <h2>📋 SESSION LOG</h2>
+    <div class="log-topbar-right">
+      <button class="tb-btn" onclick="goForm()">← Back</button>
+      <button class="tb-btn" onclick="goLock()">🔒 Lock</button>
+    </div>
+  </div>
+  <div class="gold-div"></div>
+
+  <div class="log-summary" id="log-summary">
+    <div class="log-stat"><div class="ls-val" id="ls-entries">0</div><div class="ls-lbl">Entries</div></div>
+    <div class="log-stat"><div class="ls-val" id="ls-total">$0.00</div><div class="ls-lbl">Total CAD</div></div>
+    <div class="log-stat"><div class="ls-val" id="ls-date">—</div><div class="ls-lbl">Session Date</div></div>
+    <div class="log-stat"><div class="ls-val" id="ls-trustee">Trustee</div><div class="ls-lbl">Recorded By</div></div>
+  </div>
+
+  <div class="log-scroll" id="log-list">
+    <div class="log-empty">No entries yet. Start recording contributions!</div>
+  </div>
+
+  <div class="log-actions">
+    <button class="la-btn la-lock" onclick="goLock()">🔒 Lock</button>
+    <button class="la-btn la-back" onclick="goForm()">← New Entry</button>
+    <button class="la-btn la-print" onclick="window.print()">🖨 Print Summary</button>
+  </div>
+</div>
+
+
+<script>
+  /* ── STATE ── */
+  const PIN = '1234';
+  let pinBuffer = '';
+  let session = [];
+  let sessionTotal = 0;
+
+  const cats = [
+    "Voluntary Contribution","Birthday","Ingathering","Christmas",
+    "Wedding Anniversary","Twelve Contribution","Suvisesha Sangam Anduvary",
+    "Recessa","Maramon Convention","Self Denial","Poor Fund","Tithe",
+    "Family Dedication Day","Harvest Festival","Financial Support"
+  ];
+
+  /* ── INIT ── */
+  document.getElementById('cdate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('ls-date').textContent = new Date().toLocaleDateString('en-CA', {day:'numeric',month:'short',year:'numeric'});
+
+  // Build category grid
+  const catGrid = document.getElementById('cat-grid');
+  cats.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'cat-item';
+    div.id = `ci-${i}`;
+    div.innerHTML = `
+      <div class="cat-num">${i+1}</div>
+      <div class="cat-label">${c}</div>
+      <input class="cat-amount" type="number" min="0" step="0.01"
+        placeholder="0.00" oninput="calcLive()" id="ca-${i}" aria-label="${c}"/>
+    `;
+    catGrid.appendChild(div);
+  });
+
+  // Extra "Other" rows
+  const extraGrid = document.getElementById('extra-grid');
+  for (let i=0; i<3; i++) {
+    const div = document.createElement('div');
+    div.className = 'cat-item';
+    div.innerHTML = `
+      <div class="cat-num" style="background:rgba(12,30,60,0.3);color:#c0b89a;">+</div>
+      <input type="text" style="flex:1;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--navy);outline:none;min-width:0;" placeholder="Other (specify)…"/>
+      <input class="cat-amount" type="number" min="0" step="0.01" placeholder="0.00" oninput="calcLive()"/>
+    `;
+    extraGrid.appendChild(div);
+  }
+
+  /* ── PIN ── */
+  function updateDots() {
+    for (let i=0; i<4; i++) {
+      document.getElementById(`d${i}`).classList.toggle('filled', i < pinBuffer.length);
+    }
+  }
+  function pinKey(v) {
+    if (pinBuffer.length >= 4) return;
+    pinBuffer += v;
+    updateDots();
+    document.getElementById('pin-err').textContent = '';
+    if (pinBuffer.length === 4) setTimeout(pinEnter, 200);
+  }
+  function pinDel() {
+    pinBuffer = pinBuffer.slice(0, -1);
+    updateDots();
+  }
+  function pinEnter() {
+    if (pinBuffer === PIN) {
+      goScreen('s-form');
+    } else {
+      document.getElementById('pin-err').textContent = 'Incorrect PIN. Try again.';
+      pinBuffer = '';
+      updateDots();
+      // Shake
+      const np = document.getElementById('numpad');
+      np.style.animation = 'none';
+      np.offsetHeight;
+      np.style.animation = 'shake 0.4s ease';
+    }
+  }
+
+  /* Shake anim */
+  const sa = document.createElement('style');
+  sa.textContent = `@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}`;
+  document.head.appendChild(sa);
+
+  /* ── SCREEN NAV ── */
+  function goScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function goLock() { pinBuffer=''; updateDots(); document.getElementById('pin-err').textContent=''; goScreen('s-lock'); }
+  function goForm() { goScreen('s-form'); }
+  function goLog()  { renderLog(); goScreen('s-log'); }
+
+  /* ── LIVE CALC ── */
+  function calcLive() {
+    let total = 0, count = 0;
+    document.querySelectorAll('.cat-amount').forEach((inp, i) => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v) && v > 0) { total += v; count++; }
+      // Highlight row
+      const item = cats[i] !== undefined ? document.getElementById(`ci-${i}`) : null;
+      if (item) item.classList.toggle('has-value', !isNaN(v) && v > 0);
+    });
+    document.getElementById('live-total').textContent = 'CAD $' + total.toFixed(2);
+    document.getElementById('item-count').textContent = count + (count===1?' category':' categories');
+    return { total, count };
+  }
+
+  function getEntries() {
+    const entries = [];
+    document.querySelectorAll('.cat-amount').forEach((inp, i) => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v) && v > 0) {
+        entries.push({ cat: cats[i] || 'Other', amount: v });
+      }
+    });
+    return entries;
+  }
+
+  /* ── SUBMIT ── */
+  function submitEntry() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    if (!fname || !lname) { alert('Please enter the member\'s name.'); return; }
+    const entries = getEntries();
+    if (!entries.length) { alert('Please enter at least one contribution amount.'); return; }
+
+    const total = entries.reduce((s,e) => s + e.amount, 0);
+    const name = fname + ' ' + lname;
+    const ref = document.getElementById('refno').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+
+    const record = {
+      name, ref,
+      prayer: document.getElementById('prayer').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      notes,
+      date: document.getElementById('cdate').value,
+      entries, total,
+      time: new Date().toLocaleTimeString('en-CA', {hour:'2-digit',minute:'2-digit'}),
+      idx: session.length + 1
+    };
+
+    session.push(record);
+    sessionTotal += total;
+    updateSessionPill();
+
+    // Show confirmation
+    document.getElementById('c-name').textContent = name + (ref ? '  ·  ' + ref : '');
+    document.getElementById('c-total').textContent = 'CAD $' + total.toFixed(2);
+    const cl = document.getElementById('c-list');
+    cl.innerHTML = entries.map(e => `
+      <div class="confirm-row">
+        <span class="cr-cat">${e.cat}</span>
+        <span class="cr-amt">$${e.amount.toFixed(2)}</span>
+      </div>
+    `).join('');
+    goScreen('s-confirm');
+  }
+
+  function updateSessionPill() {
+    document.getElementById('session-pill').textContent =
+      `Session: ${session.length} ${session.length===1?'entry':'entries'} · CAD $${sessionTotal.toFixed(2)}`;
+    document.getElementById('ls-entries').textContent = session.length;
+    document.getElementById('ls-total').textContent = '$' + sessionTotal.toFixed(2);
+  }
+
+  function nextMember() {
+    clearForm();
+    goScreen('s-form');
+    document.getElementById('form-scroll').scrollTo(0,0);
+    setTimeout(() => document.getElementById('fname').focus(), 100);
+  }
+
+  function clearForm() {
+    ['fname','lname','refno','prayer','phone','email','notes'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('cdate').value = new Date().toISOString().split('T')[0];
+    document.querySelectorAll('.cat-amount').forEach(inp => inp.value = '');
+    document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('has-value'));
+    calcLive();
+  }
+
+  /* ── LOG ── */
+  function renderLog() {
+    document.getElementById('ls-entries').textContent = session.length;
+    document.getElementById('ls-total').textContent = '$' + sessionTotal.toFixed(2);
+
+    const list = document.getElementById('log-list');
+    if (!session.length) {
+      list.innerHTML = '<div class="log-empty">No entries yet. Start recording contributions!</div>';
+      return;
+    }
+    list.innerHTML = [...session].reverse().map((r,i) => `
+      <div class="log-entry" style="animation-delay:${i*0.05}s">
+        <div class="log-entry-hd">
+          <div>
+            <div class="le-name">${r.idx}. ${r.name}</div>
+            <div class="le-ref">${r.ref ? 'Ref: '+r.ref+' · ' : ''}${r.time}${r.prayer ? ' · '+r.prayer : ''}</div>
+          </div>
+          <div class="le-total">$${r.total.toFixed(2)}</div>
+        </div>
+        <div class="log-entry-bd">
+          ${r.entries.map(e => `<div class="log-tag">${e.cat} <span>$${e.amount.toFixed(2)}</span></div>`).join('')}
+          ${r.notes ? `<div class="log-tag" style="background:#fff8e8;border-color:var(--gold);">📝 ${r.notes}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+</script>
+</body>
+</html>

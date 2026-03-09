@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member's Contribution — St. Thomas Mar Thoma Church, Vancouver</title>
+
+  <!-- Open Graph / Facebook Rich Preview -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://vancouvermarthomachurch.com/contribution" />
+  <meta property="og:title"       content="🙏 Member's Contribution — St. Thomas Mar Thoma Church, Vancouver" />
+  <meta property="og:description" content="Submit your annual contributions online — Tithe, Poor Fund, Birthday, Christmas, Maramon Convention & more. Pay via PayPal or Interac e-Transfer in minutes." />
+  <meta property="og:image"       content="https://img1.wsimg.com/isteam/ip/b70d8450-f7d8-4632-95d9-fe58a1b8855d/Untitled%20design%20(1).png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --ink:    #0d1b2e;
+      --navy:   #152847;
+      --navy2:  #1e3a6e;
+      --gold:   #c8a951;
+      --gold2:  #f0d98a;
+      --amber:  #e8a020;
+      --cream:  #fdf8ef;
+      --white:  #ffffff;
+      --muted:  #7a8aa8;
+      --border: #d8cdb0;
+      --soft:   #f2ece0;
+      --green:  #2d7a4f;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 48px 24px 60px;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    /* Animated geometric backdrop */
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 10%, rgba(200,169,81,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(30,58,110,0.6) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 20% 60%, rgba(21,40,71,0.8) 0%, transparent 60%);
+    }
+    .hero-rings {
+      position: absolute; inset: 0; z-index: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,81,0.12);
+      animation: pulse-ring 6s ease-in-out infinite;
+    }
+    .ring:nth-child(1) { width: 280px; height: 280px; animation-delay: 0s; }
+    .ring:nth-child(2) { width: 440px; height: 440px; animation-delay: 1s; }
+    .ring:nth-child(3) { width: 620px; height: 620px; animation-delay: 2s; border-color: rgba(200,169,81,0.07); }
+    .ring:nth-child(4) { width: 820px; height: 820px; animation-delay: 3s; border-color: rgba(200,169,81,0.04); }
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.04); opacity: 0.6; }
+    }
+
+    /* Floating gold particles */
+    .particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-up 8s ease-in infinite;
+    }
+    @keyframes float-up {
+      0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+      20%  { opacity: 0.7; }
+      80%  { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 540px; }
+
+    .cross-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 80px; height: 80px;
+      background: rgba(200,169,81,0.12);
+      border: 1.5px solid rgba(200,169,81,0.5);
+      border-radius: 50%;
+      margin-bottom: 22px;
+      animation: fade-in 0.8s ease both;
+    }
+    .cross-mark svg { width: 42px; height: 42px; }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      animation: fade-in 0.9s ease 0.1s both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 10px;
+      animation: fade-in 1s ease 0.2s both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      animation: fade-in 1s ease 0.35s both;
+    }
+
+    .cta-group {
+      display: flex; flex-direction: column; gap: 12px;
+      animation: fade-in 1s ease 0.5s both;
+    }
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--amber));
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      padding: 16px 28px;
+      border-radius: 50px;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 32px rgba(200,169,81,0.35);
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,169,81,0.45); }
+
+    .btn-copy {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.8);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500;
+      padding: 13px 24px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: rgba(255,255,255,0.12); }
+
+    .scroll-arrow {
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.3);
+      font-size: 1.4rem;
+      animation: bob 2s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── POST COPY BOX ─── */
+    .copy-section {
+      background: var(--navy);
+      padding: 32px 20px;
+      border-top: 1px solid rgba(200,169,81,0.2);
+    }
+    .copy-inner {
+      max-width: 640px; margin: 0 auto;
+    }
+    .copy-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .copy-label::before, .copy-label::after {
+      content: ''; flex: 1; height: 1px; background: rgba(200,169,81,0.25);
+    }
+    .fb-post-text {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(200,169,81,0.2);
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      white-space: pre-line;
+      margin-bottom: 14px;
+    }
+    .btn-copy-post {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), var(--amber));
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      padding: 13px;
+      border-radius: 10px;
+      border: none; cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .btn-copy-post:hover { opacity: 0.88; }
+    .btn-copy-post.copied { background: var(--green); color: #fff; }
+
+    /* ─── FORM AREA ─── */
+    .form-area {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .section-intro {
+      background: var(--navy2);
+      color: var(--white);
+      text-align: center;
+      padding: 28px 20px;
+    }
+    .section-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+    .section-intro p {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+    .gold-line { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+    .form-wrap { max-width: 680px; margin: 0 auto; padding: 28px 16px 52px; }
+
+    /* Card */
+    .fcard {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(13,27,46,0.1);
+      margin-bottom: 20px;
+    }
+    .fcard-hd {
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fcard-hd h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700;
+    }
+    .step-chip {
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 9px; border-radius: 20px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .fcard-bd { padding: 20px; }
+
+    /* Form inputs */
+    .fg { margin-bottom: 14px; }
+    .fg label {
+      display: block;
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .fg label .req { color: #c0392b; }
+    .fg input, .fg select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      background: #f9f5ec;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .fg input:focus, .fg select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,169,81,0.18);
+      background: #fff;
+    }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Contribution table */
+    .ctable { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .ctable thead tr { background: var(--navy); }
+    .ctable thead th {
+      padding: 11px 12px;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: left;
+    }
+    .ctable thead th:first-child { width: 40px; text-align: center; }
+    .ctable thead th:last-child { width: 120px; text-align: right; }
+    .ctable thead th.gold-th { color: var(--gold2); }
+
+    .ctable tbody tr { border-bottom: 1px solid #ede7d4; transition: background 0.12s; }
+    .ctable tbody tr:hover { background: #fdf9f0; }
+    .ctable tbody tr:nth-child(even) { background: #faf6ed; }
+    .ctable tbody tr:nth-child(even):hover { background: #fdf9f0; }
+    .ctable td { padding: 9px 12px; vertical-align: middle; }
+    .ctable td:first-child { text-align: center; color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+    .ctable td.cat { color: var(--ink); font-size: 0.88rem; }
+    .ctable td.amt { text-align: right; }
+
+    .amt-in {
+      width: 100%; text-align: right;
+      padding: 7px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.86rem; color: var(--ink);
+      background: #f9f5ec;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .amt-in:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,81,0.15); background: #fff; }
+    .amt-in::placeholder { color: #c8bb99; }
+
+    .total-tr { background: var(--navy) !important; border-bottom: none !important; }
+    .total-tr td {
+      padding: 14px 12px !important;
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .total-tr td:last-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem !important;
+      color: var(--gold2) !important;
+      text-align: right;
+    }
+    .total-tr .tlabel { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6) !important; }
+
+    /* Payment buttons */
+    .pay-grid { display: flex; flex-direction: column; gap: 12px; }
+    .pbtn {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.96rem; font-weight: 600;
+      text-align: left;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .pbtn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,27,46,0.15); }
+    .pbtn-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .pbtn-text small { display: block; font-weight: 400; font-size: 0.76rem; opacity: 0.7; margin-top: 2px; }
+    .pbtn-primary { background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--ink); box-shadow: 0 4px 18px rgba(200,169,81,0.3); }
+    .pbtn-navy    { background: var(--navy); color: var(--white); }
+    .pbtn-outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+
+    .info-note {
+      background: #f0ece0;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 16px;
+      font-size: 0.82rem; color: var(--muted); line-height: 1.65;
+      margin-top: 14px;
+    }
+    .info-note strong { color: var(--ink); }
+
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(13,27,46,0.75); backdrop-filter: blur(6px);
+      z-index: 200; align-items: center; justify-content: center;
+    }
+    .modal-bg.on { display: flex; }
+    .modal-box {
+      background: var(--white); color: var(--ink);
+      border-radius: 18px; padding: 36px 28px;
+      max-width: 400px; width: 90%; text-align: center;
+      animation: pop 0.3s ease;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+    }
+    @keyframes pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-icon { font-size: 2.8rem; margin-bottom: 14px; }
+    .modal-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px; }
+    .modal-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .modal-close-btn {
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 12px 32px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem; font-weight: 600; cursor: pointer;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 22px 16px;
+      font-size: 0.76rem; letter-spacing: 0.04em; line-height: 1.8;
+    }
+    .footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .row2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-rings">
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="cross-mark">
+      <svg viewBox="0 0 44 44" fill="none">
+        <rect x="19" y="3" width="6" height="38" rx="2.5" fill="#c8a951"/>
+        <rect x="3" y="13" width="38" height="6" rx="2.5" fill="#c8a951"/>
+        <circle cx="22" cy="22" r="20" stroke="#c8a951" stroke-width="1.2" fill="none"/>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">St. Thomas Mar Thoma Church · Vancouver</p>
+    <h1>Give with a<br/><em>Grateful Heart</em></h1>
+    <p class="hero-sub">
+      Submit your Member's Contribution online — securely and in minutes.<br/>
+      Every offering supports our church family and community.
+    </p>
+    <div class="cta-group">
+      <a href="#form" class="btn-primary">
+        <span>✝</span> Submit My Contribution
+      </a>
+      <button class="btn-copy" onclick="scrollToCopy()">
+        📋 &nbsp;Copy Facebook Post Text
+      </button>
+    </div>
+  </div>
+
+  <div class="scroll-arrow">↓</div>
+</section>
+
+<!-- ═══ FACEBOOK POST COPY ═══ -->
+<section class="copy-section" id="fbcopy">
+  <div class="copy-inner">
+    <p class="copy-label">Ready-to-post Facebook announcement</p>
+    <div class="fb-post-text" id="fb-text">🙏 Dear Church Family,
+
+Greetings in the name of our Lord Jesus Christ!
+
+We are pleased to inform you that **Member's Contribution** can now be submitted online for St. Thomas Mar Thoma Church, Vancouver.
+
+📌 Click the link below to fill in your contribution slip and pay securely via PayPal or Interac e-Transfer — from the comfort of your home!
+
+👉 [PASTE YOUR LINK HERE]
+
+Categories include:
+✅ Voluntary Contribution
+✅ Birthday &amp; Wedding Anniversary
+✅ Christmas &amp; Ingathering
+✅ Tithe, Poor Fund &amp; Self Denial
+✅ Maramon Convention, Recessa &amp; more
+
+For any queries, please contact the church treasurer or email us at vancouvermarthoma@gmail.com.
+
+🕊️ "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." — 2 Corinthians 9:7
+
+Holy Qurbana every Sunday at 4 PM
+10787 128 St, Surrey, BC V3T 3A2
+
+God bless you and your family! 🙏</div>
+    <button class="btn-copy-post" id="copyBtn" onclick="copyPost()">
+      📋 &nbsp;Copy Post to Clipboard
+    </button>
+  </div>
+</section>
+
+<!-- ═══ FORM ═══ -->
+<div class="form-area" id="form">
+  <div class="section-intro">
+    <h2>Contribution Form</h2>
+    <p>Fill in your details below and choose your payment method</p>
+  </div>
+  <div class="gold-line"></div>
+
+  <div class="form-wrap">
+
+    <!-- STEP 1 -->
+    <div class="fcard">
+      <div class="fcard-hd">
+        <h3>Member Information</h3>
+        <span class="step-chip">Step 1 / 3</span>
+      </div>
+      <div class="fcard-bd">
+        <div class="row2">
+          <div class="fg">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="fname" placeholder="Thomas" />
+          </div>
+          <div class="fg">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="lname" placeholder="Varghese" />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="fg">
+            <label>Ref. No.</label>
+            <input type="text" id="refno" placeholder="TMC-001" />
+          </div>
+          <div class="fg">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="cdate" />
+          </div>
+        </div>
+        <div class="fg">
+          <label>Prayer Group</label>
+          <input type="text" id="prayer" placeholder="e.g. Bethel Prayer Group" />
+        </div>
+        <div class="row2">
+          <div class="fg">
+            <label>Mobile</label>
+            <input type="tel" id="phone" placeholder="+1 (604) 000-0000" />
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="name@email.com" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="fcard">
+      <div class="fcard-hd">
+        <h3>Contribution Details</h3>
+        <span class="step-chip">Step 2 / 3</span>
+      </div>
+      <!-- table flush to edges -->
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th class="gold-th" style="text-align:right;">CAD ($)</th>
+          </tr>
+        </thead>
+        <tbody id="ctbody"></tbody>
+        <tfoot>
+          <tr class="total-tr">
+            <td colspan="2"><span class="tlabel">Total Contribution</span></td>
+            <td id="gtotal">CAD $0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="fcard">
+      <div class="fcard-hd">
+        <h3>Payment Method</h3>
+        <span class="step-chip">Step 3 / 3</span>
+      </div>
+      <div class="fcard-bd">
+        <div class="pay-grid">
+          <button class="pbtn pbtn-primary" onclick="doPayPal()">
+            <span class="pbtn-icon">💳</span>
+            <span class="pbtn-text">
+              Pay via PayPal / Credit Card
+              <small>Secure online payment — all major cards accepted</small>
+            </span>
+          </button>
+          <button class="pbtn pbtn-navy" onclick="doETransfer()">
+            <span class="pbtn-icon">📧</span>
+            <span class="pbtn-text">
+              Pay via Interac e-Transfer
+              <small>Send to vancouvermarthoma@gmail.com</small>
+            </span>
+          </button>
+          <button class="pbtn pbtn-outline" onclick="doCheque()">
+            <span class="pbtn-icon">📋</span>
+            <span class="pbtn-text">
+              Cheque / Cash — In Person
+              <small>Bring to Sunday Service or mail to church</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="info-note">
+          <strong>e-Transfer:</strong> Send to <strong>vancouvermarthoma@gmail.com</strong> — include your name &amp; Ref. No. in the message.<br/><br/>
+          <strong>Cheque:</strong> Payable to <em>"St. Thomas Mar Thoma Church, Vancouver"</em> — 10787 128 St, Surrey, BC V3T 3A2.<br/><br/>
+          <strong>Tax receipts</strong> issued at year-end for qualifying contributions.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>✝ &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;|&nbsp; Every Sunday 4 PM</div>
+  <div style="margin-top:4px;">
+    <a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a>
+    &nbsp;|&nbsp;
+    <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a>
+  </div>
+  <div style="margin-top:4px;">Diocese of North America &amp; Europe · Mar Thoma Syrian Church</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="modal-icon" id="m-icon">🙏</div>
+    <h3 id="m-title">Thank You</h3>
+    <p id="m-msg">Your contribution has been recorded.</p>
+    <button class="modal-close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  // Particle generator
+  const pContainer = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.bottom = Math.random() * 40 + '%';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+    p.style.opacity = (0.3 + Math.random() * 0.5).toString();
+    pContainer.appendChild(p);
+  }
+
+  // Categories
+  const cats = [
+    "Voluntary Contribution","Birthday","Ingathering","Christmas",
+    "Wedding Anniversary","Twelve Contribution","Suvisesha Sangam Anduvary",
+    "Recessa","Maramon Convention","Self Denial","Poor Fund","Tithe",
+    "Family Dedication Day","Harvest Festival","Financial Support"
+  ];
+
+  const tbody = document.getElementById('ctbody');
+  cats.forEach((c, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td class="cat">${c}</td>
+      <td class="amt"><input class="amt-in" type="number" min="0" step="0.01"
+        placeholder="0.00" oninput="calcTotal()" aria-label="${c}"/></td>`;
+    tbody.appendChild(tr);
+  });
+  for (let i = 0; i < 3; i++) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="color:#c8bb99">—</td>
+      <td><input type="text" style="border:none;background:transparent;width:100%;font-size:.88rem;color:#0d1b2e;outline:none;" placeholder="Other (specify)…"/></td>
+      <td class="amt"><input class="amt-in" type="number" min="0" step="0.01" placeholder="0.00" oninput="calcTotal()"/></td>`;
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById('cdate').value = new Date().toISOString().split('T')[0];
+
+  function calcTotal() {
+    let t = 0;
+    document.querySelectorAll('.amt-in').forEach(i => {
+      const v = parseFloat(i.value); if (!isNaN(v) && v > 0) t += v;
+    });
+    document.getElementById('gtotal').textContent = 'CAD $' + t.toFixed(2);
+  }
+
+  function getTotal() {
+    let t = 0;
+    document.querySelectorAll('.amt-in').forEach(i => {
+      const v = parseFloat(i.value); if (!isNaN(v) && v > 0) t += v;
+    });
+    return t;
+  }
+
+  function validate() {
+    if (!document.getElementById('fname').value.trim() || !document.getElementById('lname').value.trim()) {
+      alert('Please enter your full name.'); return false;
+    }
+    if (getTotal() === 0) { alert('Please enter an amount for at least one category.'); return false; }
+    return true;
+  }
+
+  function showModal(icon, title, msg) {
+    document.getElementById('m-icon').textContent = icon;
+    document.getElementById('m-title').textContent = title;
+    document.getElementById('m-msg').innerHTML = msg;
+    document.getElementById('modal').classList.add('on');
+  }
+  function closeModal() { document.getElementById('modal').classList.remove('on'); }
+
+  function doPayPal() {
+    if (!validate()) return;
+    const t = getTotal();
+    showModal('💳', 'Redirecting to PayPal…',
+      `Your total of <strong>CAD $${t.toFixed(2)}</strong> is ready.<br/><br/>You'll be taken to the church's secure PayPal page. Please include your name and Ref. No. in the PayPal notes.`);
+    setTimeout(() => window.open('https://www.paypal.com/donate?hosted_button_id=XXXXXXXXX', '_blank'), 1800);
+  }
+
+  function doETransfer() {
+    if (!validate()) return;
+    const t = getTotal();
+    const name = (document.getElementById('fname').value + ' ' + document.getElementById('lname').value).trim();
+    const ref = document.getElementById('refno').value.trim() || 'N/A';
+    showModal('📧', 'Interac e-Transfer',
+      `Send <strong>CAD $${t.toFixed(2)}</strong> to:<br/><strong>vancouvermarthoma@gmail.com</strong><br/><br/>Message: <em>"${name} · Ref: ${ref}"</em><br/><br/>Your contribution will be recorded upon receipt.`);
+  }
+
+  function doCheque() {
+    if (!validate()) return;
+    const t = getTotal();
+    showModal('📋', 'Cheque / Cash Payment',
+      `Please bring a cheque for <strong>CAD $${t.toFixed(2)}</strong> payable to<br/><em>"St. Thomas Mar Thoma Church, Vancouver"</em><br/><br/>10787 128 St, Surrey, BC V3T 3A2<br/>Or hand it in at Sunday Service — every Sunday at 4 PM.`);
+  }
+
+  function scrollToCopy() {
+    document.getElementById('fbcopy').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function copyPost() {
+    const text = document.getElementById('fb-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✅  Copied to clipboard!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋  Copy Post to Clipboard'; btn.classList.remove('copied'); }, 2800);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(document.getElementById('fb-text'));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      alert('Text selected — press Ctrl+C / Cmd+C to copy.');
+    });
+  }
+</script>
+</body>
+</html>

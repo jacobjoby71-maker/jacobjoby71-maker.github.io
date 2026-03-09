@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>Trustee Console — St. Thomas Mar Thoma Church</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:   #0c1e3c; --navy2: #142d58; --navy3: #1c3a70;
+      --gold:   #c9a84c; --gold2: #e8cc78; --gold3: #f5e4a8;
+      --cream:  #fdf9f0; --white: #ffffff;
+      --muted:  #7a8aaa; --border: #d0c8b0; --soft: #f2ece0;
+      --green:  #1a7a4a; --green2: #eaf7ec;
+      --red:    #b83232; --red2: #fdf0f0;
+      --orange: #c06820; --orange2: #fdf4ea;
+      --blue:   #1a5a9a; --blue2: #eaf2fd;
+      --purple: #6a3a9a; --purple2: #f4eafd;
+      --shadow: 0 4px 24px rgba(12,30,60,0.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; touch-action: manipulation; }
+    body { font-family: 'Jost', sans-serif; background: var(--navy); color: var(--white); height: 100svh; }
+
+    /* ── SCREENS ── */
+    .screen { position: fixed; inset: 0; display: none; flex-direction: column; overflow: hidden; }
+    .screen.active { display: flex; }
+
+    /* ═══════════ PIN LOCK ═══════════ */
+    #s-pin {
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.14) 0%, transparent 65%), var(--navy);
+      align-items: center; justify-content: center; gap: 32px;
+    }
+    .pin-top { text-align: center; }
+    .pin-emblem {
+      width: 78px; height: 78px; margin: 0 auto 14px;
+      background: rgba(201,168,76,0.1); border: 1.5px solid rgba(201,168,76,0.4);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 10px rgba(201,168,76,0.05), 0 0 0 22px rgba(201,168,76,0.025);
+    }
+    .pin-emblem svg { width: 40px; height: 40px; }
+    .pin-title { font-family: 'Cinzel', serif; font-size: clamp(0.95rem,2.2vw,1.2rem); letter-spacing: 0.09em; line-height: 1.3; }
+    .pin-sub { font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 6px; }
+    .pin-badge { display: inline-block; margin-top: 12px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); border-radius: 20px; padding: 5px 16px; font-size: 0.7rem; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; }
+    .pin-dots { display: flex; gap: 14px; justify-content: center; }
+    .pin-dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); background: transparent; transition: all 0.15s; }
+    .pin-dot.filled { background: var(--gold); border-color: var(--gold); transform: scale(1.15); }
+    .pin-err { font-size: 0.78rem; color: #f88; min-height: 18px; text-align: center; }
+    .numpad { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; width: min(300px,86vw); }
+    .nk { height: 60px; border-radius: 13px; border: 1.5px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.07); color: var(--white); font-family: 'Jost', sans-serif; font-size: 1.35rem; font-weight: 500; cursor: pointer; transition: background 0.12s, transform 0.1s; user-select: none; -webkit-tap-highlight-color: transparent; }
+    .nk:active { background: rgba(201,168,76,0.22); transform: scale(0.93); }
+    .nk.del { font-size: 1rem; color: var(--gold); }
+    .nk.go { background: linear-gradient(135deg,var(--gold),#b0882a); border-color: var(--gold); color: var(--navy); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.07em; }
+    .unlock-row { width: min(300px,86vw); }
+    .unlock-btn { width: 100%; height: 52px; border-radius: 13px; background: linear-gradient(135deg,var(--gold),#b0882a); border: none; color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.07em; cursor: pointer; transition: opacity 0.15s; }
+    .unlock-btn:active { opacity: 0.85; }
+    .pin-hint { font-size: 0.68rem; color: rgba(255,255,255,0.22); letter-spacing: 0.05em; }
+
+    /* ═══════════ SHARED TOPBAR ═══════════ */
+    .topbar {
+      background: var(--navy); color: var(--white);
+      padding: 0 16px; height: 52px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(12,30,60,0.3); z-index: 20;
+    }
+    .tb-left { display: flex; align-items: center; gap: 10px; }
+    .tb-logo { width: 30px; height: 30px; border: 1.5px solid rgba(201,168,76,0.45); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tb-logo svg { width: 16px; height: 16px; }
+    .tb-title { font-family: 'Cinzel', serif; font-size: clamp(0.68rem,1.6vw,0.85rem); letter-spacing: 0.07em; line-height: 1.2; }
+    .tb-sub { font-size: 0.58rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; }
+    .tb-right { display: flex; gap: 7px; align-items: center; }
+    .tb-btn { background: transparent; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; padding: 5px 11px; color: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; transition: background 0.15s; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
+    .tb-btn:active { background: rgba(255,255,255,0.1); }
+    .tb-btn.gold { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+    .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #888; flex-shrink: 0; }
+    .sync-dot.online { background: #4cde80; box-shadow: 0 0 0 3px rgba(76,222,128,0.2); }
+    .sync-dot.syncing { background: var(--gold); animation: pulse-dot 1s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+    .gold-bar { height: 2px; background: linear-gradient(90deg,transparent,var(--gold),transparent); flex-shrink: 0; }
+
+    /* ═══════════ DASHBOARD ═══════════ */
+    #s-dash { background: #0e1f3a; }
+    .dash-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 14px 14px 80px; }
+    .dash-inner { max-width: 1000px; margin: 0 auto; }
+
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
+    @media(min-width:600px){ .stats-row { grid-template-columns: repeat(4,1fr); } }
+    .stat-card { background: var(--navy2); border-radius: 12px; padding: 14px 16px; border: 1px solid rgba(201,168,76,0.12); }
+    .stat-val { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold2); line-height: 1; margin-bottom: 4px; }
+    .stat-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+    .stat-change { font-size: 0.72rem; color: #4cde80; margin-top: 4px; }
+
+    /* Channel badges row */
+    .channels-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .ch-badge { display: flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; border: 1.5px solid; cursor: pointer; transition: opacity 0.15s; -webkit-tap-highlight-color: transparent; }
+    .ch-badge:active { opacity: 0.75; }
+    .ch-web    { background: var(--blue2);   color: var(--blue);   border-color: var(--blue); }
+    .ch-fb     { background: #e8f0fd;        color: #1a4d9a;       border-color: #1a4d9a; }
+    .ch-wa     { background: var(--green2);  color: var(--green);  border-color: var(--green); }
+    .ch-kiosk  { background: var(--orange2); color: var(--orange); border-color: var(--orange); }
+    .ch-all    { background: rgba(201,168,76,0.12); color: var(--gold2); border-color: rgba(201,168,76,0.35); }
+
+    /* Two-col grid */
+    .dash-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media(min-width:700px){ .dash-grid { grid-template-columns: 1fr 1fr; } }
+    .dash-full { grid-column: 1/-1; }
+
+    .panel { background: var(--navy2); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+    .panel-hd { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .panel-hd h3 { font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.09em; color: rgba(255,255,255,0.85); }
+    .panel-bd { padding: 14px 16px; }
+
+    /* Category bar chart */
+    .cat-bars { display: flex; flex-direction: column; gap: 8px; }
+    .cat-bar-row { display: flex; align-items: center; gap: 8px; }
+    .cat-bar-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.6); width: 150px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cat-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    .cat-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg,var(--gold),var(--gold2)); transition: width 0.6s ease; }
+    .cat-bar-amt { font-size: 0.7rem; color: var(--gold2); font-weight: 600; width: 58px; text-align: right; flex-shrink: 0; }
+
+    /* Recent entries */
+    .entry-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .entry-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .entry-avatar { width: 34px; height: 34px; border-radius: 9px; background: var(--navy3); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--gold2); flex-shrink: 0; }
+    .entry-info { flex: 1; min-width: 0; }
+    .entry-name { font-size: 0.85rem; font-weight: 600; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .entry-meta { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 1px; }
+    .entry-right { text-align: right; flex-shrink: 0; }
+    .entry-amt { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold2); font-weight: 700; }
+    .entry-ch { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 2px; }
+
+    /* Quick action buttons */
+    .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .qa-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 16px 12px; border-radius: 12px; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: transform 0.12s, opacity 0.15s; -webkit-tap-highlight-color: transparent; }
+    .qa-btn:active { transform: scale(0.95); opacity: 0.85; }
+    .qa-ico { font-size: 1.5rem; }
+    .qa-lbl { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+    .qa-sub { font-size: 0.62rem; opacity: 0.7; }
+    .qa-gold   { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); }
+    .qa-navy   { background: var(--navy3); color: var(--white); }
+    .qa-green  { background: var(--green2); color: var(--green); border: 1.5px solid rgba(26,122,74,0.2); }
+    .qa-muted  { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border: 1.5px solid rgba(255,255,255,0.1); }
+
+    /* ═══════════ ALL ENTRIES ═══════════ */
+    #s-entries { background: var(--cream); color: var(--navy); }
+    .entries-filters { background: var(--white); padding: 10px 14px; display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .filter-chip { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--soft); font-size: 0.72rem; font-weight: 600; color: var(--muted); cursor: pointer; letter-spacing: 0.04em; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+    .filter-chip.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .entries-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 12px 80px; }
+    .entries-inner { max-width: 1000px; margin: 0 auto; }
+    .entry-card { background: var(--white); border-radius: 10px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(12,30,60,0.07); animation: slide-in 0.25s ease both; }
+    @keyframes slide-in { from{transform:translateY(10px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    .entry-card-hd { background: var(--navy); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; }
+    .ec-left { display: flex; flex-direction: column; gap: 2px; }
+    .ec-name { font-weight: 700; font-size: 0.88rem; color: var(--white); }
+    .ec-meta { font-size: 0.68rem; color: rgba(255,255,255,0.4); }
+    .ec-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .ec-total { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold2); }
+    .entry-card-bd { padding: 8px 14px 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .e-tag { background: var(--soft); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 0.7rem; color: var(--navy); font-weight: 500; }
+    .e-tag span { color: var(--green); font-weight: 700; }
+    .entries-bottom { padding: 12px 14px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); background: var(--white); border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
+    .eb-btn { flex: 1; padding: 13px; border-radius: 10px; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 700; -webkit-tap-highlight-color: transparent; transition: opacity 0.15s; }
+    .eb-btn:active { opacity: 0.8; }
+    .eb-back  { background: var(--navy); color: var(--white); }
+    .eb-export{ background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); }
+
+    /* ═══════════ NEW ENTRY FORM ═══════════ */
+    #s-form { background: var(--cream); color: var(--navy); }
+    .form-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 12px 90px; }
+    .form-inner { max-width: 960px; margin: 0 auto; }
+    .form-cols { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media(min-width:700px){ .form-cols { grid-template-columns: 1fr 1fr; } }
+    .fc { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 14px rgba(12,30,60,0.08); }
+    .fc-full { grid-column: 1/-1; }
+    .fc-hd { background: var(--navy); padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .fc-hd h3 { font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.08em; }
+    .fc-chip { background: var(--gold); color: var(--navy); font-size: 0.6rem; font-weight: 800; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.07em; }
+    .fc-bd { padding: 14px; }
+    .fg { margin-bottom: 11px; }
+    .fg:last-child { margin-bottom: 0; }
+    .fg label { display: block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 5px; }
+    .fg label .req { color: var(--red); }
+    .fg input, .fg select { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy); background: var(--soft); outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none; }
+    .fg input:focus, .fg select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.17); background: var(--white); }
+    .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .source-select { display: flex; gap: 7px; flex-wrap: wrap; }
+    .src-chip { padding: 7px 13px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: 1.5px solid; transition: all 0.15s; -webkit-tap-highlight-color: transparent; letter-spacing: 0.04em; }
+    .src-chip.active { opacity: 1 !important; }
+    .src-web    { background: var(--blue2);   color: var(--blue);   border-color: var(--blue); }
+    .src-fb     { background: #e8f0fd;        color: #1a4d9a;       border-color: #1a4d9a; }
+    .src-wa     { background: var(--green2);  color: var(--green);  border-color: var(--green); }
+    .src-kiosk  { background: var(--orange2); color: var(--orange); border-color: var(--orange); }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(185px,1fr)); gap: 7px; }
+    .cat-item { display: flex; align-items: center; background: var(--soft); border: 1.5px solid var(--border); border-radius: 9px; padding: 9px 11px; gap: 8px; transition: border-color 0.15s, background 0.15s; }
+    .cat-item.active { border-color: var(--gold); background: #fff8e8; }
+    .cat-num { width: 24px; height: 24px; background: var(--navy); color: var(--gold2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+    .cat-lbl { flex: 1; font-size: 0.77rem; font-weight: 500; color: var(--navy); line-height: 1.2; }
+    .cat-in { width: 76px; text-align: right; padding: 6px 8px; border: 1.5px solid var(--border); border-radius: 7px; font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--navy); background: var(--white); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+    .cat-in:focus { border-color: var(--gold); }
+    .cat-in::placeholder { color: #c0b89a; font-size: 0.78rem; }
+    .live-total-bar { background: var(--navy); border-radius: 11px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .lt-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+    .lt-count { font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 3px; }
+    .lt-amt { font-family: 'Cinzel', serif; font-size: 1.35rem; color: var(--gold2); font-weight: 700; }
+    .action-bar { position: sticky; bottom: 0; background: var(--white); border-top: 1px solid var(--border); padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); display: flex; gap: 10px; z-index: 10; flex-shrink: 0; box-shadow: 0 -4px 20px rgba(12,30,60,0.1); }
+    .ab-btn { flex: 1; padding: 14px; border-radius: 11px; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.92rem; font-weight: 700; -webkit-tap-highlight-color: transparent; transition: opacity 0.15s, transform 0.12s; }
+    .ab-btn:active { transform: scale(0.97); opacity: 0.85; }
+    .ab-clear  { background: var(--soft); color: var(--muted); border: 1.5px solid var(--border); max-width: 100px; }
+    .ab-back   { background: var(--navy); color: var(--white); max-width: 110px; }
+    .ab-submit { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
+
+    /* ═══════════ CONFIRMATION ═══════════ */
+    #s-confirm {
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 65%), var(--navy);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .confirm-box { max-width: 480px; width: 100%; text-align: center; }
+    .confirm-icon { width: 76px; height: 76px; background: rgba(26,122,74,0.15); border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px; animation: pop-in 0.4s ease both; }
+    @keyframes pop-in { from{transform:scale(0.6);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .confirm-box h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 6px; }
+    .confirm-name { font-size: 0.95rem; color: var(--gold2); font-weight: 600; margin-bottom: 4px; }
+    .confirm-ch-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 14px; }
+    .confirm-total { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); margin-bottom: 16px; }
+    .confirm-list { background: rgba(255,255,255,0.07); border-radius: 11px; overflow: hidden; margin-bottom: 20px; max-height: 200px; overflow-y: auto; text-align: left; }
+    .confirm-row { display: flex; justify-content: space-between; padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.82rem; }
+    .confirm-row:last-child { border-bottom: none; }
+    .cr-cat { color: rgba(255,255,255,0.65); }
+    .cr-amt { color: var(--gold2); font-weight: 700; }
+    .sync-status { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
+    .sync-status.ok { color: #4cde80; }
+    .confirm-btns { display: flex; gap: 11px; }
+    .cfm-btn { flex: 1; padding: 14px; border-radius: 11px; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 700; -webkit-tap-highlight-color: transparent; transition: opacity 0.15s; }
+    .cfm-btn:active { opacity: 0.82; }
+    .cfm-next { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); }
+    .cfm-log  { background: rgba(255,255,255,0.1); color: var(--white); border: 1.5px solid rgba(255,255,255,0.18); }
+
+    /* ═══════════ SETTINGS ═══════════ */
+    #s-settings { background: var(--cream); color: var(--navy); }
+    .settings-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 14px 60px; }
+    .settings-inner { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .settings-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 14px rgba(12,30,60,0.08); }
+    .sc-hd { background: var(--navy); padding: 11px 16px; }
+    .sc-hd h3 { font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.09em; }
+    .sc-bd { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .sc-field label { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 5px; }
+    .sc-field input { width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Jost', sans-serif; font-size: 0.92rem; color: var(--navy); background: var(--soft); outline: none; }
+    .sc-field input:focus { border-color: var(--gold); background: var(--white); }
+    .sc-field .field-note { font-size: 0.72rem; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+    .sc-btn { padding: 12px 20px; border-radius: 9px; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 700; transition: opacity 0.15s; -webkit-tap-highlight-color: transparent; }
+    .sc-btn:active { opacity: 0.8; }
+    .sc-btn-gold  { background: linear-gradient(135deg,var(--gold),#b0882a); color: var(--navy); }
+    .sc-btn-navy  { background: var(--navy); color: var(--white); }
+    .sc-btn-red   { background: var(--red2); color: var(--red); border: 1.5px solid rgba(184,50,50,0.2); }
+    .sc-info { font-size: 0.8rem; color: var(--muted); line-height: 1.65; }
+    .sc-info strong { color: var(--navy); }
+    .apps-script-box { background: #1e1e2e; border-radius: 10px; padding: 14px; overflow: hidden; }
+    .apps-script-box pre { font-family: 'Courier New', monospace; font-size: 0.7rem; color: #a8f0c0; line-height: 1.6; white-space: pre-wrap; word-break: break-all; }
+    .copy-code-btn { margin-top: 10px; width: 100%; padding: 10px; border-radius: 8px; background: rgba(168,240,192,0.15); border: 1px solid rgba(168,240,192,0.3); color: #a8f0c0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+
+    @media (max-width: 500px) {
+      .r2 { grid-template-columns: 1fr; }
+      .form-cols { grid-template-columns: 1fr; }
+      .fc-full { grid-column: 1; }
+      .cat-grid { grid-template-columns: 1fr 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .tb-title { font-size: 0.65rem; }
+    }
+    @media (max-width: 340px) {
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { overflow: visible; }
+      .screen { position: static; display: block !important; }
+      #s-pin, #s-dash, #s-form, #s-confirm, #s-settings { display: none !important; }
+      #s-entries { display: block !important; position: static; overflow: visible; height: auto; color: #000; background: #fff; }
+      .entries-bottom, .tb-btn, .topbar .tb-right { display: none !important; }
+      .entries-scroll { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ PIN LOCK ══════ -->
+<div class="screen active" id="s-pin">
+  <div class="pin-top">
+    <div class="pin-emblem">
+      <svg viewBox="0 0 42 42" fill="none"><rect x="18" y="3" width="6" height="36" rx="2.5" fill="#c9a84c"/><rect x="3" y="13" width="36" height="6" rx="2.5" fill="#c9a84c"/><circle cx="21" cy="21" r="19" stroke="#c9a84c" stroke-width="1.3" fill="none"/></svg>
+    </div>
+    <div class="pin-title">ST. THOMAS MAR THOMA CHURCH<br/>VANCOUVER — TRUSTEE CONSOLE</div>
+    <div class="pin-sub">Integrated Contribution Management</div>
+    <div class="pin-badge">🔐 Authorised Access Only</div>
+  </div>
+  <div class="pin-dots" id="pin-dots">
+    <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+  </div>
+  <div class="pin-err" id="pin-err"></div>
+  <div class="numpad" id="numpad">
+    <button class="nk" onclick="pk('1')">1</button><button class="nk" onclick="pk('2')">2</button><button class="nk" onclick="pk('3')">3</button>
+    <button class="nk" onclick="pk('4')">4</button><button class="nk" onclick="pk('5')">5</button><button class="nk" onclick="pk('6')">6</button>
+    <button class="nk" onclick="pk('7')">7</button><button class="nk" onclick="pk('8')">8</button><button class="nk" onclick="pk('9')">9</button>
+    <div></div><button class="nk" onclick="pk('0')">0</button><button class="nk del" onclick="pdel()">⌫</button>
+  </div>
+  <div class="unlock-row"><button class="unlock-btn" onclick="penter()">UNLOCK CONSOLE</button></div>
+  <div class="pin-hint">Default PIN: 1234 · Change in Settings after first login</div>
+</div>
+
+<!-- ══════ DASHBOARD ══════ -->
+<div class="screen" id="s-dash">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo"><svg viewBox="0 0 20 20" fill="none"><rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="#c9a84c"/><rect x="1" y="6" width="18" height="3" rx="1.2" fill="#c9a84c"/></svg></div>
+      <div><div class="tb-title">TRUSTEE CONSOLE</div><div class="tb-sub">Integrated · All Channels</div></div>
+    </div>
+    <div class="tb-right">
+      <div class="sync-dot online" id="sync-dot" title="Sync status"></div>
+      <button class="tb-btn" onclick="gS('s-settings')">⚙ Settings</button>
+      <button class="tb-btn" onclick="goLock()">🔒 Lock</button>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+  <div class="dash-scroll">
+    <div class="dash-inner">
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val" id="ds-total">$0</div><div class="stat-lbl">Total Collected</div><div class="stat-change" id="ds-period">This month</div></div>
+        <div class="stat-card"><div class="stat-val" id="ds-count">0</div><div class="stat-lbl">Total Entries</div><div class="stat-change" id="ds-today">0 today</div></div>
+        <div class="stat-card"><div class="stat-val" id="ds-avg">$0</div><div class="stat-lbl">Avg / Entry</div><div class="stat-change">per member</div></div>
+        <div class="stat-card"><div class="stat-val" id="ds-channels">0</div><div class="stat-lbl">Active Channels</div><div class="stat-change">web·fb·wa·kiosk</div></div>
+      </div>
+
+      <!-- Channel filters -->
+      <div class="channels-row">
+        <div class="ch-badge ch-all" onclick="filterChannel('all')">📊 All <span id="ch-all-n">0</span></div>
+        <div class="ch-badge ch-web" onclick="filterChannel('web')">🌐 Website <span id="ch-web-n">0</span></div>
+        <div class="ch-badge ch-fb" onclick="filterChannel('facebook')">📘 Facebook <span id="ch-fb-n">0</span></div>
+        <div class="ch-badge ch-wa" onclick="filterChannel('whatsapp')">💬 WhatsApp <span id="ch-wa-n">0</span></div>
+        <div class="ch-badge ch-kiosk" onclick="filterChannel('kiosk')">🖥 Kiosk <span id="ch-kiosk-n">0</span></div>
+      </div>
+
+      <div class="dash-grid">
+        <!-- Quick Actions -->
+        <div class="panel">
+          <div class="panel-hd"><h3>QUICK ACTIONS</h3></div>
+          <div class="panel-bd">
+            <div class="quick-actions">
+              <button class="qa-btn qa-gold" onclick="gS('s-form')"><span class="qa-ico">✝</span><span class="qa-lbl">New Entry</span><span class="qa-sub">Record contribution</span></button>
+              <button class="qa-btn qa-navy" onclick="gS('s-entries')"><span class="qa-ico">📋</span><span class="qa-lbl">All Entries</span><span class="qa-sub">View & filter all</span></button>
+              <button class="qa-btn qa-green" onclick="exportCSV()"><span class="qa-ico">📥</span><span class="qa-lbl">Export CSV</span><span class="qa-sub">Download data</span></button>
+              <button class="qa-btn qa-muted" onclick="syncData()"><span class="qa-ico">🔄</span><span class="qa-lbl">Sync Now</span><span class="qa-sub">Fetch from cloud</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Categories -->
+        <div class="panel">
+          <div class="panel-hd"><h3>TOP CATEGORIES</h3><span style="font-size:0.68rem;color:rgba(255,255,255,0.4);">by total collected</span></div>
+          <div class="panel-bd"><div class="cat-bars" id="cat-bars"></div></div>
+        </div>
+
+        <!-- Recent Entries -->
+        <div class="panel dash-full">
+          <div class="panel-hd"><h3>RECENT ENTRIES</h3><button class="tb-btn" onclick="gS('s-entries')" style="font-size:0.62rem;">View All →</button></div>
+          <div class="panel-bd" id="recent-entries"><div style="color:rgba(255,255,255,0.35);font-size:0.85rem;text-align:center;padding:20px;">No entries yet. Add the first contribution!</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ALL ENTRIES ══════ -->
+<div class="screen" id="s-entries">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo"><svg viewBox="0 0 20 20" fill="none"><rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="#c9a84c"/><rect x="1" y="6" width="18" height="3" rx="1.2" fill="#c9a84c"/></svg></div>
+      <div><div class="tb-title">ALL ENTRIES</div><div class="tb-sub" id="entries-count-label">0 records</div></div>
+    </div>
+    <div class="tb-right"><button class="tb-btn" onclick="gS('s-dash')">← Dashboard</button><button class="tb-btn" onclick="goLock()">🔒</button></div>
+  </div>
+  <div class="gold-bar"></div>
+  <div class="entries-filters" id="entries-filters">
+    <div class="filter-chip active" onclick="setFilter('all',this)">All</div>
+    <div class="filter-chip" onclick="setFilter('web',this)">🌐 Web</div>
+    <div class="filter-chip" onclick="setFilter('facebook',this)">📘 Facebook</div>
+    <div class="filter-chip" onclick="setFilter('whatsapp',this)">💬 WhatsApp</div>
+    <div class="filter-chip" onclick="setFilter('kiosk',this)">🖥 Kiosk</div>
+  </div>
+  <div class="entries-scroll"><div class="entries-inner" id="entries-list"></div></div>
+  <div class="entries-bottom">
+    <button class="eb-btn eb-back" onclick="gS('s-dash')">← Back</button>
+    <button class="eb-btn eb-export" onclick="exportCSV()">📥 Export CSV</button>
+  </div>
+</div>
+
+<!-- ══════ NEW ENTRY FORM ══════ -->
+<div class="screen" id="s-form">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo"><svg viewBox="0 0 20 20" fill="none"><rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="#c9a84c"/><rect x="1" y="6" width="18" height="3" rx="1.2" fill="#c9a84c"/></svg></div>
+      <div><div class="tb-title">NEW CONTRIBUTION ENTRY</div><div class="tb-sub">St. Thomas Mar Thoma Church</div></div>
+    </div>
+    <div class="tb-right"><button class="tb-btn" onclick="gS('s-dash')">Dashboard</button><button class="tb-btn" onclick="goLock()">🔒</button></div>
+  </div>
+  <div class="gold-bar"></div>
+  <div class="form-scroll">
+    <div class="form-inner">
+      <div class="form-cols">
+
+        <!-- Member Details -->
+        <div class="fc">
+          <div class="fc-hd"><h3>MEMBER DETAILS</h3><span class="fc-chip">Step 1</span></div>
+          <div class="fc-bd">
+            <div class="r2">
+              <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="f-fname" placeholder="Thomas"/></div>
+              <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="f-lname" placeholder="Varghese"/></div>
+            </div>
+            <div class="r2">
+              <div class="fg"><label>Ref. No.</label><input type="text" id="f-ref" placeholder="TMC-001"/></div>
+              <div class="fg"><label>Date <span class="req">*</span></label><input type="date" id="f-date"/></div>
+            </div>
+            <div class="fg"><label>Prayer Group</label><input type="text" id="f-prayer" placeholder="e.g. Bethel Prayer Group"/></div>
+            <div class="r2">
+              <div class="fg"><label>Mobile</label><input type="tel" id="f-phone" placeholder="+1 (604) 000-0000"/></div>
+              <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="name@email.com"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source + Summary -->
+        <div class="fc" style="display:flex;flex-direction:column;">
+          <div class="fc-hd"><h3>SOURCE CHANNEL</h3><span class="fc-chip">Step 2</span></div>
+          <div class="fc-bd" style="flex:1;">
+            <div class="fg" style="margin-bottom:14px;">
+              <label>Received Via <span class="req">*</span></label>
+              <div class="source-select" id="source-select">
+                <div class="src-chip src-web active" onclick="setSource('web',this)">🌐 Website</div>
+                <div class="src-chip src-fb" onclick="setSource('facebook',this)">📘 Facebook</div>
+                <div class="src-chip src-wa" onclick="setSource('whatsapp',this)">💬 WhatsApp</div>
+                <div class="src-chip src-kiosk" onclick="setSource('kiosk',this)">🖥 Kiosk</div>
+              </div>
+            </div>
+            <div class="live-total-bar">
+              <div><div class="lt-lbl">Total This Entry</div><div class="lt-count" id="lt-count">0 categories</div></div>
+              <div class="lt-amt" id="lt-amt">CAD $0.00</div>
+            </div>
+            <div style="margin-top:12px;" class="fg"><label>Trustee Notes</label><input type="text" id="f-notes" placeholder="e.g. Paid by cheque, receipt #…"/></div>
+            <div class="fg"><label>Trustee Name</label><input type="text" id="f-trustee" placeholder="Your name"/></div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="fc fc-full">
+          <div class="fc-hd"><h3>CONTRIBUTION CATEGORIES</h3><span class="fc-chip">Step 3</span></div>
+          <div class="fc-bd">
+            <div class="cat-grid" id="f-cat-grid"></div>
+            <div style="margin-top:8px;" id="f-extra-grid"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="action-bar">
+    <button class="ab-btn ab-back" onclick="gS('s-dash')">← Back</button>
+    <button class="ab-btn ab-clear" onclick="clearForm()">Clear</button>
+    <button class="ab-btn ab-submit" onclick="submitEntry()">✓ Save Entry</button>
+  </div>
+</div>
+
+<!-- ══════ CONFIRMATION ══════ -->
+<div class="screen" id="s-confirm">
+  <div class="confirm-box">
+    <div class="confirm-icon">✓</div>
+    <h2>Entry Saved!</h2>
+    <div class="confirm-name" id="cfm-name"></div>
+    <div class="confirm-ch-badge" id="cfm-ch"></div>
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;">Total Contribution</div>
+    <div class="confirm-total" id="cfm-total"></div>
+    <div class="confirm-list" id="cfm-list"></div>
+    <div class="sync-status" id="cfm-sync">Saving to local store…</div>
+    <div class="confirm-btns">
+      <button class="cfm-btn cfm-log" onclick="gS('s-entries')">📋 View All</button>
+      <button class="cfm-btn cfm-next" onclick="nextEntry()">+ Next Member</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SETTINGS ══════ -->
+<div class="screen" id="s-settings">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo"><svg viewBox="0 0 20 20" fill="none"><rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="#c9a84c"/><rect x="1" y="6" width="18" height="3" rx="1.2" fill="#c9a84c"/></svg></div>
+      <div><div class="tb-title">SETTINGS & INTEGRATION</div><div class="tb-sub">Configure sync endpoint</div></div>
+    </div>
+    <div class="tb-right"><button class="tb-btn" onclick="gS('s-dash')">← Dashboard</button></div>
+  </div>
+  <div class="gold-bar"></div>
+  <div class="settings-scroll">
+    <div class="settings-inner">
+
+      <!-- Endpoint config -->
+      <div class="settings-card">
+        <div class="sc-hd"><h3>GOOGLE SHEETS ENDPOINT</h3></div>
+        <div class="sc-bd">
+          <div class="sc-field">
+            <label>Apps Script Web App URL</label>
+            <input type="url" id="cfg-endpoint" placeholder="https://script.google.com/macros/s/…/exec"/>
+            <div class="field-note">Deploy the Google Apps Script (see below) as a web app, then paste the URL here. All entries from all channels will sync to your Google Sheet.</div>
+          </div>
+          <button class="sc-btn sc-btn-gold" onclick="saveEndpoint()">Save Endpoint</button>
+        </div>
+      </div>
+
+      <!-- PIN change -->
+      <div class="settings-card">
+        <div class="sc-hd"><h3>CHANGE TRUSTEE PIN</h3></div>
+        <div class="sc-bd">
+          <div class="sc-field"><label>New 4-Digit PIN</label><input type="password" id="cfg-pin" maxlength="4" placeholder="••••"/></div>
+          <div class="sc-field"><label>Confirm PIN</label><input type="password" id="cfg-pin2" maxlength="4" placeholder="••••"/></div>
+          <button class="sc-btn sc-btn-navy" onclick="changePIN()">Update PIN</button>
+        </div>
+      </div>
+
+      <!-- Google Apps Script code -->
+      <div class="settings-card">
+        <div class="sc-hd"><h3>GOOGLE APPS SCRIPT — SETUP CODE</h3></div>
+        <div class="sc-bd">
+          <div class="sc-info">
+            <strong>Step 1:</strong> Open <a href="https://sheets.google.com" target="_blank" style="color:var(--blue);">Google Sheets</a>, create a new sheet named <strong>Contributions</strong>.<br/><br/>
+            <strong>Step 2:</strong> Go to <strong>Extensions → Apps Script</strong>, paste the code below, save, then click <strong>Deploy → New Deployment → Web App</strong>. Set access to <em>"Anyone"</em>. Copy the URL into the field above.<br/><br/>
+            <strong>Step 3:</strong> Add the same URL to all three public forms (website, Facebook, WhatsApp) in the <code>ENDPOINT</code> constant at the top of each file.
+          </div>
+          <div class="apps-script-box">
+            <pre id="gas-code">const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+const SHEET_NAME = 'Contributions';
+
+function doPost(e) {
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    let sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) {
+      sheet = ss.insertSheet(SHEET_NAME);
+      sheet.appendRow(['Timestamp','Channel','Name','Ref No','Prayer Group',
+        'Phone','Email','Date','Voluntary','Birthday','Ingathering',
+        'Christmas','Wedding Anniv','Twelve Contrib','Suvisesha Sangam',
+        'Recessa','Maramon Conv','Self Denial','Poor Fund','Tithe',
+        'Family Dedication','Harvest Festival','Financial Support',
+        'Other 1','Other 2','Other 3','Total CAD','Notes','Trustee']);
+    }
+    const d = JSON.parse(e.postData.contents);
+    const cats = ['Voluntary Contribution','Birthday','Ingathering',
+      'Christmas','Wedding Anniversary','Twelve Contribution',
+      'Suvisesha Sangam Anduvary','Recessa','Maramon Convention',
+      'Self Denial','Poor Fund','Tithe','Family Dedication Day',
+      'Harvest Festival','Financial Support'];
+    const row = [
+      new Date(), d.channel||'', d.name||'', d.ref||'',
+      d.prayer||'', d.phone||'', d.email||'', d.date||'',
+      ...cats.map(c => d.contributions?.[c] || 0),
+      d.other1||0, d.other2||0, d.other3||0,
+      d.total||0, d.notes||'', d.trustee||''
+    ];
+    sheet.appendRow(row);
+    return output({success:true, id: Utilities.getUuid()});
+  } catch(err) {
+    return output({success:false, error: err.message});
+  }
+}
+
+function doGet(e) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) return output([]);
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows[0];
+  const data = rows.slice(1).map(r => {
+    const obj = {};
+    headers.forEach((h,i) => obj[h] = r[i]);
+    return obj;
+  });
+  return output(data);
+}
+
+function output(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+          </div>
+          <button class="copy-code-btn" onclick="copyGAS()">📋 Copy Apps Script Code</button>
+        </div>
+      </div>
+
+      <!-- Data management -->
+      <div class="settings-card">
+        <div class="sc-hd"><h3>DATA MANAGEMENT</h3></div>
+        <div class="sc-bd">
+          <div class="sc-info" style="margin-bottom:12px;">All entries are stored locally in this device. Use Export to back up data. Sync fetches new entries from Google Sheets (if endpoint is set).</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="sc-btn sc-btn-navy" onclick="exportCSV()">📥 Export CSV</button>
+            <button class="sc-btn sc-btn-gold" onclick="syncData()">🔄 Sync from Sheets</button>
+            <button class="sc-btn sc-btn-red" onclick="clearAllData()">🗑 Clear All Local Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════ CONFIG & STATE ══════════════ */
+let CFG = JSON.parse(localStorage.getItem('tmc_cfg') || '{}');
+CFG.pin      = CFG.pin      || '1234';
+CFG.endpoint = CFG.endpoint || '';
+
+let allData   = JSON.parse(localStorage.getItem('tmc_entries') || '[]');
+let pinBuf    = '';
+let activeFilter = 'all';
+let activeSource = 'web';
+
+const CATS = [
+  "Voluntary Contribution","Birthday","Ingathering","Christmas",
+  "Wedding Anniversary","Twelve Contribution","Suvisesha Sangam Anduvary",
+  "Recessa","Maramon Convention","Self Denial","Poor Fund","Tithe",
+  "Family Dedication Day","Harvest Festival","Financial Support"
+];
+
+/* ── Sample data pre-loaded so dashboard shows a working state ── */
+if (!allData.length) {
+  allData = [
+    {id:'s1',ts:'2025-12-08T09:14',channel:'kiosk',name:'Thomas Varghese',ref:'TMC-001',prayer:'Bethel',phone:'',email:'',date:'2025-12-08',contributions:{'Tithe':300,'Voluntary Contribution':100},total:400,notes:'Cash',trustee:'George Mathew'},
+    {id:'s2',ts:'2025-12-08T09:22',channel:'kiosk',name:'Mary Kurian',ref:'TMC-002',prayer:'Emmanuel',phone:'',email:'',date:'2025-12-08',contributions:{'Tithe':200,'Maramon Convention':100,'Birthday':50},total:350,notes:'',trustee:'George Mathew'},
+    {id:'s3',ts:'2025-12-07T14:33',channel:'web',name:'Saju Abraham',ref:'TMC-015',prayer:'Bethel',phone:'',email:'saju@email.com',date:'2025-12-07',contributions:{'Tithe':250,'Self Denial':50},total:300,notes:'',trustee:''},
+    {id:'s4',ts:'2025-12-07T16:11',channel:'whatsapp',name:'Priya George',ref:'',prayer:'',phone:'604-555-0142',email:'',date:'2025-12-07',contributions:{'Voluntary Contribution':150,'Christmas':75},total:225,notes:'e-transfer',trustee:''},
+    {id:'s5',ts:'2025-12-06T10:55',channel:'facebook',name:'Binu Thomas',ref:'TMC-008',prayer:'Zion',phone:'',email:'binu@email.com',date:'2025-12-06',contributions:{'Tithe':200,'Poor Fund':50,'Harvest Festival':25},total:275,notes:'PayPal',trustee:''},
+    {id:'s6',ts:'2025-12-06T11:30',channel:'kiosk',name:'Anu Mathew',ref:'TMC-022',prayer:'Emmanuel',phone:'',email:'',date:'2025-12-06',contributions:{'Wedding Anniversary':100,'Tithe':200},total:300,notes:'',trustee:'Sara Chacko'},
+    {id:'s7',ts:'2025-12-05T15:45',channel:'web',name:'Rajan Philip',ref:'TMC-011',prayer:'Bethel',phone:'',email:'',date:'2025-12-05',contributions:{'Twelve Contribution':120,'Family Dedication Day':80},total:200,notes:'',trustee:''},
+    {id:'s8',ts:'2025-12-05T17:02',channel:'whatsapp',name:'Lisha Paul',ref:'',prayer:'Zion',phone:'',email:'',date:'2025-12-05',contributions:{'Ingathering':200,'Birthday':50},total:250,notes:'e-transfer',trustee:''},
+    {id:'s9',ts:'2025-12-04T12:20',channel:'web',name:'Jijo Cherian',ref:'TMC-019',prayer:'',phone:'',email:'',date:'2025-12-04',contributions:{'Tithe':180,'Suvisesha Sangam Anduvary':60},total:240,notes:'',trustee:''},
+    {id:'s10',ts:'2025-12-03T09:00',channel:'facebook',name:'Sheela Jose',ref:'TMC-005',prayer:'Emmanuel',phone:'',email:'',date:'2025-12-03',contributions:{'Voluntary Contribution':100,'Recessa':50,'Poor Fund':30},total:180,notes:'PayPal',trustee:''}
+  ];
+  persist();
+}
+
+/* ══════════════ PIN LOGIC ══════════════ */
+function pk(v) {
+  if (pinBuf.length >= 4) return;
+  pinBuf += v;
+  updateDots();
+  document.getElementById('pin-err').textContent = '';
+  if (pinBuf.length === 4) setTimeout(penter, 180);
+}
+function pdel() { pinBuf = pinBuf.slice(0,-1); updateDots(); }
+function updateDots() {
+  for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled', i<pinBuf.length);
+}
+function penter() {
+  if (pinBuf === CFG.pin) { gS('s-dash'); renderDash(); }
+  else {
+    document.getElementById('pin-err').textContent = 'Incorrect PIN — try again';
+    pinBuf = ''; updateDots();
+    const np = document.getElementById('numpad');
+    np.style.animation='none'; np.offsetHeight;
+    np.style.animation='pin-shake 0.4s ease';
+  }
+}
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent='@keyframes pin-shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}';
+document.head.appendChild(shakeStyle);
+
+/* ══════════════ SCREEN NAV ══════════════ */
+function gS(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goLock() { pinBuf=''; updateDots(); document.getElementById('pin-err').textContent=''; gS('s-pin'); }
+
+/* ══════════════ DASHBOARD ══════════════ */
+function renderDash() {
+  const total   = allData.reduce((s,e) => s+e.total, 0);
+  const avg     = allData.length ? (total/allData.length) : 0;
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayCount = allData.filter(e => e.date === todayStr).length;
+  const channels = [...new Set(allData.map(e=>e.channel))];
+
+  document.getElementById('ds-total').textContent   = '$'+total.toFixed(0);
+  document.getElementById('ds-count').textContent   = allData.length;
+  document.getElementById('ds-avg').textContent     = '$'+avg.toFixed(0);
+  document.getElementById('ds-channels').textContent= channels.length;
+  document.getElementById('ds-today').textContent   = todayCount+' today';
+
+  // Channel counts
+  const chCounts = {web:0, facebook:0, whatsapp:0, kiosk:0};
+  allData.forEach(e => { if(chCounts[e.channel]!==undefined) chCounts[e.channel]++; });
+  document.getElementById('ch-all-n').textContent     = allData.length;
+  document.getElementById('ch-web-n').textContent     = chCounts.web;
+  document.getElementById('ch-fb-n').textContent      = chCounts.facebook;
+  document.getElementById('ch-wa-n').textContent      = chCounts.whatsapp;
+  document.getElementById('ch-kiosk-n').textContent   = chCounts.kiosk;
+
+  // Category chart
+  const catTotals = {};
+  CATS.forEach(c => catTotals[c]=0);
+  allData.forEach(e => {
+    Object.entries(e.contributions||{}).forEach(([c,v]) => {
+      if (catTotals[c]!==undefined) catTotals[c] += parseFloat(v)||0;
+    });
+  });
+  const sorted = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const maxV = sorted[0]?.[1] || 1;
+  document.getElementById('cat-bars').innerHTML = sorted.map(([c,v]) => `
+    <div class="cat-bar-row">
+      <div class="cat-bar-lbl">${c}</div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${(v/maxV)*100}%"></div></div>
+      <div class="cat-bar-amt">$${v.toFixed(0)}</div>
+    </div>`).join('');
+
+  // Recent entries (last 5)
+  const recent = [...allData].sort((a,b)=>new Date(b.ts)-new Date(a.ts)).slice(0,5);
+  if (!recent.length) {
+    document.getElementById('recent-entries').innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:0.85rem;text-align:center;padding:20px;">No entries yet.</div>';
+    return;
+  }
+  document.getElementById('recent-entries').innerHTML = recent.map(e => `
+    <div class="entry-row">
+      <div class="entry-avatar">${e.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+      <div class="entry-info">
+        <div class="entry-name">${e.name}${e.ref?' · '+e.ref:''}</div>
+        <div class="entry-meta">${e.date} · ${Object.keys(e.contributions||{}).length} categories</div>
+      </div>
+      <div class="entry-right">
+        <div class="entry-amt">$${e.total.toFixed(2)}</div>
+        <div class="entry-ch">${chColor(e.channel)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function chColor(ch) {
+  const map = {web:'🌐 Web', facebook:'📘 FB', whatsapp:'💬 WA', kiosk:'🖥 Kiosk'};
+  return map[ch] || ch;
+}
+function chBadgeStyle(ch) {
+  const map = {web:'background:var(--blue2);color:var(--blue);border:1px solid var(--blue)', facebook:'background:#e8f0fd;color:#1a4d9a;border:1px solid #1a4d9a', whatsapp:'background:var(--green2);color:var(--green);border:1px solid var(--green)', kiosk:'background:var(--orange2);color:var(--orange);border:1px solid var(--orange)'};
+  return map[ch] || '';
+}
+
+function filterChannel(ch) { activeFilter=ch; renderEntries(ch); gS('s-entries'); }
+
+/* ══════════════ ALL ENTRIES ══════════════ */
+let currentFilter = 'all';
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderEntries(f);
+}
+function renderEntries(filter) {
+  filter = filter || currentFilter;
+  const filtered = filter==='all' ? allData : allData.filter(e=>e.channel===filter);
+  const sorted = [...filtered].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  document.getElementById('entries-count-label').textContent = sorted.length+' record'+(sorted.length===1?'':'s');
+  if (!sorted.length) {
+    document.getElementById('entries-list').innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--muted);">No entries for this channel yet.</div>';
+    return;
+  }
+  document.getElementById('entries-list').innerHTML = sorted.map((e,i) => `
+    <div class="entry-card" style="animation-delay:${i*0.04}s">
+      <div class="entry-card-hd">
+        <div class="ec-left">
+          <div class="ec-name">${e.name}${e.ref?' · <span style="font-weight:400;opacity:0.6">'+e.ref+'</span>':''}</div>
+          <div class="ec-meta">${e.date} · ${e.prayer||'—'} · Trustee: ${e.trustee||'Self-service'}</div>
+        </div>
+        <div class="ec-right">
+          <div class="ec-total">$${e.total.toFixed(2)}</div>
+          <div style="font-size:0.62rem;padding:3px 8px;border-radius:20px;margin-top:3px;${chBadgeStyle(e.channel)}">${chColor(e.channel)}</div>
+        </div>
+      </div>
+      <div class="entry-card-bd">
+        ${Object.entries(e.contributions||{}).map(([c,v])=>`<div class="e-tag">${c} <span>$${parseFloat(v).toFixed(2)}</span></div>`).join('')}
+        ${e.notes?`<div class="e-tag" style="background:#fff8e8;border-color:var(--gold);">📝 ${e.notes}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+/* ══════════════ NEW ENTRY FORM ══════════════ */
+// Build category grid
+window.addEventListener('DOMContentLoaded', () => {
+  const cg = document.getElementById('f-cat-grid');
+  CATS.forEach((c,i) => {
+    const d = document.createElement('div');
+    d.className='cat-item'; d.id='ci-'+i;
+    d.innerHTML=`<div class="cat-num">${i+1}</div><div class="cat-lbl">${c}</div><input class="cat-in" type="number" min="0" step="0.01" placeholder="0.00" oninput="calcLive()" id="ca-${i}" aria-label="${c}"/>`;
+    cg.appendChild(d);
+  });
+  const eg = document.getElementById('f-extra-grid');
+  eg.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:7px;margin-top:8px;';
+  for(let i=0;i<3;i++){
+    const d=document.createElement('div'); d.className='cat-item';
+    d.innerHTML=`<div class="cat-num" style="background:rgba(12,30,60,0.2);color:#b0a060;">+</div><input type="text" style="flex:1;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:0.77rem;color:var(--navy);outline:none;min-width:0;" placeholder="Other (specify)…"/><input class="cat-in" type="number" min="0" step="0.01" placeholder="0.00" oninput="calcLive()"/>`;
+    eg.appendChild(d);
+  }
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  if(CFG.endpoint) document.getElementById('cfg-endpoint').value = CFG.endpoint;
+});
+
+function setSource(src, el) {
+  activeSource = src;
+  document.querySelectorAll('#source-select .src-chip').forEach(c => c.style.opacity='0.45');
+  el.style.opacity='1';
+}
+
+function calcLive() {
+  let total=0, count=0;
+  document.querySelectorAll('.cat-in').forEach((inp,i) => {
+    const v=parseFloat(inp.value);
+    if(!isNaN(v)&&v>0){total+=v;count++;}
+    const item=document.getElementById('ci-'+i);
+    if(item) item.classList.toggle('active',!isNaN(v)&&v>0);
+  });
+  document.getElementById('lt-amt').textContent='CAD $'+total.toFixed(2);
+  document.getElementById('lt-count').textContent=count+(count===1?' category':' categories');
+  return {total,count};
+}
+
+function getContributions() {
+  const c={};
+  document.querySelectorAll('#f-cat-grid .cat-in').forEach((inp,i) => {
+    const v=parseFloat(inp.value); if(!isNaN(v)&&v>0) c[CATS[i]]=v;
+  });
+  return c;
+}
+
+function submitEntry() {
+  const fname=document.getElementById('f-fname').value.trim();
+  const lname=document.getElementById('f-lname').value.trim();
+  if(!fname||!lname){alert('Please enter the member\'s full name.');return;}
+  const contrib=getContributions();
+  if(!Object.keys(contrib).length){alert('Please enter at least one contribution amount.');return;}
+  const total=Object.values(contrib).reduce((s,v)=>s+v,0);
+
+  const entry = {
+    id: 'e'+Date.now(),
+    ts: new Date().toISOString(),
+    channel: activeSource,
+    name: fname+' '+lname,
+    ref: document.getElementById('f-ref').value.trim(),
+    prayer: document.getElementById('f-prayer').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    date: document.getElementById('f-date').value,
+    contributions: contrib,
+    total,
+    notes: document.getElementById('f-notes').value.trim(),
+    trustee: document.getElementById('f-trustee').value.trim()
+  };
+
+  allData.unshift(entry);
+  persist();
+
+  // Show confirmation
+  document.getElementById('cfm-name').textContent = entry.name + (entry.ref?' · '+entry.ref:'');
+  document.getElementById('cfm-ch').textContent = chColor(entry.channel);
+  document.getElementById('cfm-ch').style.cssText = 'display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.06em;margin-bottom:14px;'+chBadgeStyle(entry.channel);
+  document.getElementById('cfm-total').textContent = 'CAD $'+total.toFixed(2);
+  document.getElementById('cfm-list').innerHTML = Object.entries(contrib).map(([c,v])=>`<div class="confirm-row"><span class="cr-cat">${c}</span><span class="cr-amt">$${v.toFixed(2)}</span></div>`).join('');
+
+  const syncEl=document.getElementById('cfm-sync');
+  syncEl.textContent='✓ Saved locally'; syncEl.className='sync-status ok';
+
+  if(CFG.endpoint) {
+    syncEl.textContent='⏳ Syncing to Google Sheets…'; syncEl.className='sync-status';
+    fetch(CFG.endpoint, {method:'POST', body:JSON.stringify(entry)})
+      .then(()=>{syncEl.textContent='☁ Synced to Google Sheets ✓'; syncEl.className='sync-status ok';})
+      .catch(()=>{syncEl.textContent='⚠ Saved locally · Sync failed (no connection)'; syncEl.className='sync-status';});
+  }
+
+  gS('s-confirm');
+}
+
+function nextEntry() { clearForm(); gS('s-form'); setTimeout(()=>document.getElementById('f-fname').focus(),80); }
+
+function clearForm() {
+  ['f-fname','f-lname','f-ref','f-prayer','f-phone','f-email','f-notes','f-trustee'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+  document.querySelectorAll('.cat-in').forEach(inp=>inp.value='');
+  document.querySelectorAll('.cat-item').forEach(el=>el.classList.remove('active'));
+  calcLive();
+}
+
+/* ══════════════ SETTINGS ══════════════ */
+function saveEndpoint() {
+  CFG.endpoint = document.getElementById('cfg-endpoint').value.trim();
+  persistCFG(); alert('Endpoint saved! All new entries will sync to Google Sheets.');
+}
+function changePIN() {
+  const p1=document.getElementById('cfg-pin').value;
+  const p2=document.getElementById('cfg-pin2').value;
+  if(p1.length!==4||!/^\d{4}$/.test(p1)){alert('PIN must be exactly 4 digits.');return;}
+  if(p1!==p2){alert('PINs do not match.');return;}
+  CFG.pin=p1; persistCFG();
+  document.getElementById('cfg-pin').value=''; document.getElementById('cfg-pin2').value='';
+  alert('PIN updated successfully!');
+}
+function copyGAS() {
+  navigator.clipboard.writeText(document.getElementById('gas-code').textContent)
+    .then(()=>alert('Apps Script code copied! Paste into Google Apps Script editor.'))
+    .catch(()=>{
+      const r=document.createRange(); r.selectNode(document.getElementById('gas-code'));
+      window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+      alert('Text selected — press Ctrl+C / Cmd+C to copy.');
+    });
+}
+function clearAllData() {
+  if(!confirm('Delete ALL local entries? This cannot be undone. Data in Google Sheets is unaffected.')) return;
+  allData=[]; persist(); renderDash(); alert('Local data cleared.');
+}
+
+/* ══════════════ SYNC & EXPORT ══════════════ */
+function syncData() {
+  if(!CFG.endpoint){alert('No endpoint configured. Add your Google Apps Script URL in Settings first.');return;}
+  document.getElementById('sync-dot').className='sync-dot syncing';
+  fetch(CFG.endpoint)
+    .then(r=>r.json())
+    .then(rows=>{
+      if(Array.isArray(rows)&&rows.length){
+        // Merge remote rows (avoid duplicates by id if present)
+        const existingIds = new Set(allData.map(e=>e.id));
+        let added=0;
+        rows.forEach(r=>{
+          if(r.id&&!existingIds.has(r.id)){allData.push(r);added++;}
+        });
+        persist(); renderDash();
+        alert(`Sync complete! ${added} new entries added from Google Sheets.`);
+      } else { alert('No new data found in Google Sheets.'); }
+      document.getElementById('sync-dot').className='sync-dot online';
+    })
+    .catch(()=>{document.getElementById('sync-dot').className='sync-dot'; alert('Sync failed. Check your endpoint URL and internet connection.');});
+}
+
+function exportCSV() {
+  if(!allData.length){alert('No data to export.');return;}
+  const headers=['Date','Channel','Name','Ref No','Prayer Group','Phone','Email',
+    ...CATS,'Total CAD','Notes','Trustee','Recorded At'];
+  const rows = allData.map(e => [
+    e.date, e.channel, e.name, e.ref||'', e.prayer||'', e.phone||'', e.email||'',
+    ...CATS.map(c => e.contributions?.[c]||0),
+    e.total.toFixed(2), e.notes||'', e.trustee||'', e.ts||''
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href=url; a.download='TMC_Contributions_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+/* ══════════════ PERSISTENCE ══════════════ */
+function persist()    { localStorage.setItem('tmc_entries', JSON.stringify(allData)); }
+function persistCFG() { localStorage.setItem('tmc_cfg', JSON.stringify(CFG)); }
+</script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member's Contribution — St. Thomas Mar Thoma Church, Vancouver</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:   #0f2346;
+      --navy2:  #1a3460;
+      --gold:   #c9a84c;
+      --gold2:  #e8c96a;
+      --cream:  #faf7f2;
+      --white:  #ffffff;
+      --muted:  #6b7a99;
+      --border: #d4c9b0;
+      --red:    #c0392b;
+      --input-bg: #f4f0e8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      color: var(--white);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(201,168,76,0.04) 40px,
+        rgba(201,168,76,0.04) 41px
+      );
+    }
+    .header-inner {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 36px 24px 30px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .cross-emblem {
+      flex-shrink: 0;
+      width: 72px; height: 72px;
+      background: rgba(201,168,76,0.15);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cross-emblem svg { width: 38px; height: 38px; }
+    .header-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+    }
+    .header-text p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .gold-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+    }
+
+    /* ── BANNER ── */
+    .banner {
+      background: var(--gold);
+      color: var(--navy);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN WRAPPER ── */
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 16px 60px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(15,35,70,0.08);
+      margin-bottom: 24px;
+    }
+    .card-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .card-header .step-badge {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      margin-left: auto;
+    }
+    .card-body { padding: 24px; }
+
+    /* ── MEMBER INFO GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 20px;
+    }
+    .info-grid .full { grid-column: 1 / -1; }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    label span.req { color: var(--red); }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.92rem;
+      color: var(--navy);
+      background: var(--input-bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+      background: #fff;
+    }
+
+    /* ── CONTRIBUTIONS TABLE ── */
+    .contrib-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .contrib-table thead tr {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .contrib-table thead th {
+      padding: 11px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .contrib-table thead th:nth-child(1) { width: 48px; text-align: center; }
+    .contrib-table thead th:last-child { width: 130px; text-align: right; }
+    .contrib-table thead th.col-cad { width: 90px; text-align: right; }
+
+    .contrib-table tbody tr {
+      border-bottom: 1px solid #eee8da;
+      transition: background 0.15s;
+    }
+    .contrib-table tbody tr:hover { background: #fdf9f2; }
+    .contrib-table tbody td {
+      padding: 10px 14px;
+      vertical-align: middle;
+    }
+    .contrib-table tbody td:nth-child(1) {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .contrib-table tbody td.label-cell {
+      font-weight: 400;
+      color: var(--navy);
+    }
+    .contrib-table tbody td.amt-cell {
+      text-align: right;
+    }
+
+    .amt-input {
+      width: 100%;
+      text-align: right;
+      padding: 7px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      color: var(--navy);
+      background: var(--input-bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .amt-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+      background: #fff;
+    }
+    .amt-input::placeholder { color: #c0b89a; }
+
+    /* ── TOTAL ROW ── */
+    .total-row {
+      background: var(--navy) !important;
+      border-bottom: none !important;
+    }
+    .total-row td {
+      padding: 14px 14px !important;
+      color: var(--white) !important;
+      font-weight: 600 !important;
+    }
+    .total-row td:last-child {
+      text-align: right;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem !important;
+      color: var(--gold) !important;
+      letter-spacing: 0.02em;
+    }
+    .total-row .total-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75) !important;
+    }
+
+    /* ── PAYMENT SECTION ── */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .pay-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    }
+    .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,35,70,0.15); }
+    .pay-btn:active { transform: translateY(0); }
+    .pay-btn.paypal {
+      background: #003087;
+      color: #fff;
+      border-color: #003087;
+    }
+    .pay-btn.paypal .pp-logo { font-size: 1.2rem; }
+    .pay-btn.etransfer {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .pay-btn.cheque {
+      background: transparent;
+      color: var(--navy);
+      border-color: var(--navy);
+    }
+    .pay-btn.submit-online {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-color: var(--gold);
+      grid-column: 1 / -1;
+      font-size: 1.05rem;
+      padding: 18px 24px;
+      letter-spacing: 0.02em;
+    }
+    .pay-icon { font-size: 1.4rem; }
+
+    /* ── NOTES ── */
+    .note-box {
+      background: #f4f0e8;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .note-box strong { color: var(--navy); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(15,35,70,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 36px 32px;
+      max-width: 420px; width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .modal .check-icon {
+      width: 60px; height: 60px;
+      background: #eaf7ec;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 2rem;
+    }
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .modal p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .modal-close {
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 12px 32px; font-family: 'Outfit', sans-serif;
+      font-size: 0.92rem; font-weight: 600; cursor: pointer;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .info-grid { grid-template-columns: 1fr; }
+      .info-grid .full { grid-column: 1; }
+      .header-inner { flex-direction: column; text-align: center; }
+      .card-body { padding: 16px; }
+      .contrib-table tbody td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="cross-emblem">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="16" y="2" width="6" height="34" rx="2" fill="#c9a84c"/>
+        <rect x="2" y="11" width="34" height="6" rx="2" fill="#c9a84c"/>
+        <circle cx="19" cy="19" r="17" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>St. Thomas Mar Thoma Church</h1>
+      <p>Vancouver &nbsp;·&nbsp; Member's Contribution &nbsp;·&nbsp; Online Payment</p>
+    </div>
+  </div>
+</header>
+<div class="gold-bar"></div>
+<div class="banner">Holy Qurbana &amp; Worship — Every Sunday at 4 PM &nbsp;|&nbsp; 10787 128 St, Surrey, BC</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- STEP 1: MEMBER INFORMATION -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Member Information</h2>
+      <span class="step-badge">STEP 1 of 3</span>
+    </div>
+    <div class="card-body">
+      <div class="info-grid">
+        <div>
+          <label for="fname">First Name <span class="req">*</span></label>
+          <input type="text" id="fname" placeholder="Thomas" />
+        </div>
+        <div>
+          <label for="lname">Last Name <span class="req">*</span></label>
+          <input type="text" id="lname" placeholder="Varghese" />
+        </div>
+        <div>
+          <label for="refno">Ref. No.</label>
+          <input type="text" id="refno" placeholder="e.g. TMC-001" />
+        </div>
+        <div>
+          <label for="contrib-date">Date <span class="req">*</span></label>
+          <input type="date" id="contrib-date" />
+        </div>
+        <div class="full">
+          <label for="prayer">Prayer Group</label>
+          <input type="text" id="prayer" placeholder="e.g. Bethel Prayer Group" />
+        </div>
+        <div>
+          <label for="phone">Phone / Mobile</label>
+          <input type="tel" id="phone" placeholder="+1 (604) 000-0000" />
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@email.com" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: CONTRIBUTION DETAILS -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Contribution Details</h2>
+      <span class="step-badge">STEP 2 of 3</span>
+    </div>
+    <div class="card-body" style="padding: 0;">
+      <table class="contrib-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th class="col-cad" style="text-align:right;">CAD ($)</th>
+          </tr>
+        </thead>
+        <tbody id="contrib-rows">
+          <!-- rows injected by JS -->
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2">
+              <span class="total-label">Total Contribution</span>
+            </td>
+            <td id="grand-total">CAD $0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- STEP 3: PAYMENT -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Payment Method</h2>
+      <span class="step-badge">STEP 3 of 3</span>
+    </div>
+    <div class="card-body">
+      <div class="payment-methods">
+
+        <!-- Submit + PayPal -->
+        <button class="pay-btn submit-online" onclick="handleSubmitPayPal()">
+          <span class="pay-icon">✝</span>
+          Submit &amp; Pay via PayPal / Credit Card
+        </button>
+
+        <!-- E-Transfer -->
+        <button class="pay-btn etransfer" onclick="handleETransfer()">
+          <span class="pay-icon">📧</span>
+          Pay via Interac e-Transfer
+        </button>
+
+        <!-- Cheque / Cash -->
+        <button class="pay-btn cheque" onclick="handleCheque()">
+          <span class="pay-icon">📋</span>
+          Pay by Cheque / Cash (In-Person)
+        </button>
+
+      </div>
+
+      <div class="note-box" style="margin-top:20px;">
+        <strong>Interac e-Transfer:</strong> Send to <strong>vancouvermarthoma@gmail.com</strong> and include your name &amp; Ref. No. in the message.<br/><br/>
+        <strong>Cheque:</strong> Made payable to <em>"St. Thomas Mar Thoma Church, Vancouver"</em>. Bring to Sunday Service or mail to 10787 128 St, Surrey, BC V3T 3A2.<br/><br/>
+        <strong>Tax receipts</strong> are issued at year-end for qualifying contributions. Contact the church treasurer for details.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 St. Thomas Mar Thoma Church, Vancouver &nbsp;|&nbsp; <a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a> &nbsp;|&nbsp; <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a></p>
+  <p style="margin-top:6px;">Diocese of North America &amp; Europe · Mar Thoma Syrian Church of Malabar</p>
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="check-icon">🙏</div>
+    <h3 id="modal-title">Thank You!</h3>
+    <p id="modal-msg">Your contribution slip has been recorded. You will be redirected to complete your payment.</p>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  const categories = [
+    "Voluntary Contribution",
+    "Birthday",
+    "Ingathering",
+    "Christmas",
+    "Wedding Anniversary",
+    "Twelve Contribution",
+    "Suvisesha Sangam Anduvary",
+    "Recessa",
+    "Maramon Convention",
+    "Self Denial",
+    "Poor Fund",
+    "Tithe",
+    "Family Dedication Day",
+    "Harvest Festival",
+    "Financial Support"
+  ];
+
+  // Render rows
+  const tbody = document.getElementById('contrib-rows');
+  categories.forEach((cat, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td class="label-cell">${cat}</td>
+      <td class="amt-cell">
+        <input class="amt-input" type="number" min="0" step="0.01"
+          placeholder="0.00" oninput="updateTotal()" aria-label="${cat}" />
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Extra blank rows
+  for (let i = 0; i < 3; i++) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:#c0b89a;">—</td>
+      <td class="label-cell"><input type="text" style="border:none;background:transparent;width:100%;font-size:0.9rem;color:var(--navy);outline:none;" placeholder="Other (specify)…" /></td>
+      <td class="amt-cell">
+        <input class="amt-input" type="number" min="0" step="0.01"
+          placeholder="0.00" oninput="updateTotal()" />
+      </td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.amt-input').forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v) && v > 0) total += v;
+    });
+    document.getElementById('grand-total').textContent =
+      'CAD $' + total.toFixed(2);
+  }
+
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('contrib-date').value = today;
+
+  function getTotal() {
+    let total = 0;
+    document.querySelectorAll('.amt-input').forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v) && v > 0) total += v;
+    });
+    return total;
+  }
+
+  function validate() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    if (!fname || !lname) {
+      alert('Please enter your full name to proceed.');
+      return false;
+    }
+    if (getTotal() === 0) {
+      alert('Please enter an amount for at least one contribution category.');
+      return false;
+    }
+    return true;
+  }
+
+  function handleSubmitPayPal() {
+    if (!validate()) return;
+    const total = getTotal();
+    showModal(
+      'Redirecting to PayPal…',
+      `Your total of CAD $${total.toFixed(2)} is ready. You'll be taken to the church's PayPal donation page. Please note your name and Ref. No. in the PayPal message.`
+    );
+    setTimeout(() => {
+      window.open('https://www.paypal.com/donate?hosted_button_id=XXXXXXXXX', '_blank');
+    }, 1800);
+  }
+
+  function handleETransfer() {
+    if (!validate()) return;
+    const total = getTotal();
+    const name = (document.getElementById('fname').value + ' ' + document.getElementById('lname').value).trim();
+    const ref = document.getElementById('refno').value.trim() || 'N/A';
+    showModal(
+      'Interac e-Transfer Details',
+      `Send CAD $${total.toFixed(2)} to <strong>vancouvermarthoma@gmail.com</strong>.<br/><br/>Include in the message:<br/><em>"${name} · Ref: ${ref}"</em><br/><br/>Your contribution will be recorded upon receipt.`
+    );
+  }
+
+  function handleCheque() {
+    if (!validate()) return;
+    const total = getTotal();
+    showModal(
+      'Cheque / Cash Payment',
+      `Please bring a cheque for <strong>CAD $${total.toFixed(2)}</strong> payable to <em>"St. Thomas Mar Thoma Church, Vancouver"</em> to Sunday Service, or mail to:<br/><br/>10787 128 St, Surrey, BC V3T 3A2.`
+    );
+  }
+
+  function showModal(title, msg) {
+    document.getElementById('modal-title').innerHTML = title;
+    document.getElementById('modal-msg').innerHTML = msg;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+</script>
+</body>
+</html>

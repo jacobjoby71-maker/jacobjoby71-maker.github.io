@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Member's Contribution — St. Thomas Mar Thoma Church, Vancouver</title>
+
+  <!-- WhatsApp / OG Link Preview -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:url"         content="https://vancouvermarthomachurch.com/contribution-wa"/>
+  <meta property="og:title"       content="🙏 Member's Contribution — St. Thomas Mar Thoma Church, Vancouver"/>
+  <meta property="og:description" content="Submit your contributions online in minutes — Tithe, Birthday, Maramon Convention & more. Pay via PayPal or Interac e-Transfer."/>
+  <meta property="og:image"       content="https://img1.wsimg.com/isteam/ip/b70d8450-f7d8-4632-95d9-fe58a1b8855d/Untitled%20design%20(1).png"/>
+  <meta name="theme-color"        content="#0a1628"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --wa:      #25D366;
+      --wa-dk:   #128C7E;
+      --wa-pale: #dcf8c6;
+      --navy:    #0a1628;
+      --navy2:   #132040;
+      --gold:    #c8a951;
+      --gold2:   #edd97a;
+      --cream:   #fdf8ef;
+      --white:   #ffffff;
+      --muted:   #7a8aa8;
+      --border:  #d8cdb0;
+      --ink:     #0d1b2e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 56px 24px 72px;
+      overflow: hidden;
+    }
+
+    /* Chat bubble mosaic bg */
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 0%,   rgba(37,211,102,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 70% at 10% 80%,  rgba(18,140,126,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 90% 30%,  rgba(10,22,40,0.9)    0%, transparent 70%),
+        var(--navy);
+    }
+
+    /* Floating WhatsApp-style chat bubbles */
+    .bubbles { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .bubble {
+      position: absolute;
+      border-radius: 16px 16px 16px 4px;
+      background: rgba(37,211,102,0.07);
+      border: 1px solid rgba(37,211,102,0.12);
+      animation: drift 12s ease-in-out infinite;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0) rotate(-1deg); opacity: 0.5; }
+      50%       { transform: translateY(-18px) rotate(1deg); opacity: 0.9; }
+    }
+
+    /* Animated cross halo */
+    .halo-wrap {
+      position: relative; z-index: 1;
+      width: 90px; height: 90px;
+      margin: 0 auto 24px;
+    }
+    .halo {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid rgba(37,211,102,0.3);
+      animation: halo-pulse 3s ease-in-out infinite;
+    }
+    .halo:nth-child(2) { inset: -10px; border-color: rgba(37,211,102,0.15); animation-delay: 0.6s; }
+    .halo:nth-child(3) { inset: -22px; border-color: rgba(37,211,102,0.07); animation-delay: 1.2s; }
+    @keyframes halo-pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+    .cross-circle {
+      position: relative; z-index: 2;
+      width: 90px; height: 90px;
+      background: rgba(37,211,102,0.12);
+      border: 1.5px solid rgba(37,211,102,0.5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cross-circle svg { width: 46px; height: 46px; }
+
+    .eyebrow {
+      position: relative; z-index: 1;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--wa);
+      margin-bottom: 14px;
+      animation: rise 0.8s ease 0.1s both;
+    }
+    .hero h1 {
+      position: relative; z-index: 1;
+      font-family: 'Lora', serif;
+      font-size: clamp(1.9rem, 6.5vw, 2.8rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 10px;
+      animation: rise 0.9s ease 0.2s both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--wa), var(--gold2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      position: relative; z-index: 1;
+      font-size: 0.9rem; font-weight: 300;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.65; max-width: 380px;
+      margin: 0 auto 34px;
+      animation: rise 1s ease 0.3s both;
+    }
+
+    .cta-stack {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto;
+      animation: rise 1s ease 0.45s both;
+    }
+    .btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--wa);
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      padding: 16px 28px; border-radius: 50px; border: none; cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(37,211,102,0.45); }
+    .btn-form {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.8);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 14px 24px; border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-form:hover { background: rgba(255,255,255,0.14); }
+
+    @keyframes rise {
+      from { opacity:0; transform: translateY(16px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.25); font-size: 1.3rem; z-index:1;
+      animation: bob 2.2s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
+
+    /* ── WA MESSAGE BOX ── */
+    .wa-section {
+      background: #0b1f14;
+      padding: 32px 20px;
+      border-top: 1px solid rgba(37,211,102,0.2);
+    }
+    .wa-inner { max-width: 600px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.17em; text-transform: uppercase;
+      color: var(--wa); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before, .section-label::after {
+      content:''; flex:1; height:1px; background: rgba(37,211,102,0.2);
+    }
+
+    /* Fake WA chat UI */
+    .wa-phone {
+      background: #0a1628;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(37,211,102,0.15);
+      margin-bottom: 14px;
+    }
+    .wa-topbar {
+      background: var(--wa-dk);
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .wa-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .wa-topbar-info { flex: 1; }
+    .wa-topbar-info .wt-name { font-size: 0.88rem; font-weight: 700; color: #fff; }
+    .wa-topbar-info .wt-sub  { font-size: 0.7rem; color: rgba(255,255,255,0.65); }
+
+    .wa-body {
+      padding: 16px;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2325d366' fill-opacity='0.03'%3E%3Cpath d='M40 0L80 40L40 80L0 40z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .wa-bubble {
+      background: #1c3a2a;
+      border: 1px solid rgba(37,211,102,0.15);
+      border-radius: 4px 16px 16px 16px;
+      padding: 14px 16px;
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+      white-space: pre-line;
+      max-width: 92%;
+    }
+    .wa-bubble .wa-tick {
+      text-align: right; font-size: 0.7rem;
+      color: rgba(37,211,102,0.6); margin-top: 6px;
+    }
+
+    .btn-copy-wa {
+      width: 100%;
+      background: var(--wa);
+      color: #fff;
+      border: none; border-radius: 12px;
+      padding: 14px; font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem; font-weight: 800; cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 10px;
+    }
+    .btn-copy-wa:hover { opacity: 0.88; }
+    .btn-copy-wa.done { background: #128C7E; }
+
+    .btn-share-wa {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--wa);
+      color: var(--wa);
+      border-radius: 12px; padding: 13px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-share-wa:hover { background: var(--wa); color: #fff; }
+
+    /* ── FORM ── */
+    .form-wrap-outer {
+      background: var(--cream); color: var(--ink);
+    }
+    .form-head {
+      background: var(--navy2); color: var(--white);
+      text-align: center; padding: 26px 20px;
+    }
+    .form-head h2 {
+      font-family: 'Lora', serif; font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+    .form-head p { font-size: 0.82rem; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+    .wa-stripe { height: 3px; background: linear-gradient(90deg, transparent, var(--wa), transparent); }
+
+    .form-inner { max-width: 660px; margin: 0 auto; padding: 24px 16px 52px; }
+
+    .fc {
+      background: var(--white); border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(13,27,46,0.09);
+      margin-bottom: 18px;
+    }
+    .fc-hd {
+      background: var(--navy); color: var(--white);
+      padding: 13px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fc-hd h3 { font-family: 'Lora', serif; font-size: 1rem; font-weight: 700; }
+    .wa-chip {
+      background: var(--wa); color: #fff;
+      font-size: 0.63rem; font-weight: 800;
+      padding: 3px 9px; border-radius: 20px;
+      letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .fc-bd { padding: 18px; }
+
+    .fg { margin-bottom: 13px; }
+    .fg label {
+      display: block; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 5px;
+    }
+    .fg label .req { color: #c0392b; }
+    .fg input {
+      width: 100%; padding: 11px 13px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--ink);
+      background: #f7f2e8; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .fg input:focus {
+      border-color: var(--wa);
+      box-shadow: 0 0 0 3px rgba(37,211,102,0.15);
+      background: #fff;
+    }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Table */
+    .ctab { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    .ctab thead tr { background: var(--navy); }
+    .ctab thead th {
+      padding: 10px 12px; color: rgba(255,255,255,0.8);
+      font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; text-align: left;
+    }
+    .ctab thead th:first-child { width: 38px; text-align: center; }
+    .ctab thead th:last-child  { width: 118px; text-align: right; color: #a8f0c0; }
+    .ctab tbody tr { border-bottom: 1px solid #ede7d4; transition: background 0.12s; }
+    .ctab tbody tr:hover { background: #f5faf0; }
+    .ctab tbody tr:nth-child(even) { background: #faf6ed; }
+    .ctab tbody tr:nth-child(even):hover { background: #f5faf0; }
+    .ctab td { padding: 9px 12px; vertical-align: middle; }
+    .ctab td:first-child { text-align: center; color: var(--muted); font-size: 0.76rem; font-weight: 700; }
+    .ctab td.cat { font-size: 0.86rem; color: var(--ink); }
+    .ctab td.amt { text-align: right; }
+    .ain {
+      width: 100%; text-align: right; padding: 7px 10px;
+      border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: 'Nunito', sans-serif; font-size: 0.84rem; color: var(--ink);
+      background: #f7f2e8; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .ain:focus { border-color: var(--wa); box-shadow: 0 0 0 3px rgba(37,211,102,0.15); background: #fff; }
+    .ain::placeholder { color: #c8bb99; }
+
+    .tot-row { background: var(--navy) !important; border-bottom: none !important; }
+    .tot-row td { padding: 13px 12px !important; color: #fff !important; font-weight: 600; }
+    .tot-row td:last-child {
+      font-family: 'Lora', serif; font-size: 1.15rem !important;
+      color: #a8f0c0 !important; text-align: right;
+    }
+    .tot-row .tlbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.55) !important; }
+
+    /* Pay buttons */
+    .pay-stack { display: flex; flex-direction: column; gap: 11px; }
+    .pb {
+      display: flex; align-items: center; gap: 14px;
+      padding: 15px 18px; border-radius: 12px; border: none; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 0.94rem; font-weight: 700;
+      text-align: left;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .pb:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,27,46,0.14); }
+    .pb-ico { font-size: 1.55rem; flex-shrink: 0; }
+    .pb small { display: block; font-weight: 400; font-size: 0.74rem; opacity: 0.7; margin-top: 1px; }
+    .pb-wa      { background: var(--wa); color: #fff; box-shadow: 0 4px 16px rgba(37,211,102,0.3); }
+    .pb-navy    { background: var(--navy); color: #fff; }
+    .pb-outline { background: transparent; border: 2px solid var(--navy); color: var(--navy); }
+
+    .note-bx {
+      background: #edf7ed;
+      border-left: 4px solid var(--wa);
+      border-radius: 0 10px 10px 0;
+      padding: 13px 15px; font-size: 0.8rem; color: #3a5a3a; line-height: 1.65;
+      margin-top: 13px;
+    }
+    .note-bx strong { color: var(--ink); }
+
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,22,40,0.8); backdrop-filter: blur(6px);
+      z-index: 300; align-items: center; justify-content: center;
+    }
+    .modal-bg.on { display: flex; }
+    .modal-box {
+      background: #fff; color: var(--ink);
+      border-radius: 18px; padding: 34px 26px;
+      max-width: 390px; width: 92%; text-align: center;
+      animation: pop 0.28s ease;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    @keyframes pop { from{transform:scale(0.84);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .modal-ico { font-size: 2.6rem; margin-bottom: 12px; }
+    .modal-box h3 { font-family: 'Lora', serif; font-size: 1.45rem; margin-bottom: 10px; }
+    .modal-box p  { font-size: 0.86rem; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+    .modal-close {
+      background: var(--wa); color: #fff; border: none;
+      border-radius: 8px; padding: 12px 32px;
+      font-family: 'Nunito', sans-serif; font-size: 0.92rem; font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #040e1a; color: rgba(255,255,255,0.38);
+      text-align: center; padding: 20px 16px;
+      font-size: 0.74rem; letter-spacing: 0.04em; line-height: 1.85;
+    }
+    footer a { color: var(--wa); text-decoration: none; }
+
+    @media (max-width: 460px) {
+      .row2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+
+  <!-- Floating chat bubbles -->
+  <div class="bubbles" id="bubbles"></div>
+
+  <div class="halo-wrap">
+    <div class="halo"></div><div class="halo"></div><div class="halo"></div>
+    <div class="cross-circle">
+      <svg viewBox="0 0 46 46" fill="none">
+        <rect x="20" y="3"  width="6" height="40" rx="3" fill="#25D366"/>
+        <rect x="3"  y="14" width="40" height="6" rx="3" fill="#25D366"/>
+        <circle cx="23" cy="23" r="21" stroke="#25D366" stroke-width="1.2" fill="none"/>
+      </svg>
+    </div>
+  </div>
+
+  <p class="eyebrow">St. Thomas Mar Thoma Church · Vancouver</p>
+  <h1>Your Offering,<br/><em>His Glory</em></h1>
+  <p class="hero-sub">
+    Pay your Member's Contribution online — securely and in minutes.<br/>
+    Share the link with your WhatsApp community.
+  </p>
+
+  <div class="cta-stack">
+    <a href="#form" class="btn-wa">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.078 23.246a.75.75 0 00.914.972l5.57-1.463A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.67-.507-5.2-1.392l-.372-.22-3.853 1.013 1.03-3.744-.242-.386A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Submit My Contribution
+    </a>
+    <button class="btn-form" onclick="document.getElementById('wacopy').scrollIntoView({behavior:'smooth'})">
+      💬 &nbsp;Copy WhatsApp Message
+    </button>
+  </div>
+
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- ═══ WHATSAPP MESSAGE BOX ═══ -->
+<section class="wa-section" id="wacopy">
+  <div class="wa-inner">
+    <p class="section-label">Ready-to-send WhatsApp message</p>
+
+    <!-- Fake WA chat preview -->
+    <div class="wa-phone">
+      <div class="wa-topbar">
+        <div class="wa-avatar">✝</div>
+        <div class="wa-topbar-info">
+          <div class="wt-name">St. Thomas Mar Thoma Church</div>
+          <div class="wt-sub">Vancouver Community Group</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.078 23.246a.75.75 0 00.914.972l5.57-1.463A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.67-.507-5.2-1.392l-.372-.22-3.853 1.013 1.03-3.744-.242-.386A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      </div>
+      <div class="wa-body">
+        <div class="wa-bubble" id="wa-text">🙏 *Dear Church Family,*
+
+Greetings in the name of our Lord Jesus Christ!
+
+We are glad to inform you that *Member's Contribution* for St. Thomas Mar Thoma Church, Vancouver can now be submitted *online!* 🎉
+
+👉 *Click here to submit:*
+[PASTE YOUR LINK HERE]
+
+*Contributions accepted:*
+✅ Voluntary Contribution
+✅ Birthday & Wedding Anniversary
+✅ Christmas & Ingathering
+✅ Tithe, Poor Fund & Self Denial
+✅ Maramon Convention & Recessa
+✅ Family Dedication Day & more
+
+💳 Pay via *PayPal / Credit Card*
+📧 Pay via *Interac e-Transfer*
+📋 Or bring *Cheque/Cash* on Sunday
+
+For queries: vancouvermarthoma@gmail.com
+
+_"God loves a cheerful giver."_
+_— 2 Corinthians 9:7_ 🕊️
+
+*Holy Qurbana every Sunday at 4 PM*
+10787 128 St, Surrey, BC V3T 3A2
+
+God bless you! 🙏</div>
+          <div class="wa-tick">✓✓ Delivered</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-copy-wa" id="copyWaBtn" onclick="copyWaText()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4a2 2 0 00-2 2v14h2V3h12V1zm3 4H8a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2zm0 16H8V7h11v14z"/></svg>
+      Copy Message to Clipboard
+    </button>
+
+    <a id="waShareBtn" href="#" target="_blank" class="btn-share-wa" onclick="openWaShare(event)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L.078 23.246a.75.75 0 00.914.972l5.57-1.463A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.67-.507-5.2-1.392l-.372-.22-3.853 1.013 1.03-3.744-.242-.386A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Open in WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FORM ═══ -->
+<div class="form-wrap-outer" id="form">
+  <div class="form-head">
+    <h2>Contribution Form</h2>
+    <p>Fill in your details and choose how to pay</p>
+  </div>
+  <div class="wa-stripe"></div>
+
+  <div class="form-inner">
+
+    <!-- Step 1 -->
+    <div class="fc">
+      <div class="fc-hd"><h3>Member Information</h3><span class="wa-chip">Step 1 / 3</span></div>
+      <div class="fc-bd">
+        <div class="row2">
+          <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="fname" placeholder="Thomas"/></div>
+          <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="lname" placeholder="Varghese"/></div>
+        </div>
+        <div class="row2">
+          <div class="fg"><label>Ref. No.</label><input type="text" id="refno" placeholder="TMC-001"/></div>
+          <div class="fg"><label>Date <span class="req">*</span></label><input type="date" id="cdate"/></div>
+        </div>
+        <div class="fg"><label>Prayer Group</label><input type="text" id="prayer" placeholder="e.g. Bethel Prayer Group"/></div>
+        <div class="row2">
+          <div class="fg"><label>Mobile</label><input type="tel" id="phone" placeholder="+1 (604) 000-0000"/></div>
+          <div class="fg"><label>Email</label><input type="email" id="email" placeholder="name@email.com"/></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="fc">
+      <div class="fc-hd"><h3>Contribution Details</h3><span class="wa-chip">Step 2 / 3</span></div>
+      <table class="ctab">
+        <thead>
+          <tr>
+            <th>#</th><th>Description</th>
+            <th style="text-align:right;color:#a8f0c0;">CAD ($)</th>
+          </tr>
+        </thead>
+        <tbody id="ctbody"></tbody>
+        <tfoot>
+          <tr class="tot-row">
+            <td colspan="2"><span class="tlbl">Total Contribution</span></td>
+            <td id="gtotal">CAD $0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="fc">
+      <div class="fc-hd"><h3>Payment Method</h3><span class="wa-chip">Step 3 / 3</span></div>
+      <div class="fc-bd">
+        <div class="pay-stack">
+          <button class="pb pb-wa" onclick="doPayPal()">
+            <span class="pb-ico">💳</span>
+            <span>Pay via PayPal / Credit Card<small>Secure payment — all major cards accepted</small></span>
+          </button>
+          <button class="pb pb-navy" onclick="doETransfer()">
+            <span class="pb-ico">📧</span>
+            <span>Pay via Interac e-Transfer<small>Send to vancouvermarthoma@gmail.com</small></span>
+          </button>
+          <button class="pb pb-outline" onclick="doCheque()">
+            <span class="pb-ico">📋</span>
+            <span>Cheque / Cash — In Person<small>Bring to Sunday Service or mail to church</small></span>
+          </button>
+        </div>
+        <div class="note-bx">
+          <strong>e-Transfer:</strong> Send to <strong>vancouvermarthoma@gmail.com</strong> — include your name &amp; Ref. No. in the message.<br/><br/>
+          <strong>Cheque:</strong> Payable to <em>"St. Thomas Mar Thoma Church, Vancouver"</em> — 10787 128 St, Surrey, BC V3T 3A2.<br/><br/>
+          <strong>Tax receipts</strong> issued at year-end for qualifying contributions.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div>✝ &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;|&nbsp; Every Sunday 4 PM</div>
+  <div><a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a> &nbsp;|&nbsp; <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a></div>
+  <div>Diocese of North America &amp; Europe · Mar Thoma Syrian Church</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="modal-ico" id="m-ico">🙏</div>
+    <h3 id="m-title">Thank You</h3>
+    <p id="m-msg"></p>
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('on')">Close</button>
+  </div>
+</div>
+
+<script>
+  // Floating bubbles
+  const bc = document.getElementById('bubbles');
+  const sizes = [[80,36],[120,28],[60,24],[100,32],[70,28],[90,30]];
+  sizes.forEach(([w,h], i) => {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.style.cssText = `width:${w}px;height:${h}px;left:${8+i*14}%;bottom:${15+i*10}%;animation-delay:${i*1.4}s;animation-duration:${10+i*1.5}s;`;
+    bc.appendChild(b);
+  });
+
+  // Categories
+  const cats = [
+    "Voluntary Contribution","Birthday","Ingathering","Christmas",
+    "Wedding Anniversary","Twelve Contribution","Suvisesha Sangam Anduvary",
+    "Recessa","Maramon Convention","Self Denial","Poor Fund","Tithe",
+    "Family Dedication Day","Harvest Festival","Financial Support"
+  ];
+  const tb = document.getElementById('ctbody');
+  cats.forEach((c,i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td class="cat">${c}</td>
+      <td class="amt"><input class="ain" type="number" min="0" step="0.01"
+        placeholder="0.00" oninput="calc()" aria-label="${c}"/></td>`;
+    tb.appendChild(tr);
+  });
+  for (let i=0;i<3;i++) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="color:#c8bb99">—</td>
+      <td><input type="text" style="border:none;background:transparent;width:100%;font-size:.86rem;color:#0d1b2e;outline:none;" placeholder="Other (specify)…"/></td>
+      <td class="amt"><input class="ain" type="number" min="0" step="0.01" placeholder="0.00" oninput="calc()"/></td>`;
+    tb.appendChild(tr);
+  }
+
+  document.getElementById('cdate').value = new Date().toISOString().split('T')[0];
+
+  function calc() {
+    let t=0;
+    document.querySelectorAll('.ain').forEach(i=>{const v=parseFloat(i.value);if(!isNaN(v)&&v>0)t+=v;});
+    document.getElementById('gtotal').textContent='CAD $'+t.toFixed(2);
+  }
+  function getTotal(){let t=0;document.querySelectorAll('.ain').forEach(i=>{const v=parseFloat(i.value);if(!isNaN(v)&&v>0)t+=v;});return t;}
+
+  function validate(){
+    if(!document.getElementById('fname').value.trim()||!document.getElementById('lname').value.trim()){alert('Please enter your full name.');return false;}
+    if(getTotal()===0){alert('Please enter an amount for at least one category.');return false;}
+    return true;
+  }
+  function showModal(ico,title,msg){
+    document.getElementById('m-ico').textContent=ico;
+    document.getElementById('m-title').textContent=title;
+    document.getElementById('m-msg').innerHTML=msg;
+    document.getElementById('modal').classList.add('on');
+  }
+  function doPayPal(){
+    if(!validate())return;
+    const t=getTotal();
+    showModal('💳','Redirecting to PayPal…',`Your total of <strong>CAD $${t.toFixed(2)}</strong> is ready.<br/><br/>You'll be taken to the church's secure PayPal page. Please include your name and Ref. No. in the payment notes.`);
+    setTimeout(()=>window.open('https://www.paypal.com/donate?hosted_button_id=XXXXXXXXX','_blank'),1800);
+  }
+  function doETransfer(){
+    if(!validate())return;
+    const t=getTotal();
+    const name=(document.getElementById('fname').value+' '+document.getElementById('lname').value).trim();
+    const ref=document.getElementById('refno').value.trim()||'N/A';
+    showModal('📧','Interac e-Transfer',`Send <strong>CAD $${t.toFixed(2)}</strong> to:<br/><strong>vancouvermarthoma@gmail.com</strong><br/><br/>Message: <em>"${name} · Ref: ${ref}"</em><br/><br/>Contribution will be recorded on receipt.`);
+  }
+  function doCheque(){
+    if(!validate())return;
+    const t=getTotal();
+    showModal('📋','Cheque / Cash Payment',`Please bring a cheque for <strong>CAD $${t.toFixed(2)}</strong> payable to<br/><em>"St. Thomas Mar Thoma Church, Vancouver"</em><br/><br/>10787 128 St, Surrey, BC V3T 3A2<br/>Sunday Service every Sunday at 4 PM.`);
+  }
+
+  // Copy WA message
+  function copyWaText(){
+    const text=document.getElementById('wa-text').innerText;
+    navigator.clipboard.writeText(text).then(()=>{
+      const btn=document.getElementById('copyWaBtn');
+      btn.innerHTML='✅ &nbsp;Copied!';
+      btn.classList.add('done');
+      setTimeout(()=>{btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4a2 2 0 00-2 2v14h2V3h12V1zm3 4H8a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2zm0 16H8V7h11v14z"/></svg> Copy Message to Clipboard';btn.classList.remove('done');},3000);
+    }).catch(()=>{
+      const r=document.createRange();r.selectNode(document.getElementById('wa-text'));
+      window.getSelection().removeAllRanges();window.getSelection().addRange(r);
+      alert('Text selected — press Ctrl+C / Cmd+C to copy.');
+    });
+  }
+
+  // Open WA with pre-filled message
+  function openWaShare(e){
+    e.preventDefault();
+    const text=document.getElementById('wa-text').innerText;
+    const enc=encodeURIComponent(text);
+    window.open('https://wa.me/?text='+enc,'_blank');
+  }
+</script>
+</body>
+</html>
