@@ -1,542 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Silver Jubilee Parish Directory — Executive Committee Proposal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;0,800;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --navy:#0c1e3c; --navy2:#142d58;
-      --gold:#c9a84c; --gold2:#e8cc78; --gold4:#6a4c10;
-      --cream:#fdf9f0; --white:#fff;
-      --muted:#6a7a98; --border:#d8cdb0; --soft:#f2ece0;
-      --green:#1a6a3a; --red:#9a2020; --blue:#1a4a8a;
-      --jubilee:linear-gradient(135deg,#8a5c00 0%,#c9a84c 40%,#f5e4a8 60%,#c9a84c 80%,#8a5c00 100%);
-    }
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--navy); line-height:1.6; }
-
-    /* Cover page */
-    .cover {
-      min-height:100vh; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; text-align:center;
-      padding:60px 24px; position:relative; overflow:hidden;
-      background:linear-gradient(180deg,#060f1e 0%,#0c1e3c 60%,#142d58 100%);
-      page-break-after:always;
-    }
-    .cover-rays { position:absolute; inset:0; }
-    .cr { position:absolute; top:0; opacity:0.06; transform-origin:top center; }
-    .cr:nth-child(1){left:15%;width:2px;height:85%;background:linear-gradient(180deg,var(--gold),transparent);}
-    .cr:nth-child(2){left:30%;width:3px;height:70%;background:linear-gradient(180deg,#fff,transparent);}
-    .cr:nth-child(3){left:50%;width:2px;height:95%;background:linear-gradient(180deg,var(--gold),transparent);}
-    .cr:nth-child(4){left:70%;width:3px;height:75%;background:linear-gradient(180deg,#fff,transparent);}
-    .cr:nth-child(5){left:85%;width:2px;height:80%;background:linear-gradient(180deg,var(--gold),transparent);}
-    .cover-content { position:relative; z-index:1; max-width:680px; }
-    .cover-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(201,168,76,0.12); border:1.5px solid rgba(201,168,76,0.35); border-radius:30px; padding:8px 20px; margin-bottom:28px; }
-    .cb-num { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:800; background:var(--jubilee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .cb-text { font-size:0.68rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold2); }
-    .cover-cross { width:88px; height:88px; margin:0 auto 24px; }
-    .cover-cross svg { width:100%; height:100%; }
-    .cover h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,6vw,2.8rem); font-weight:800; color:var(--white); line-height:1.1; margin-bottom:12px; }
-    .cover h1 em { font-style:italic; background:var(--jubilee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .cover h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,2.5vw,1.3rem); color:rgba(255,255,255,0.6); font-style:italic; margin-bottom:6px; }
-    .cover-church { font-size:0.8rem; color:rgba(255,255,255,0.4); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:36px; }
-    .cover-divider { width:80px; height:2px; background:var(--jubilee); border-radius:1px; margin:0 auto 28px; }
-    .cover-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; background:rgba(20,45,88,0.8); border:1px solid rgba(201,168,76,0.15); border-radius:14px; padding:20px; }
-    .cm-item { text-align:center; }
-    .cm-val { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; color:var(--gold2); }
-    .cm-lbl { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.35); margin-top:3px; }
-    .cover-footer { position:absolute; bottom:0; left:0; right:0; background:rgba(12,30,60,0.9); border-top:1px solid rgba(201,168,76,0.2); padding:14px 24px; display:flex; justify-content:space-between; align-items:center; font-size:0.72rem; color:rgba(255,255,255,0.4); }
-    .cf-doc { font-size:0.68rem; color:var(--gold); font-weight:600; letter-spacing:0.08em; }
-
-    /* Body */
-    .doc-body { max-width:900px; margin:0 auto; padding:48px 20px 80px; }
-    .gold-bar { height:3px; background:var(--jubilee); }
-
-    /* TOC */
-    .toc { background:var(--white); border-radius:14px; overflow:hidden; box-shadow:0 3px 18px rgba(12,30,60,0.09); margin-bottom:44px; }
-    .toc-hd { background:var(--navy); padding:14px 20px; }
-    .toc-hd h2 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--white); letter-spacing:0.06em; }
-    .toc-body { padding:20px; display:flex; flex-direction:column; gap:6px; }
-    .toc-item { display:flex; align-items:center; justify-content:space-between; padding:6px 0; border-bottom:1px dotted var(--border); font-size:0.84rem; }
-    .toc-item:last-child { border-bottom:none; }
-    .toc-item a { color:var(--navy); text-decoration:none; font-weight:500; display:flex; gap:10px; align-items:center; }
-    .toc-item a:hover { color:var(--gold4); }
-    .toc-num { width:24px; height:24px; background:var(--navy); color:var(--gold2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:700; flex-shrink:0; }
-    .toc-pg { font-size:0.72rem; color:var(--muted); }
-
-    /* Section */
-    .section { margin-bottom:52px; }
-    .sec-anchor { display:block; margin-top:-60px; padding-top:60px; visibility:hidden; }
-    .sec-hd { display:flex; align-items:center; gap:12px; margin-bottom:22px; padding-bottom:14px; border-bottom:2px solid var(--border); }
-    .sec-num-badge { width:36px; height:36px; background:var(--navy); color:var(--gold2); border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:700; flex-shrink:0; }
-    .sec-hd h2 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; color:var(--navy); }
-    .sec-hd .sec-sub { font-size:0.78rem; color:var(--muted); margin-top:2px; }
-    p.body-text { font-size:0.88rem; color:var(--navy); line-height:1.75; margin-bottom:14px; }
-
-    /* Info cards */
-    .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:20px; }
-    .icard { background:var(--white); border-radius:12px; padding:18px; border-left:4px solid; box-shadow:0 2px 12px rgba(12,30,60,0.08); }
-    .icard.gold   { border-color:var(--gold); }
-    .icard.green  { border-color:var(--green); }
-    .icard.blue   { border-color:var(--blue); }
-    .icard.red    { border-color:var(--red); }
-    .icard.navy   { border-color:var(--navy); }
-    .ic-ico { font-size:1.4rem; margin-bottom:8px; }
-    .ic-title { font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:5px; }
-    .ic-body { font-size:0.78rem; color:var(--muted); line-height:1.6; }
-
-    /* Revenue table */
-    .rev-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 14px rgba(12,30,60,0.09); margin-bottom:18px; }
-    .rev-table thead tr { background:var(--navy); }
-    .rev-table thead th { padding:11px 14px; color:rgba(255,255,255,0.8); font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; text-align:left; }
-    .rev-table tbody tr { border-bottom:1px solid var(--border); background:var(--white); }
-    .rev-table tbody tr:nth-child(even) { background:var(--soft); }
-    .rev-table td { padding:10px 14px; font-size:0.82rem; vertical-align:top; }
-    .rev-table td:first-child { font-weight:600; color:var(--navy); }
-    .rev-table tfoot tr { background:var(--navy); }
-    .rev-table tfoot td { padding:12px 14px; font-weight:700; font-size:0.88rem; color:var(--gold2); }
-    .rev-total-val { font-family:'Cormorant Garamond',serif; font-size:1.1rem; }
-
-    /* Directory structure */
-    .dir-structure { background:var(--white); border-radius:14px; overflow:hidden; box-shadow:0 3px 16px rgba(12,30,60,0.09); }
-    .ds-hd { background:var(--navy); padding:13px 18px; display:flex; align-items:center; justify-content:space-between; }
-    .ds-hd h3 { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-weight:700; color:var(--white); letter-spacing:0.05em; }
-    .ds-hd span { font-size:0.68rem; color:var(--gold2); font-weight:600; letter-spacing:0.07em; }
-    .ds-body { padding:18px; display:flex; flex-direction:column; gap:8px; }
-    .ds-row { display:flex; align-items:center; gap:12px; padding:9px 12px; background:var(--soft); border-radius:8px; font-size:0.82rem; }
-    .ds-row.section-hd { background:var(--navy2); color:var(--white); font-weight:700; }
-    .ds-row.subsection { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); padding-left:14px; }
-    .ds-pg { min-width:65px; text-align:right; font-size:0.72rem; color:var(--muted); font-weight:600; }
-    .ds-row.section-hd .ds-pg { color:var(--gold2); }
-    .ds-type { font-size:0.62rem; padding:2px 8px; border-radius:10px; font-weight:700; letter-spacing:0.07em; }
-    .dt-sponsor { background:rgba(201,168,76,0.15); color:var(--gold4); }
-        .dt-content { background:var(--green); color:var(--white); }
-    .dt-index { background:var(--blue); color:var(--white); }
-    .dt-photo { background:rgba(154,32,32,0.12); color:var(--red); }
-
-    /* Timeline */
-    .timeline { display:flex; flex-direction:column; gap:0; position:relative; }
-    .timeline::before { content:''; position:absolute; left:17px; top:0; bottom:0; width:2px; background:var(--border); }
-    .tl-item { display:flex; gap:16px; padding-bottom:24px; position:relative; }
-    .tl-item:last-child { padding-bottom:0; }
-    .tl-dot { width:36px; height:36px; flex-shrink:0; border-radius:50%; background:var(--white); border:3px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.85rem; z-index:1; }
-    .tl-dot.done { border-color:var(--green); background:var(--green); }
-    .tl-dot.active { border-color:var(--gold); background:var(--gold); }
-    .tl-dot.future { border-color:var(--navy); }
-    .tl-content { flex:1; padding-top:4px; }
-    .tl-date { font-size:0.7rem; font-weight:700; color:var(--gold4); letter-spacing:0.07em; text-transform:uppercase; }
-    .tl-title { font-size:0.9rem; font-weight:700; color:var(--navy); margin:2px 0; }
-    .tl-desc { font-size:0.78rem; color:var(--muted); line-height:1.55; }
-
-    /* Technical stack */
-    .tech-stack { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
-    .ts-card { background:var(--white); border-radius:11px; padding:16px; text-align:center; border:1.5px solid var(--border); box-shadow:0 2px 10px rgba(12,30,60,0.07); }
-    .ts-icon { font-size:1.8rem; margin-bottom:8px; }
-    .ts-name { font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:3px; }
-    .ts-desc { font-size:0.7rem; color:var(--muted); line-height:1.5; }
-    .ts-badge { display:inline-block; font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:10px; margin-top:6px; background:var(--green); color:var(--white); letter-spacing:0.07em; }
-    .ts-badge.phase2 { background:var(--blue); }
-
-    /* Resolution box */
-    .resolution-box { background:var(--navy); border-radius:14px; padding:24px 22px; color:var(--white); }
-    .resolution-box h3 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--gold2); letter-spacing:0.07em; margin-bottom:16px; }
-    .res-item { display:flex; gap:10px; margin-bottom:10px; font-size:0.84rem; }
-    .res-item:last-child { margin-bottom:0; }
-    .res-bullet { color:var(--gold); font-weight:700; flex-shrink:0; }
-    .res-text { color:rgba(255,255,255,0.75); line-height:1.6; }
-    .res-text strong { color:var(--gold2); }
-
-    /* Sample entry mockup */
-    .entry-mockup { background:var(--white); border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(12,30,60,0.12); border:2px solid var(--border); max-width:480px; margin:0 auto; }
-    .em-hd { background:var(--navy); padding:12px 18px; display:flex; align-items:center; gap:10px; }
-    .em-hd-pg { font-size:0.68rem; font-weight:700; color:var(--gold2); letter-spacing:0.08em; }
-    .em-hd-lbl { font-size:0.7rem; color:rgba(255,255,255,0.5); }
-    .em-body { display:flex; gap:14px; padding:16px; }
-    .em-photo { width:90px; height:110px; background:var(--soft); border-radius:8px; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:2.5rem; flex-shrink:0; }
-    .em-details { flex:1; }
-    .em-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:4px; }
-    .em-house { font-size:0.75rem; color:var(--gold4); font-weight:600; margin-bottom:6px; }
-    .em-field { font-size:0.75rem; color:var(--muted); margin-bottom:3px; }
-    .em-field strong { color:var(--navy); }
-    .em-members { margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
-    .em-member-row { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--navy); padding:2px 0; }
-    .em-member-row span { color:var(--muted); }
-    .em-footer { background:var(--soft); padding:8px 16px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
-    .em-reg { font-size:0.65rem; color:var(--muted); }
-    .em-badge { font-size:0.58rem; font-weight:800; padding:2px 8px; border-radius:10px; background:var(--jubilee); color:var(--navy); }
-
-    /* Print styles */
-    @media print {
-      .cover { min-height:auto; padding:40px; }
-      .cover-footer { position:static; margin-top:30px; }
-      body { background:#fff; }
-      .doc-body { padding:32px 20px; }
-    }
-
-    /* Sig block */
-    .sig-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-top:28px; }
-    .sig-block { border-top:1.5px solid var(--border); padding-top:12px; }
-    .sig-name { font-size:0.85rem; font-weight:700; color:var(--navy); }
-    .sig-role { font-size:0.75rem; color:var(--muted); }
-    .sig-date { font-size:0.72rem; color:var(--muted); margin-top:4px; }
-
-    footer { background:var(--navy); color:rgba(255,255,255,0.4); text-align:center; padding:24px; font-size:0.74rem; line-height:1.9; }
-    footer a { color:var(--gold); text-decoration:none; }
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Church Directory Proposal — St. Thomas Mar Thoma Church, Vancouver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0c1e3c;--gold:#b8923a;--gold2:#d4a84b;--gold3:#f0cc78;--cream:#faf6ee;--white:#fff;--muted:#7a8aaa;--border:#ddd3b8;--soft:#f4ede0;--green:#155c35;--green-bg:#e8f5ee;--red:#8a1818;--blue:#1a3d7a;--blue-bg:#eaf0fa;--ink:#1c2640;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;}
+.hdr{background:linear-gradient(165deg,#040d1e,#0c1e3c,#182e54);padding:32px 20px 24px;text-align:center;position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;inset:0;opacity:0.04;background:repeating-linear-gradient(60deg,transparent 0,transparent 36px,var(--gold) 36px,var(--gold) 37px);}
+.hdr-in{position:relative;z-index:1;}
+.cross{width:52px;height:52px;margin:0 auto 10px;border-radius:50%;background:rgba(184,146,58,0.1);border:1.5px solid rgba(184,146,58,0.35);display:flex;align-items:center;justify-content:center;}
+.cross svg{width:26px;height:26px;}
+.hdr-ch{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3.5vw,1.75rem);font-weight:700;color:#fff;margin-bottom:3px;}
+.hdr-ch em{font-style:italic;color:var(--gold3);}
+.hdr-sub{font-size:0.67rem;color:rgba(255,255,255,0.38);letter-spacing:0.1em;text-transform:uppercase;}
+.hdr-ft{display:inline-block;margin:11px auto 0;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:rgba(255,255,255,0.88);border-bottom:1.5px solid rgba(184,146,58,0.4);padding-bottom:3px;}
+.dioc-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;background:rgba(5,10,25,0.7);border-top:1px solid rgba(184,146,58,0.15);padding:8px 16px;font-size:0.63rem;color:rgba(255,255,255,0.4);}
+.ds-l{color:var(--gold3);font-weight:700;margin-right:3px;}
+.gold-rule{height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold3),var(--gold2),transparent);}
+.wrap{max-width:860px;margin:0 auto;padding:22px 14px 64px;}
+/* APPROVAL NOTE */
+.approval-note{background:linear-gradient(155deg,#070f22,#0d1c3a,#13264c);border-radius:14px;overflow:hidden;margin-bottom:22px;}
+.an-hd{padding:15px 18px;border-bottom:1px solid rgba(184,146,58,0.18);display:flex;align-items:center;gap:10px;}
+.an-em{width:42px;height:42px;flex-shrink:0;border-radius:50%;background:rgba(184,146,58,0.12);border:1.5px solid rgba(184,146,58,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.an-ht h2{font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;color:var(--gold3);}
+.an-ht p{font-size:0.59rem;color:rgba(255,255,255,0.28);letter-spacing:0.07em;text-transform:uppercase;margin-top:1px;}
+.an-body{padding:18px;}
+.sig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;}
+.as{border-top:1.5px solid rgba(184,146,58,0.28);padding-top:8px;}
+.as-l{height:36px;border-bottom:1px solid rgba(255,255,255,0.14);margin-bottom:6px;}
+.as-n{font-size:0.73rem;font-weight:700;color:rgba(255,255,255,0.7);}
+.as-r{font-size:0.59rem;color:rgba(255,255,255,0.26);margin-top:1px;}
+.as-d{font-size:0.58rem;color:rgba(255,255,255,0.15);margin-top:6px;}
+.an-exco{margin-top:16px;background:rgba(255,255,255,0.04);border-radius:7px;padding:11px 13px;}
+.an-ex-t{font-size:0.59rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold3);margin-bottom:8px;}
+.an-ex-line{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.06);padding:6px 0;font-size:0.72rem;}
+.an-ex-line:last-child{border-bottom:none;}
+.an-ex-r{color:rgba(255,255,255,0.5);}
+.an-ex-s{min-width:120px;border-bottom:1px solid rgba(255,255,255,0.18);height:22px;}
+/* CARDS */
+.card{background:var(--white);border-radius:12px;overflow:hidden;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(12,30,60,0.06);margin-bottom:16px;}
+.ch{padding:11px 16px;display:flex;align-items:center;gap:9px;}
+.hn{background:var(--navy);}.hg{background:linear-gradient(135deg,var(--gold),#9a7020);}.hgr{background:var(--green);}.hb{background:var(--blue);}.hd{background:#111827;}
+.ch-ti{font-family:'Playfair Display',serif;font-size:0.89rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
+.hg .ch-ti{color:var(--navy);}
+.ch-su{font-size:0.59rem;color:rgba(255,255,255,0.44);margin-top:1px;}
+.hg .ch-su{color:rgba(12,30,60,0.44);}
+.ch-i{font-size:0.95rem;flex-shrink:0;}
+.cb{padding:16px;}
+.prose{font-size:0.8rem;color:var(--ink);line-height:1.75;}
+.prose h3{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin:18px 0 6px;}
+.prose h3:first-child{margin-top:0;}
+.prose p{margin-bottom:10px;}
+.prose p:last-child{margin-bottom:0;}
+.prose ul{list-style:none;margin:0 0 10px;}
+.prose ul li{padding:3px 0 3px 14px;position:relative;}
+.prose ul li::before{content:'&#10003;';position:absolute;left:0;color:var(--green);font-weight:800;font-size:0.72rem;}
+.prose .sect-num{display:inline-block;width:22px;height:22px;background:var(--navy);color:var(--gold3);border-radius:5px;font-size:0.62rem;font-weight:800;text-align:center;line-height:22px;margin-right:6px;flex-shrink:0;}
+/* AUTH TABLE */
+.auth-tbl{width:100%;border-collapse:collapse;}
+.auth-tbl th{font-size:0.59rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);padding:7px 9px;border-bottom:1.5px solid var(--border);text-align:left;background:var(--soft);}
+.auth-tbl td{padding:9px 9px;border-bottom:1px solid var(--border);font-size:0.75rem;vertical-align:top;}
+.auth-tbl tr:last-child td{border-bottom:none;}
+.auth-lv{font-weight:700;color:var(--navy);font-size:0.68rem;}
+.ph{color:var(--muted);font-style:italic;}
+/* RESOLUTION */
+.res-grid{display:flex;flex-direction:column;gap:8px;}
+.ri{display:flex;gap:9px;background:var(--soft);border-radius:8px;padding:10px 12px;border:1px solid var(--border);}
+.rn{width:20px;height:20px;flex-shrink:0;background:var(--navy);color:var(--gold3);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.59rem;font-weight:800;margin-top:1px;}
+.rt{font-size:0.76rem;color:var(--ink);line-height:1.6;}
+.rt strong{color:var(--navy);}
+/* REVENUE */
+.rev-tbl{width:100%;border-collapse:collapse;}
+.rev-tbl th{font-size:0.59rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);padding:7px 9px;border-bottom:1.5px solid var(--border);text-align:right;background:var(--soft);}
+.rev-tbl th:first-child{text-align:left;}
+.rev-tbl td{padding:9px 9px;border-bottom:1px solid var(--border);font-size:0.77rem;text-align:right;vertical-align:top;}
+.rev-tbl td:first-child{text-align:left;}
+.rev-tbl .tot{font-weight:800;background:rgba(12,30,60,0.04);}
+/* WF STEPS */
+.wf-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.wf-step{display:flex;gap:12px;padding-bottom:16px;position:relative;}
+.wf-step:last-child{padding-bottom:0;}
+.wf-line{position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--border);}
+.wf-step:last-child .wf-line{display:none;}
+.wf-num{width:28px;height:28px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:800;position:relative;z-index:1;background:var(--blue-bg);color:var(--blue);border:2px solid var(--blue);}
+.wf-txt h3{font-size:0.76rem;font-weight:700;color:var(--navy);margin-bottom:2px;padding-top:4px;}
+.wf-txt p{font-size:0.69rem;color:var(--muted);line-height:1.6;}
+@media print{body{background:#fff;}.hdr{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.card{box-shadow:none;}}
+@media(max-width:560px){.sig-grid{grid-template-columns:1fr 1fr;}.auth-tbl th:nth-child(4),.auth-tbl td:nth-child(4){display:none;}}
+</style>
 </head>
 <body>
-
-<!-- ═══ COVER PAGE ═══ -->
-<div class="cover">
-  <div class="cover-rays"><div class="cr"></div><div class="cr"></div><div class="cr"></div><div class="cr"></div><div class="cr"></div></div>
-  <div class="cover-content">
-    <div class="cover-badge"><span class="cb-num">25</span><span class="cb-text">Years of Grace · Silver Jubilee</span></div>
-    <div class="cover-cross">
-      <svg viewBox="0 0 88 88" fill="none">
-        <circle cx="44" cy="44" r="42" stroke="url(#cg)" stroke-width="1.5" fill="none"/>
-        <rect x="38" y="8" width="8" height="72" rx="3.5" fill="url(#cg)"/>
-        <rect x="8" y="28" width="72" height="8" rx="3.5" fill="url(#cg)"/>
-        <defs><linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a5c00"/><stop offset="40%" stop-color="#c9a84c"/><stop offset="60%" stop-color="#f5e4a8"/><stop offset="100%" stop-color="#8a5c00"/></linearGradient></defs>
-      </svg>
-    </div>
-    <h1>Silver Jubilee<br/><em>Parish Membership Directory</em></h1>
-    <h2>St. Thomas Mar Thoma Church, Vancouver</h2>
-    <p class="cover-church">Surrey, British Columbia · Diocese of North America & Europe · 2000–2025</p>
-    <div class="cover-divider"></div>
-    <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px;">Proposal to the Executive Committee<br/>for submission to the General Body</div>
-    <div class="cover-meta">
-      <div class="cm-item"><div class="cm-val">CAD $50,000</div><div class="cm-lbl">Fundraising Target</div></div>
-      <div class="cm-item"><div class="cm-val">200+</div><div class="cm-lbl">Families Expected</div></div>
-      <div class="cm-item"><div class="cm-val">Q3 2025</div><div class="cm-lbl">Target Release</div></div>
-    </div>
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="cross"><svg viewBox="0 0 38 38" fill="none"><rect x="16.5" y="2" width="5" height="34" rx="2" fill="#d4a84b"/><rect x="2" y="12" width="34" height="5" rx="2" fill="#d4a84b"/><circle cx="19" cy="19" r="17" stroke="#d4a84b" stroke-width="1" fill="none" opacity="0.35"/></svg></div>
+    <div class="hdr-ch">St. Thomas Mar Thoma Church <em>Vancouver</em></div>
+    <div class="hdr-sub">10787 128 Street, Surrey, BC V3T 3A2 &nbsp;&#183;&nbsp; Diocese of North America</div>
+    <div class="hdr-ft">Silver Jubilee Parish Directory 2025 &mdash; Executive Committee Proposal</div>
   </div>
-  <div class="cover-footer">
-    <span>Prepared by the Directory Committee · March 2025</span>
-    <span class="cf-doc">CONFIDENTIAL — EXECUTIVE COMMITTEE USE ONLY</span>
+  <div class="dioc-strip">
+    <span><span class="ds-l">Diocese:</span>Diocese of North America</span>
+    <span><span class="ds-l">Bishop:</span>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</span>
+    <span><span class="ds-l">Metropolitan:</span>Most Rev. Dr. Theodosius Mar Thoma (22nd)</span>
   </div>
 </div>
+<div class="gold-rule"></div>
 
-<div class="gold-bar"></div>
-
-<div class="doc-body">
-
-  <!-- TABLE OF CONTENTS -->
-  <div class="toc">
-    <div class="toc-hd"><h2>Table of Contents</h2></div>
-    <div class="toc-body">
-      <div class="toc-item"><a href="#s1"><div class="toc-num">1</div>Executive Summary</a><span class="toc-pg">pg 2</span></div>
-      <div class="toc-item"><a href="#s2"><div class="toc-num">2</div>Project Rationale & Background</a><span class="toc-pg">pg 3</span></div>
-      <div class="toc-item"><a href="#s3"><div class="toc-num">3</div>North American Directory Standard</a><span class="toc-pg">pg 4</span></div>
-      <div class="toc-item"><a href="#s4"><div class="toc-num">4</div>Directory Structure & Page Layout</a><span class="toc-pg">pg 5</span></div>
-      <div class="toc-item"><a href="#s5"><div class="toc-num">5</div>Revenue Model — Path to CAD $50,000</a><span class="toc-pg">pg 7</span></div>
-      <div class="toc-item"><a href="#s6"><div class="toc-num">6</div>Digital-First Member Registration System</a><span class="toc-pg">pg 9</span></div>
-      <div class="toc-item"><a href="#s7"><div class="toc-num">7</div>Technical Architecture</a><span class="toc-pg">pg 10</span></div>
-      <div class="toc-item"><a href="#s8"><div class="toc-num">8</div>Project Timeline</a><span class="toc-pg">pg 11</span></div>
-      <div class="toc-item"><a href="#s9"><div class="toc-num">9</div>Governance & Committee Roles</a><span class="toc-pg">pg 12</span></div>
-      <div class="toc-item"><a href="#s10"><div class="toc-num">10</div>Resolutions Sought from General Body</a><span class="toc-pg">pg 13</span></div>
-    </div>
-  </div>
-
-  <!-- S1: EXECUTIVE SUMMARY -->
-  <div class="section">
-    <span class="sec-anchor" id="s1"></span>
-    <div class="sec-hd"><div class="sec-num-badge">1</div><div><h2>Executive Summary</h2><div class="sec-sub">The case for the Silver Jubilee Parish Directory</div></div></div>
-    <p class="body-text">St. Thomas Mar Thoma Church, Vancouver marks its <strong>25th Anniversary (Silver Jubilee)</strong> in 2025. The Directory Committee proposes the creation of a comprehensive, print-ready <strong>Parish Membership Directory</strong> — a permanent keepsake capturing the church's families, history, and community as it enters its second quarter-century of ministry in Canada.</p>
-    <p class="body-text">The directory follows the <strong>North American Parish Directory Standard</strong>, building on best practices from churches across the Mar Thoma Diocese of North America and drawing on the Immanuel Mar Thoma Church, Paruthippara model for technical production. It will be compiled from a live online registration system accessible via the church website, Facebook, and WhatsApp — making it easy for every family regardless of technical ability.</p>
-    <div class="info-grid">
-      <div class="icard gold"><div class="ic-ico">💰</div><div class="ic-title">CAD $50,000 Fundraising Target</div><div class="ic-body">Revenue from family listings and sponsorships funds the Silver Jubilee celebrations in full. Zero net cost to the church treasury.</div></div>
-      <div class="icard green"><div class="ic-ico">📖</div><div class="ic-title">200+ Family Entries</div><div class="ic-body">Every registered family receives a print copy. Estimated 400–500 pages covering all 8 prayer groups.</div></div>
-      <div class="icard blue"><div class="ic-ico">📱</div><div class="ic-title">Digital-First Registration</div><div class="ic-body">Families register online via Website, Facebook, WhatsApp, or the Trustee Tablet. No paper forms needed.</div></div>
-      <div class="icard navy"><div class="ic-ico">✝</div><div class="ic-title">Silver Jubilee Keepsake</div><div class="ic-body">The directory becomes a permanent record of the church family at its 25th year — passed down through generations.</div></div>
-    </div>
-  </div>
-
-  <!-- S2: RATIONALE -->
-  <div class="section">
-    <span class="sec-anchor" id="s2"></span>
-    <div class="sec-hd"><div class="sec-num-badge">2</div><div><h2>Project Rationale & Background</h2><div class="sec-sub">Why now, and why this format</div></div></div>
-    <p class="body-text">Founded in 2000, St. Thomas Mar Thoma Church, Vancouver has grown from a small gathering of Malayalam-speaking families in British Columbia into a vibrant parish community worshipping at 10787 128 Street, Surrey. The Silver Jubilee marks 25 years of faithful ministry on Canadian soil.</p>
-    <p class="body-text">A Parish Directory serves multiple vital functions for the church community: it <strong>connects families</strong> across prayer groups who may not know one another well; it provides the <strong>finance committee</strong> with an accurate membership roll; it gives the <strong>General Body</strong> a formal record of the congregation; and it provides <strong>every family</strong> with a beautiful, lasting souvenir of their church family at this historic milestone.</p>
-    <p class="body-text">The Immanuel Mar Thoma Church, Paruthippara recently demonstrated that a 400-page parish directory can be produced using a data-driven workflow (Google Sheets → MySQL → PHP/FPDF → PDF generation) in approximately 20 seconds of compile time. This proposal adapts that technical model for the North American context, using a cloud-based, mobile-first registration system appropriate for the Vancouver parish.</p>
-    <div class="info-grid">
-      <div class="icard red"><div class="ic-ico">📋</div><div class="ic-title">No Current Membership Roll</div><div class="ic-body">The church does not currently have a complete, verified, up-to-date family directory. This project creates that foundational record.</div></div>
-      <div class="icard gold"><div class="ic-ico">🍁</div><div class="ic-title">North American Context</div><div class="ic-body">Canadian directories differ from Kerala counterparts: bilingual entries (English/Malayalam), Canadian address format, privacy-compliant data handling (PIPEDA).</div></div>
-    </div>
-  </div>
-
-  <!-- S3: NA STANDARD -->
-  <div class="section">
-    <span class="sec-anchor" id="s3"></span>
-    <div class="sec-hd"><div class="sec-num-badge">3</div><div><h2>North American Directory Standard</h2><div class="sec-sub">Adapted from Mar Thoma Diocese of North America best practices</div></div></div>
-    <p class="body-text">The following standard has been derived from parish directories produced by Mar Thoma churches across North America, including congregations in New York, Toronto, Chicago, Houston, and the Greater Vancouver Area. It has been adapted to meet Canadian privacy standards and North American typographic conventions.</p>
-
-    <div class="info-grid" style="grid-template-columns:1fr 1fr;">
-      <div class="icard navy">
-        <div class="ic-ico">📐</div>
-        <div class="ic-title">Print Specifications</div>
-        <div class="ic-body">
-          Format: 8.5" × 11" (Letter, North American standard)<br/>
-          Binding: Perfect-bound softcover or hardcover<br/>
-          Colour: Full-colour cover; interior mix of colour and B&W<br/>
-          Paper: 100gsm interior; 300gsm cover<br/>
-          Estimated pages: 400–500<br/>
-          Print run: 250 copies (one per registered family + archive)
-        </div>
+<div class="wrap">
+  <!-- APPROVAL NOTE -->
+  <div class="approval-note">
+    <div class="an-hd"><div class="an-em">&#9997;</div><div class="an-ht"><h2>Approval Note &mdash; Executive Committee, St. Thomas Mar Thoma Church, Vancouver</h2><p>For formal approval. Three signatures required before proceeding.</p></div></div>
+    <div class="an-body">
+      <div style="font-size:0.72rem;color:rgba(255,255,255,0.54);line-height:1.7;margin-bottom:16px;">
+        This proposal for the <strong style="color:#fff;">Silver Jubilee Parish Directory 2025</strong> and the <strong style="color:#fff;">Live Membership Portal</strong> is submitted to the Executive Committee for review and approval. It is aligned with the guidelines of the <strong style="color:var(--gold3);">Diocese of North America (of the Mar Thoma Church)</strong> and reflects best practices from established Mar Thoma parishes in North America and Dubai. The General Body (Edavaka Sangham) will be asked to ratify this proposal as directed by the Executive Committee.
       </div>
-      <div class="icard gold">
-        <div class="ic-ico">📝</div>
-        <div class="ic-title">Entry Standard — Per Family</div>
-        <div class="ic-body">
-          Family name & house name (if applicable)<br/>
-          Head of family: name, DOB, occupation<br/>
-          Spouse: name, DOB, occupation<br/>
-          Children: names, DOBs, school/grade<br/>
-          Contact: phone, email (optional)<br/>
-          Home address (province/city only for privacy)<br/>
-          Family photo (group portrait)<br/>
-          Prayer group, membership ref. no.<br/>
-          Hometown / place of origin (Kerala)
-        </div>
+      <div class="sig-grid">
+        <div class="as"><div class="as-l"></div><div class="as-n">Vicar</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">President, Executive Committee</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">Secretary, Executive Committee</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">Trustee</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
       </div>
-    </div>
-
-    <div style="margin-top:14px;" class="icard blue">
-      <div class="ic-ico">🍁</div>
-      <div class="ic-title">Canadian Privacy (PIPEDA) Compliance</div>
-      <div class="ic-body">
-        All data collected with explicit consent via the registration form. Members may opt out of showing full address, phone, or email. Data stored on Canadian servers or Google Workspace (Canadian data residency available). Retention policy: directory data retained for 7 years in accordance with CRA requirements for charitable organisations. Privacy officer: Church Treasurer.
+      <div class="an-exco">
+        <div class="an-ex-t">Executive Committee Approval</div>
+        <div class="an-ex-line"><span class="an-ex-r">Date of Approval:</span><div class="an-ex-s"></div></div>
+        <div class="an-ex-line"><span class="an-ex-r">Minute Number:</span><div class="an-ex-s"></div></div>
+        <div class="an-ex-line"><span class="an-ex-r">General Body Ratification Date:</span><div class="an-ex-s"></div></div>
       </div>
     </div>
   </div>
 
-  <!-- S4: STRUCTURE -->
-  <div class="section">
-    <span class="sec-anchor" id="s4"></span>
-    <div class="sec-hd"><div class="sec-num-badge">4</div><div><h2>Directory Structure & Page Layout</h2><div class="sec-sub">Content outline for the 400–500 page directory</div></div></div>
+  <!-- SECTION 1: OVERVIEW -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#127963;</span><div><div class="ch-ti">1. Overview</div><div class="ch-su">Background and purpose of the Silver Jubilee Parish Directory</div></div></div>
+    <div class="cb"><div class="prose">
+      <p>St. Thomas Mar Thoma Church, Vancouver was founded in the year 2000, under the pastoral care of the Diocese of North America of the Mar Thoma Syrian Church. In 2025, the congregation celebrates its <strong>Silver Jubilee</strong> — a milestone of 25 years of worship, fellowship, and Christian service in British Columbia.</p>
+      <p>To mark this occasion, the Executive Committee proposes the production of a <strong>Silver Jubilee Parish Directory 2025</strong>: a comprehensive printed and digital record of all member families, church authorities, prayer groups, and the history of the congregation. The directory will be produced in the <strong>8.5&quot; × 11&quot; Letter format</strong> standard used across the Diocese of North America.</p>
+      <p>Alongside the printed directory, the committee proposes the development of a <strong>Live Membership Portal</strong> — a secure online platform for family registration, profile updates, and directory management, with a mandatory three-approver workflow before any data is published.</p>
+      <p>This proposal seeks the approval of the Executive Committee and, subsequently, ratification by the General Body (Edavaka Sangham).</p>
+    </div></div>
+  </div>
 
-    <div class="dir-structure">
-      <div class="ds-hd"><h3>DIRECTORY PAGE PLAN</h3><span>~400–500 pages total</span></div>
-      <div class="ds-body">
-        <div class="ds-row section-hd"><span>FRONT MATTER</span><span class="ds-pg">pp. 1–20</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Cover Page, Title Page, Church History</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 1–8</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Message from the Vicar & Executive Committee</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 9–12</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Silver Jubilee Commemorative Pages</span><span class="ds-type dt-photo">Photo</span><span class="ds-pg">pp. 13–20</span></div>
+  <!-- SECTION 2: DIOCESAN ALIGNMENT -->
+  <div class="card">
+    <div class="ch hb"><span class="ch-i">&#9962;</span><div><div class="ch-ti">2. Diocesan Alignment &mdash; Diocese of North America</div><div class="ch-su">Alignment with marthomana.org guidelines and best practices of Mar Thoma parishes in North America and Dubai</div></div></div>
+    <div class="cb"><div class="prose">
+      <p>This project is explicitly aligned with the guidelines of the <strong>Diocese of North America of the Mar Thoma Church</strong> (marthomana.org), headquartered at Sinai Mar Thoma Centre, Merrick, New York.</p>
+      <p>The <strong>Family Directory Information Form</strong> and the <strong>Live Membership Portal</strong> are modelled on:</p>
+      <ul>
+        <li>The directory standard of the <strong>Diocese of North America</strong> as observed across its parishes</li>
+        <li>The live membership portal of <strong>Mar Thoma Parish Dubai</strong> (marthomaparishdubai.org) — serving 2,400+ families — which captures blood group, home parish (Idavaka), all family members&#8217; details, and emergency contacts</li>
+        <li>The Mar Thoma Church&#8217;s downloadable family and clergy welfare fund registration forms (marthoma.in)</li>
+      </ul>
+      <p>A copy of this proposal and the finalised directory will be submitted to the Diocesan Bishop, <strong>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</strong>, for information.</p>
+    </div></div>
+  </div>
 
-        <div class="ds-row section-hd"><span>SPONSORSHIP SECTION</span><span class="ds-pg">pp. 21–60</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Back Cover Sponsor (full page colour)</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">Back</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Inside Front Cover Sponsor</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">p. 1</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Platinum Full-Page Sponsors (6 × $1,500)</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">pp. 21–26</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Gold Full-Page Sponsors (12 × $750)</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">pp. 27–38</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Silver Half-Page Sponsors (20 × $400)</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">pp. 39–48</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Quarter-Page Sponsors (30 × $200)</span><span class="ds-type dt-sponsor">Sponsor</span><span class="ds-pg">pp. 49–56</span></div>
-
-        <div class="ds-row section-hd"><span>PARISH FAMILY LISTINGS (by Prayer Group)</span><span class="ds-pg">pp. 61–380</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Bethel Prayer Group — Section Title + Patron Page + Families</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 61–95</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Emmanuel Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 96–130</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Sharon Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 131–160</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Zion Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 161–195</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Calvary Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 196–230</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Carmel Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 231–265</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Horeb Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 266–300</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Moriah Prayer Group</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 301–335</span></div>
-
-        <div class="ds-row section-hd"><span>FAMILY PHOTO GALLERY</span><span class="ds-pg">pp. 336–380</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Full-page family portrait spreads — Platinum listings</span><span class="ds-type dt-photo">Photo</span><span class="ds-pg">pp. 336–355</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Half-page family portraits — Gold listings</span><span class="ds-type dt-photo">Photo</span><span class="ds-pg">pp. 356–375</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Silver Jubilee Family Group Photos</span><span class="ds-type dt-photo">Photo</span><span class="ds-pg">pp. 376–380</span></div>
-
-        <div class="ds-row section-hd"><span>APPENDIX & INDEX</span><span class="ds-pg">pp. 381–420</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Index by Family Name (alphabetical)</span><span class="ds-type dt-index">Index</span><span class="ds-pg">pp. 381–390</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Index by Membership Ref No.</span><span class="ds-type dt-index">Index</span><span class="ds-pg">pp. 391–395</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Prayer Group Leaders & Church Officers</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 396–400</span></div>
-        <div class="ds-row subsection"><span style="flex:1;">Church Contact Directory & Ministries</span><span class="ds-type dt-content">Content</span><span class="ds-pg">pp. 401–410</span></div>
-      </div>
+  <!-- SECTION 3: AUTHORITIES -->
+  <div class="card">
+    <div class="ch hd"><span class="ch-i">&#127963;</span><div><div class="ch-ti">3. Church &amp; Civil Authorities &mdash; Directory Introduction Pages</div><div class="ch-su">To be included in the introductory section of the Silver Jubilee Directory — verified March 2026</div></div></div>
+    <div class="cb">
+      <table class="auth-tbl">
+        <thead><tr><th>Level</th><th>Role</th><th>Name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="auth-lv">Church &#8212; Universal</span></td><td>Malankara Metropolitan</td><td>Most Rev. Dr. Theodosius Mar Thoma</td><td>22nd Metropolitan · Mar Thoma Syrian Church · Thiruvalla, Kerala</td></tr>
+          <tr><td><span class="auth-lv">Church &#8212; Diocesan</span></td><td>Diocesan Bishop, Diocese of North America</td><td>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</td><td>Consecrated 2024 · Sinai Mar Thoma Centre, Merrick, NY 11566</td></tr>
+          <tr><td><span class="auth-lv">Church &#8212; Parish</span></td><td>Vicar, St. Thomas Mar Thoma Church, Vancouver</td><td class="ph">[Name of Vicar]</td><td>10787 128 Street, Surrey, BC V3T 3A2</td></tr>
+          <tr><td><span class="auth-lv">Federal</span></td><td>Member of Parliament, Surrey-Centre</td><td>Hon. Randeep Sarai, MP</td><td>Liberal &nbsp;·&nbsp; 170&#8211;10362 King George Blvd, Surrey, BC</td></tr>
+          <tr><td><span class="auth-lv">Provincial</span></td><td>Premier of British Columbia</td><td>Hon. David Eby</td><td>BC NDP · 37th Premier since Nov 18, 2022</td></tr>
+          <tr><td><span class="auth-lv">Provincial</span></td><td>MLA, Surrey-Fleetwood</td><td>Jagrup Brar, MLA</td><td>BC NDP · Re-elected October 19, 2024</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td>Mayor of Surrey</td><td>Mayor Brenda Locke</td><td>Surrey Connect · Elected October 15, 2022</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td>Surrey City Councillors</td><td>Linda Annis, Harry Bains, Mike Bose,<br/>Doug Elford, Gordon Hepner, Pardeep Kooner,<br/>Mandeep Nagra, Rob Stutt</td><td>Elected October 15, 2022 · Next election 2026</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td>Surrey Fire Chief</td><td>Fire Chief Jason Cairney</td><td>Appointed June 2024</td></tr>
+          <tr><td><span class="auth-lv">Ecumenical</span></td><td>Bishop, Anglican Diocese of New Westminster</td><td class="ph">[Name of Anglican Bishop]</td><td>Confirm with church office before printing</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.62rem;color:var(--muted);margin-top:9px;">&#128204; Sources verified March 2026. Items marked as placeholders require confirmation by church office. Surrey-Fleetwood encompasses the 128 Street / 107A Avenue area where the church is located.</div>
     </div>
+  </div>
 
-    <!-- Sample entry mockup -->
-    <div style="margin-top:24px;">
-      <div style="text-align:center;margin-bottom:16px;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Sample Standard Family Entry (Gold Listing)</div>
-      <div class="entry-mockup">
-        <div class="em-hd">
-          <div><div class="em-hd-pg">BETHEL PRAYER GROUP</div><div class="em-hd-lbl">p. 72</div></div>
-        </div>
-        <div class="em-body">
-          <div class="em-photo">👨‍👩‍👧‍👦</div>
-          <div class="em-details">
-            <div class="em-name">Thomas K. Varghese</div>
-            <div class="em-house">Vattoly House · Kottayam, Kerala</div>
-            <div class="em-field"><strong>Spouse:</strong> Mary Thomas Varghese</div>
-            <div class="em-field"><strong>Address:</strong> Surrey, BC, Canada</div>
-            <div class="em-field"><strong>Phone:</strong> 604-555-0101</div>
-            <div class="em-members">
-              <div class="em-member-row">Jijo Thomas <span>b. 2009</span></div>
-              <div class="em-member-row">Elsa Thomas <span>b. 2012</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="em-footer">
-          <span class="em-reg">Ref: TMC-001 · Registered 2025</span>
-          <span class="em-badge">GOLD LISTING</span>
-        </div>
+  <!-- SECTION 4: LIVE MEMBERSHIP PORTAL -->
+  <div class="card">
+    <div class="ch hgr"><span class="ch-i">&#127760;</span><div><div class="ch-ti">4. Live Membership Portal &mdash; Design &amp; Three-Approver Workflow</div><div class="ch-su">Secure online platform for family registration and directory management</div></div></div>
+    <div class="cb"><div class="prose">
+      <h3>4.1 Portal Overview</h3>
+      <p>The Live Membership Portal is a secure web-based platform accessible at <a href="https://vancouvermarthomachurch.com/" style="color:var(--gold);">vancouvermarthomachurch.com</a>. It provides four pages: a <strong>Public Information Page</strong>, a <strong>Secure Login Page</strong>, a <strong>Member Profile Page</strong>, and an <strong>Admin Review &amp; Approval Queue</strong>.</p>
+      <h3>4.2 Mandatory Three-Approver Workflow</h3>
+      <p>No new or updated family data will be published without the following minimum approvals. The system enforces this rule automatically and it cannot be overridden by any single user, including the Administrator.</p>
+      <p>Acceptable approval combinations:</p>
+      <ul>
+        <li><strong>President / Vicar</strong> + any <strong>two Trustees</strong></li>
+        <li><strong>President / Vicar</strong> + one <strong>Trustee</strong> + <strong>Secretary</strong></li>
+        <li><strong>President / Vicar</strong> + <strong>Secretary</strong> + one other authorised ExCo member</li>
+      </ul>
+      <h3>4.3 Workflow Steps</h3>
+    </div>
+    <div class="wf-steps" style="margin-top:12px;">
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">1</div><div class="wf-txt"><h3>Member submits or updates information online</h3><p>System assigns a reference number. Member sees a confirmation screen immediately.</p></div></div>
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">2</div><div class="wf-txt"><h3>Automated acknowledgement email sent to member</h3><p>Email confirms receipt and reference number. Data is marked <em>Pending Approval</em>.</p></div></div>
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">3</div><div class="wf-txt"><h3>Approvers notified and review in queue</h3><p>President/Vicar, Secretary, and all Trustees receive email notification with link to Admin Queue.</p></div></div>
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">4</div><div class="wf-txt"><h3>Three qualifying approvals recorded</h3><p>Only after the required combination of three approvals is the data released for publication.</p></div></div>
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">5</div><div class="wf-txt"><h3>Directory database and member portal updated</h3><p>Approved data is immediately reflected in the live online directory and queued for the printed edition.</p></div></div>
+      <div class="wf-step"><div class="wf-line"></div><div class="wf-num">6</div><div class="wf-txt"><h3>Rejection or change requests returned to member</h3><p>Automated email with approver comments. Item stays <em>Pending</em> until resubmitted and re-approved.</p></div></div>
+      <div class="wf-step"><div class="wf-num">7</div><div class="wf-txt"><h3>Permanent audit log maintained</h3><p>Who submitted, who approved/rejected, and date/time — logged for every event.</p></div></div>
+    </div>
+    <div style="margin-top:14px;" class="prose">
+      <h3>4.4 Role-Based Access</h3>
+      <ul>
+        <li><strong>Member:</strong> View and edit own record only. Cannot publish.</li>
+        <li><strong>Vicar / President:</strong> Key approver. One of the mandatory three. Can view all records.</li>
+        <li><strong>Secretary:</strong> Can approve. Can view all records. Cannot bypass three-approver rule.</li>
+        <li><strong>Trustee:</strong> Can approve. Can view all records.</li>
+        <li><strong>Directory Convenor:</strong> Can review and recommend. Does NOT count toward three-approver rule.</li>
+        <li><strong>Administrator:</strong> Full system access. Cannot bypass three-approver rule under any circumstance.</li>
+      </ul>
+      <h3>4.5 Privacy</h3>
+      <p>Sensitive contact information (full address, phone, email) is visible only to logged-in members and the church office. The public-facing directory displays only the fields the member approved in their registration form. The portal is designed for future extension to contributions and event registrations.</p>
+    </div></div>
+  </div>
+
+  <!-- SECTION 5: REVENUE -->
+  <div class="card">
+    <div class="ch hg"><span class="ch-i">&#128176;</span><div><div class="ch-ti">5. Revenue Model &amp; Financial Forecast</div><div class="ch-su">Target: CAD $50,000 for Silver Jubilee celebrations and directory production</div></div></div>
+    <div class="cb">
+      <table class="rev-tbl">
+        <thead><tr><th>Category</th><th>Unit Price (CAD)</th><th>Estimated Qty</th><th>Projected Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>Standard Listings ($40)</td><td>$40</td><td>60 families</td><td>$2,400</td></tr>
+          <tr><td>Gold Listings ($100)</td><td>$100</td><td>30 families</td><td>$3,000</td></tr>
+          <tr><td>Platinum Listings ($200)</td><td>$200</td><td>20 families</td><td>$4,000</td></tr>
+          <tr><td>Heritage Tribute Page ($250)</td><td>$250</td><td>8</td><td>$2,000</td></tr>
+          <tr><td>Quarter-Page Ads ($200)</td><td>$200</td><td>10</td><td>$2,000</td></tr>
+          <tr><td>Half-Page Ads ($400)</td><td>$400</td><td>8</td><td>$3,200</td></tr>
+          <tr><td>Full-Page Ads ($750)</td><td>$750</td><td>10</td><td>$7,500</td></tr>
+          <tr><td>Back Cover ($2,500)</td><td>$2,500</td><td>1</td><td>$2,500</td></tr>
+          <tr><td>Prayer Group Patrons ($500)</td><td>$500</td><td>8</td><td>$4,000</td></tr>
+          <tr><td>General Donations</td><td>&#8212;</td><td>&#8212;</td><td>$6,000</td></tr>
+          <tr class="tot"><td><strong>TOTAL PROJECTED</strong></td><td>&#8212;</td><td>&#8212;</td><td><strong>$36,600</strong></td></tr>
+          <tr class="tot"><td><strong>FUNDRAISING TARGET</strong></td><td>&#8212;</td><td>&#8212;</td><td><strong>CAD $50,000</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.62rem;color:var(--muted);margin-top:9px;">Note: Gap between projection and target to be covered through additional sponsorships, Maramon Convention and general church fundraising. Finance Committee to review and adjust projections.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TIMELINE -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128197;</span><div><div class="ch-ti">6. Project Timeline</div></div></div>
+    <div class="cb">
+      <table class="rev-tbl" style="text-align:left;">
+        <thead><tr><th style="text-align:left;">Phase</th><th style="text-align:left;">Period</th><th style="text-align:left;">Key Milestone</th></tr></thead>
+        <tbody>
+          <tr><td>ExCo Proposal &amp; Approval</td><td>Mar&#8211;Apr 2025</td><td>This proposal approved by Executive Committee</td></tr>
+          <tr><td>General Body Ratification</td><td>Apr&#8211;May 2025</td><td>Edavaka Sangham ratifies project &amp; budget</td></tr>
+          <tr><td>Committee Formation</td><td>May 2025</td><td>Directory Committee constituted; 8 prayer group liaisons appointed</td></tr>
+          <tr><td>Portal Development</td><td>May&#8211;Jul 2025</td><td>Live Membership Portal built and tested; three-approver workflow activated</td></tr>
+          <tr><td>Family Registration</td><td>Jun&#8211;Aug 2025</td><td>Online &amp; paper registration open; families submit information &amp; photos</td></tr>
+          <tr><td>Data Review &amp; Approvals</td><td>Aug&#8211;Sep 2025</td><td>All submissions reviewed; three-approver rule enforced</td></tr>
+          <tr><td>Design &amp; Print</td><td>Sep&#8211;Oct 2025</td><td>Layout finalised; sent to printer (250 copies)</td></tr>
+          <tr><td>Silver Jubilee Launch</td><td>Nov 2025</td><td>Directory distributed at Silver Jubilee celebrations</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 7: RESOLUTIONS -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128220;</span><div><div class="ch-ti">7. Resolutions for Executive Committee Approval</div><div class="ch-su">Six resolutions — to be passed at a duly convened meeting of the Executive Committee</div></div></div>
+    <div class="cb">
+      <div class="res-grid">
+        <div class="ri"><div class="rn">1</div><div class="rt">That the Executive Committee approves the <strong>Silver Jubilee Parish Directory 2025</strong> as a formal project of St. Thomas Mar Thoma Church, Vancouver, to be ratified by the General Body (Edavaka Sangham).</div></div>
+        <div class="ri"><div class="rn">2</div><div class="rt">That the <strong>Family Directory Information Form</strong> (Parts A&#8211;K, modelled on the Diocese of North America and Mar Thoma Parish Dubai standards) is adopted as the official registration instrument for the directory.</div></div>
+        <div class="ri"><div class="rn">3</div><div class="rt">That the <strong>fundraising target of CAD $50,000</strong> is approved, and the Finance Committee is authorised to collect listing fees and sponsorships as set out in the Revenue Model (Section 5).</div></div>
+        <div class="ri"><div class="rn">4</div><div class="rt">That the <strong>Live Membership Portal</strong> is approved for development, with a <strong>mandatory three-approver workflow</strong> (as specified in Section 4) enforced for all data publications. No data may go live without the required approvals.</div></div>
+        <div class="ri"><div class="rn">5</div><div class="rt">That the directory be produced to the <strong>Diocese of North America standard</strong> of 8.5&quot; × 11&quot; Letter format, in a minimum of <strong>250 printed copies</strong>, for distribution to member families and the Diocese of North America office.</div></div>
+        <div class="ri"><div class="rn">6</div><div class="rt">That this proposal and the final directory be <strong>submitted to the Diocesan Bishop</strong>, Rt. Rev. Dr. Abraham Mar Paulos Episcopa, Diocese of North America, and a copy forwarded to the Most Rev. Dr. Theodosius Mar Thoma, Malankara Metropolitan, for information.</div></div>
       </div>
     </div>
   </div>
 
-  <!-- S5: REVENUE -->
-  <div class="section">
-    <span class="sec-anchor" id="s5"></span>
-    <div class="sec-hd"><div class="sec-num-badge">5</div><div><h2>Revenue Model — Path to CAD $50,000</h2><div class="sec-sub">Detailed breakdown of sponsorship and listing revenue</div></div></div>
-    <p class="body-text">The directory is designed to be fully self-funded through family listing fees and sponsorship revenue. The following projections are based on conservative estimates for a congregation of approximately 200 registered families.</p>
-
-    <table class="rev-table">
-      <thead><tr><th>Category</th><th>Unit Price</th><th>Units</th><th>Revenue</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td>Back Cover Sponsor</td><td>$2,500</td><td>1</td><td><strong>$2,500</strong></td><td>Exclusive · highest visibility</td></tr>
-        <tr><td>Inside Front Cover</td><td>$2,000</td><td>1</td><td><strong>$2,000</strong></td><td>Second most visible position</td></tr>
-        <tr><td>Inside Back Cover</td><td>$1,500</td><td>1</td><td><strong>$1,500</strong></td><td></td></tr>
-        <tr><td>Platinum Full-Page Sponsor</td><td>$1,500</td><td>6</td><td><strong>$9,000</strong></td><td>Full colour, premium placement</td></tr>
-        <tr><td>Gold Full-Page Sponsor</td><td>$750</td><td>12</td><td><strong>$9,000</strong></td><td>Colour or B&W</td></tr>
-        <tr><td>Silver Half-Page Sponsor</td><td>$400</td><td>16</td><td><strong>$6,400</strong></td><td></td></tr>
-        <tr><td>Quarter-Page Sponsor</td><td>$200</td><td>20</td><td><strong>$4,000</strong></td><td>B&W</td></tr>
-        <tr><td>Prayer Group Section Patron</td><td>$500</td><td>8</td><td><strong>$4,000</strong></td><td>One per prayer group</td></tr>
-        <tr><td>Silver Jubilee Heritage Page</td><td>$300</td><td>10</td><td><strong>$3,000</strong></td><td>Individual/family tribute pages</td></tr>
-        <tr><td>Platinum Family Listing</td><td>$200</td><td>30</td><td><strong>$6,000</strong></td><td>Full page, priority placement</td></tr>
-        <tr><td>Gold Family Listing</td><td>$100</td><td>60</td><td><strong>$6,000</strong></td><td>Half-page entry</td></tr>
-        <tr><td>Standard Family Listing</td><td>$40</td><td>100</td><td><strong>$4,000</strong></td><td>Standard entry with photo</td></tr>
-      </tbody>
-      <tfoot>
-        <tr><td colspan="3">TOTAL PROJECTED REVENUE</td><td colspan="2"><span class="rev-total-val">CAD $57,400</span> (target: $50,000 ✓)</td></tr>
-      </tfoot>
-    </table>
-
-    <div style="background:rgba(26,106,58,0.1);border:1.5px solid rgba(26,106,58,0.25);border-radius:10px;padding:14px;font-size:0.82rem;color:var(--green);line-height:1.65;">
-      <strong>✓ Revenue Confidence:</strong> The projections above are based on a participation rate of 95% of registered families selecting at minimum a Standard listing. Even at 70% participation, the $50,000 target is achievable through sponsorship alone (the top three tiers total $30,400 before any family listings are counted). The directory committee recommends a minimum fundraising timeline of 6 months to allow all families to register and sponsors to be solicited.
-    </div>
-  </div>
-
-  <!-- S6: DIGITAL SYSTEM -->
-  <div class="section">
-    <span class="sec-anchor" id="s6"></span>
-    <div class="sec-hd"><div class="sec-num-badge">6</div><div><h2>Digital-First Member Registration System</h2><div class="sec-sub">How families register — zero technical barriers</div></div></div>
-    <p class="body-text">The registration system has been designed so that <strong>any member of the congregation can register their family without technical knowledge</strong>. Registration is accessible through four channels, all feeding into a single database:</p>
-
-    <div class="info-grid">
-      <div class="icard blue"><div class="ic-ico">🌐</div><div class="ic-title">Church Website</div><div class="ic-body">Accessible at vancouvermarthomachurch.com/directory — permanent, always available, optimal for desktop and laptop users. Full-form experience with photo upload.</div></div>
-      <div class="icard navy"><div class="ic-ico">📘</div><div class="ic-title">Facebook Group Link</div><div class="ic-body">Shared in the church Facebook group with a ready-to-post announcement. Rich link preview shows automatically when posted. Ideal for reaching members who primarily use Facebook.</div></div>
-      <div class="icard green"><div class="ic-ico">💬</div><div class="ic-title">WhatsApp Community</div><div class="ic-body">Link shared via WhatsApp with a pre-written Malayalam/English message. "Open in WhatsApp" button auto-fills the message. Reaches members who do not use Facebook.</div></div>
-      <div class="icard gold"><div class="ic-ico">🖥</div><div class="ic-title">Trustee Tablet / Kiosk</div><div class="ic-body">For members without smartphones or who prefer in-person registration. Trustees use the kiosk at Sunday Service to register families. Fully offline-capable.</div></div>
-    </div>
-
-    <p class="body-text" style="margin-top:14px;">The six-step registration form captures: Head of Family details, Spouse details, Children (unlimited), Family Photo upload, Prayer Group selection, and Listing Type. The entire process takes approximately <strong>5–7 minutes</strong> per family.</p>
-  </div>
-
-  <!-- S7: TECH -->
-  <div class="section">
-    <span class="sec-anchor" id="s7"></span>
-    <div class="sec-hd"><div class="sec-num-badge">7</div><div><h2>Technical Architecture</h2><div class="sec-sub">From registration to print-ready PDF</div></div></div>
-    <p class="body-text">The system follows the production model demonstrated by Immanuel Mar Thoma Church, Paruthippara, adapted for North American cloud deployment. A full 400-page directory can be compiled in under 30 seconds once data collection is complete.</p>
-
-    <div class="tech-stack">
-      <div class="ts-card"><div class="ts-icon">📋</div><div class="ts-name">Registration Portal</div><div class="ts-desc">HTML5 / JavaScript · Mobile-first · Works on all devices · Local storage + cloud sync</div><span class="ts-badge">Phase 1 ✓</span></div>
-      <div class="ts-card"><div class="ts-icon">☁</div><div class="ts-name">Google Sheets</div><div class="ts-desc">Central data store · Accessible by all trustees · Free · PIPEDA-compliant</div><span class="ts-badge">Phase 1 ✓</span></div>
-      <div class="ts-card"><div class="ts-icon">🐳</div><div class="ts-name">MySQL / Docker</div><div class="ts-desc">Production database · Data imported from Google Sheets CSV · Schema mirrors Kerala model</div><span class="ts-badge phase2">Phase 2</span></div>
-      <div class="ts-card"><div class="ts-icon">🖼</div><div class="ts-name">ImageMagick</div><div class="ts-desc">Automated photo enhancement · Resolution checking · Standardised cropping for print</div><span class="ts-badge phase2">Phase 2</span></div>
-      <div class="ts-card"><div class="ts-icon">📄</div><div class="ts-name">PHP / FPDF</div><div class="ts-desc">PDF layout engine · Prayer group sections · Sponsor page templates · Index generation</div><span class="ts-badge phase2">Phase 2</span></div>
-      <div class="ts-card"><div class="ts-icon">⚙</div><div class="ts-name">GNU Make</div><div class="ts-desc">Build orchestration · Full 400-page compile in ~20 seconds · Reproducible output</div><span class="ts-badge phase2">Phase 2</span></div>
-    </div>
-
-    <p class="body-text" style="margin-top:16px;"><strong>Phase 1</strong> (immediate) deploys the online registration portal, admin dashboard, and Google Sheets backend. <strong>Phase 2</strong> (production, Q2 2025) adapts the Paruthippara PDF generation system for the North American layout standard, producing the print-ready file delivered to the printer.</p>
-  </div>
-
-  <!-- S8: TIMELINE -->
-  <div class="section">
-    <span class="sec-anchor" id="s8"></span>
-    <div class="sec-hd"><div class="sec-num-badge">8</div><div><h2>Project Timeline</h2><div class="sec-sub">From General Body approval to print</div></div></div>
-
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-dot done">✓</div>
-        <div class="tl-content"><div class="tl-date">March 2025</div><div class="tl-title">Proposal to Executive Committee</div><div class="tl-desc">This document presented to ExCo for review. Registration portal and admin system ready for deployment pending GB approval.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot active">★</div>
-        <div class="tl-content"><div class="tl-date">April 2025</div><div class="tl-title">General Body Approval & Launch</div><div class="tl-desc">GB passes resolution. Directory committee formally constituted. Registration link published on website, Facebook, and WhatsApp on the Sunday following approval.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">3</div>
-        <div class="tl-content"><div class="tl-date">April – July 2025</div><div class="tl-title">Family Registration Drive</div><div class="tl-desc">12-week open registration. Prayer group leaders each responsible for ensuring 100% of their group is registered. Monthly progress reports to ExCo. Trustees use kiosk every Sunday for walk-in registrations.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">4</div>
-        <div class="tl-content"><div class="tl-date">April – June 2025</div><div class="tl-title">Sponsorship Sales Campaign</div><div class="tl-desc">Parallel sponsorship drive. Finance committee contacts local businesses and prominent families. Target: all premium sponsorships sold by June 30.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">5</div>
-        <div class="tl-content"><div class="tl-date">August 2025</div><div class="tl-title">Data Finalisation & Photo Review</div><div class="tl-desc">Registration closes. All family data exported from Google Sheets. Photos checked for resolution. Missing photos followed up. Sponsor artwork collected and approved.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">6</div>
-        <div class="tl-content"><div class="tl-date">September 2025</div><div class="tl-title">PDF Production & Proofreading</div><div class="tl-desc">Full directory compiled using the automated PDF system. Committee proofreads all 400+ pages. At least two rounds of corrections. Final file approved by Vicar and ExCo.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">7</div>
-        <div class="tl-content"><div class="tl-date">October 2025</div><div class="tl-title">Print & Binding</div><div class="tl-desc">File sent to Canadian print house. 250 copies printed. Estimated 2–3 week turnaround. Quality check of printed copies.</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot future">🎉</div>
-        <div class="tl-content"><div class="tl-date">November 2025</div><div class="tl-title">Silver Jubilee Celebration & Directory Release</div><div class="tl-desc">Directory officially released at the Silver Jubilee Thanksgiving and Banquet. Every registered family receives their copy. Sponsors recognised at the event. Digital edition made available to members.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- S9: GOVERNANCE -->
-  <div class="section">
-    <span class="sec-anchor" id="s9"></span>
-    <div class="sec-hd"><div class="sec-num-badge">9</div><div><h2>Governance & Committee Roles</h2><div class="sec-sub">Proposed directory committee structure</div></div></div>
-    <div class="info-grid">
-      <div class="icard navy"><div class="ic-ico">📌</div><div class="ic-title">Directory Chairperson</div><div class="ic-body">Overall accountability. Reports to ExCo monthly. Final sign-off on design and content. Liaisons with printer and Vicar.</div></div>
-      <div class="icard gold"><div class="ic-ico">💰</div><div class="ic-title">Sponsorship Coordinator</div><div class="ic-body">Manages all sponsor relationships. Issues ad specifications. Collects payments. Reconciles sponsorship revenue against target.</div></div>
-      <div class="icard green"><div class="ic-ico">📸</div><div class="ic-title">Photo & Data Coordinator</div><div class="ic-body">Manages registration data quality. Follows up missing photos. Runs ImageMagick enhancement scripts. Exports final data set.</div></div>
-      <div class="icard blue"><div class="ic-ico">🖥</div><div class="ic-title">Technical Coordinator</div><div class="ic-body">Deploys and maintains the registration portal and admin console. Runs PDF generation. Delivers print-ready file to printer.</div></div>
-      <div class="icard red"><div class="ic-ico">🙏</div><div class="ic-title">Prayer Group Liaisons (×8)</div><div class="ic-body">One per prayer group. Responsible for ensuring all families in their group are registered. Assists members with the online form.</div></div>
-    </div>
-  </div>
-
-  <!-- S10: RESOLUTIONS -->
-  <div class="section">
-    <span class="sec-anchor" id="s10"></span>
-    <div class="sec-hd"><div class="sec-num-badge">10</div><div><h2>Resolutions Sought from the General Body</h2><div class="sec-sub">Formal motions for GB approval</div></div></div>
-
-    <div class="resolution-box">
-      <h3>✝ RESOLUTIONS FOR GENERAL BODY APPROVAL</h3>
-      <div class="res-item"><span class="res-bullet">1.</span><p class="res-text"><strong>That the General Body approves</strong> the production of a Silver Jubilee Parish Membership Directory of St. Thomas Mar Thoma Church, Vancouver, to be released at the Silver Jubilee Celebrations in November 2025.</p></div>
-      <div class="res-item"><span class="res-bullet">2.</span><p class="res-text"><strong>That the General Body authorises</strong> the Executive Committee to constitute a Directory Committee of not fewer than five members, including a Chairperson, Sponsorship Coordinator, Photo/Data Coordinator, Technical Coordinator, and Prayer Group Liaisons.</p></div>
-      <div class="res-item"><span class="res-bullet">3.</span><p class="res-text"><strong>That the General Body approves</strong> the fundraising target of <strong>CAD $50,000</strong> through family listing fees and directory sponsorships, to fund the Silver Jubilee Celebrations, with a minimum reserve of CAD $5,000 retained for printing costs.</p></div>
-      <div class="res-item"><span class="res-bullet">4.</span><p class="res-text"><strong>That the General Body approves</strong> the sponsorship rate schedule as presented in Section 5 of this proposal, including the listing fees ranging from CAD $40 (Standard) to CAD $200 (Platinum) per family.</p></div>
-      <div class="res-item"><span class="res-bullet">5.</span><p class="res-text"><strong>That the General Body authorises</strong> the Directory Committee to collect, store, and process family data (including photographs) in accordance with PIPEDA, for the sole purpose of producing the Parish Directory and maintaining the church membership roll.</p></div>
-      <div class="res-item"><span class="res-bullet">6.</span><p class="res-text"><strong>That the General Body approves</strong> a print run of a minimum 250 copies of the directory, and authorises the Directory Committee to engage a Canadian print house for production at a budget not to exceed CAD $8,000 for printing.</p></div>
-      <div class="res-item"><span class="res-bullet">7.</span><p class="res-text"><strong>That the General Body further endorses</strong> this proposal for submission to the <strong>Diocese of North America & Europe Executive Committee</strong> as a model for adoption by other parishes in the Diocese, in line with the resolution to standardise Parish Directories across the North American region.</p></div>
-    </div>
-
-    <!-- Signature block -->
-    <div class="sig-grid">
-      <div class="sig-block"><div class="sig-name">______________________________</div><div class="sig-role">Vicar, St. Thomas Mar Thoma Church, Vancouver</div><div class="sig-date">Date: _______________</div></div>
-      <div class="sig-block"><div class="sig-name">______________________________</div><div class="sig-role">Secretary, Executive Committee</div><div class="sig-date">Date: _______________</div></div>
-      <div class="sig-block"><div class="sig-name">______________________________</div><div class="sig-role">Treasurer, Executive Committee</div><div class="sig-date">Date: _______________</div></div>
-      <div class="sig-block"><div class="sig-name">______________________________</div><div class="sig-role">Directory Committee Chairperson</div><div class="sig-date">Date: _______________</div></div>
-    </div>
-  </div>
-
-</div>
-
-<div class="gold-bar"></div>
-<footer>
-  <div>✝ &nbsp;St. Thomas Mar Thoma Church, Vancouver · Silver Jubilee Parish Directory 2025</div>
-  <div><a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a> &nbsp;·&nbsp; <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a></div>
-  <div>10787 128 St, Surrey, BC V3T 3A2 &nbsp;·&nbsp; Diocese of North America &amp; Europe &nbsp;·&nbsp; Mar Thoma Syrian Church</div>
-  <div style="margin-top:8px;font-size:0.68rem;color:rgba(255,255,255,0.25);">CONFIDENTIAL — PREPARED FOR EXECUTIVE COMMITTEE · MARCH 2025</div>
+</div><!-- /wrap -->
+<div class="gold-rule"></div>
+<footer style="background:var(--navy);color:rgba(255,255,255,0.38);text-align:center;padding:18px;font-size:0.67rem;line-height:1.9;">
+  <div>&#10013; &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; Diocese of North America &nbsp;&#183;&nbsp; Silver Jubilee 2025</div>
+  <div><a href="https://vancouvermarthomachurch.com/" style="color:var(--gold2);text-decoration:none;">vancouvermarthomachurch.com</a> &nbsp;&#183;&nbsp; <a href="https://marthomana.org/" style="color:var(--gold2);text-decoration:none;">marthomana.org</a> &nbsp;&#183;&nbsp; <a href="mailto:vancouvermarthoma@gmail.com" style="color:var(--gold2);text-decoration:none;">vancouvermarthoma@gmail.com</a></div>
+  <div style="margin-top:4px;font-size:0.59rem;">Private and confidential — for Executive Committee review only &nbsp;&#183;&nbsp; Not for public distribution</div>
 </footer>
 </body>
 </html>

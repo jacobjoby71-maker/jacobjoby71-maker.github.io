@@ -1,588 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>Project Hub — St. Thomas Mar Thoma Church, Vancouver</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;0,800;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --navy:#0c1e3c; --navy2:#142d58; --navy3:#1c3a70;
-      --gold:#c9a84c; --gold2:#e8cc78; --gold3:#f5e4a8; --gold4:#6a4c10;
-      --cream:#fdf9f0; --white:#fff;
-      --muted:#6a7a98; --border:#d8cdb0; --soft:#f2ece0;
-      --green:#1a6a3a; --green2:#eaf7ec;
-      --red:#9a2020;   --red2:#fdf0f0;
-      --blue:#1a4a8a;  --blue2:#eaf2fd;
-      --orange:#b06020; --orange2:#fdf4ea;
-      --purple:#5a3a8a; --purple2:#f4eafd;
-      --teal:#0e6a6a;  --teal2:#e6f7f7;
-    }
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
-    body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--navy); min-height:100vh; }
-
-    /* ── HEADER ── */
-    .header {
-      background:linear-gradient(160deg,#050d1a 0%,var(--navy) 45%,var(--navy2) 100%);
-      color:var(--white); padding:44px 20px 36px; text-align:center;
-      position:relative; overflow:hidden;
-    }
-    .header::before {
-      content:''; position:absolute; inset:0; z-index:0;
-      background:repeating-linear-gradient(55deg,transparent,transparent 60px,rgba(201,168,76,0.025) 60px,rgba(201,168,76,0.025) 61px);
-    }
-    /* floating particles */
-    .particles { position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .particle { position:absolute; width:3px; height:3px; border-radius:50%; background:var(--gold); opacity:0; animation:float-up 6s ease-in-out infinite; }
-    @keyframes float-up { 0%{opacity:0;transform:translateY(0) scale(1);}30%{opacity:0.6;}70%{opacity:0.3;}100%{opacity:0;transform:translateY(-80px) scale(0.5);} }
-
-    .header-inner { position:relative; z-index:1; max-width:700px; margin:0 auto; }
-
-    .header-emblem {
-      width:80px; height:80px; margin:0 auto 18px;
-      background:rgba(201,168,76,0.1); border:1.5px solid rgba(201,168,76,0.4);
-      border-radius:50%; display:flex; align-items:center; justify-content:center;
-      box-shadow:0 0 0 10px rgba(201,168,76,0.05),0 0 0 22px rgba(201,168,76,0.025);
-      animation:pulse-ring 3s ease-in-out infinite;
-    }
-    @keyframes pulse-ring { 0%,100%{box-shadow:0 0 0 10px rgba(201,168,76,0.05),0 0 0 22px rgba(201,168,76,0.025);} 50%{box-shadow:0 0 0 14px rgba(201,168,76,0.08),0 0 0 28px rgba(201,168,76,0.04);} }
-    .header-emblem svg { width:44px; height:44px; }
-
-    .jubilee-pill { display:inline-flex; align-items:center; gap:7px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); border-radius:30px; padding:6px 16px; margin-bottom:14px; }
-    .jp-num { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:800; background:linear-gradient(135deg,#8a5c00,#c9a84c,#f5e4a8,#c9a84c,#8a5c00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .jp-text { font-size:0.65rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold2); }
-
-    .header h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,5vw,2.4rem); font-weight:800; line-height:1.1; margin-bottom:6px; }
-    .header h1 em { font-style:italic; background:linear-gradient(135deg,#c9a84c,#f5e4a8,#c9a84c); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .header h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(0.9rem,2.5vw,1.15rem); font-weight:600; color:rgba(255,255,255,0.5); font-style:italic; margin-bottom:4px; }
-    .header-sub { font-size:0.7rem; color:rgba(255,255,255,0.32); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:24px; }
-
-    /* Stats row */
-    .header-stats { display:inline-flex; gap:0; background:rgba(20,45,88,0.7); border:1px solid rgba(201,168,76,0.15); border-radius:12px; overflow:hidden; }
-    .hs-item { padding:10px 20px; text-align:center; border-right:1px solid rgba(255,255,255,0.07); }
-    .hs-item:last-child { border-right:none; }
-    .hs-val { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--gold2); line-height:1; }
-    .hs-lbl { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.09em; color:rgba(255,255,255,0.35); margin-top:3px; }
-
-    .gold-bar { height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
-
-    /* ── SEARCH BAR ── */
-    .search-bar-wrap { max-width:700px; margin:28px auto 0; padding:0 16px; }
-    .search-bar { display:flex; align-items:center; gap:10px; background:var(--white); border:1.5px solid var(--border); border-radius:50px; padding:10px 18px; box-shadow:0 4px 20px rgba(12,30,60,0.08); }
-    .search-bar input { flex:1; border:none; outline:none; font-family:'Outfit',sans-serif; font-size:0.92rem; color:var(--navy); background:transparent; }
-    .search-bar input::placeholder { color:var(--muted); }
-    .search-clear { background:transparent; border:none; color:var(--muted); font-size:1rem; cursor:pointer; display:none; }
-
-    /* ── MAIN ── */
-    .main { max-width:980px; margin:0 auto; padding:36px 16px 80px; }
-
-    /* Category label */
-    .cat-label { display:flex; align-items:center; gap:10px; margin-bottom:18px; margin-top:8px; }
-    .cat-label h2 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--navy); white-space:nowrap; }
-    .cat-label::after { content:''; flex:1; height:1px; background:var(--border); }
-    .cat-label .cat-count { font-size:0.65rem; font-weight:700; color:var(--muted); letter-spacing:0.08em; background:var(--soft); border:1px solid var(--border); border-radius:20px; padding:2px 9px; }
-
-    /* Cards grid */
-    .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:40px; }
-
-    /* Card */
-    .card {
-      background:var(--white); border-radius:16px; overflow:hidden;
-      box-shadow:0 3px 18px rgba(12,30,60,0.08);
-      border:1.5px solid var(--border);
-      transition:transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-      text-decoration:none; color:inherit; display:flex; flex-direction:column;
-      cursor:pointer;
-    }
-    .card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(12,30,60,0.14); border-color:transparent; }
-
-    .card-header { padding:18px 18px 14px; display:flex; align-items:flex-start; gap:14px; }
-    .card-icon-wrap { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
-    .card-meta { flex:1; }
-    .card-tag { font-size:0.58rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px; display:inline-block; padding:2px 8px; border-radius:10px; }
-    .card-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:3px; }
-    .card-subtitle { font-size:0.72rem; color:var(--muted); }
-
-    .card-body { padding:0 18px 16px; flex:1; }
-    .card-desc { font-size:0.78rem; color:var(--muted); line-height:1.6; }
-
-    .card-footer { padding:12px 18px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
-    .card-audience { display:flex; gap:5px; flex-wrap:wrap; }
-    .aud-chip { font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:10px; letter-spacing:0.04em; }
-    .card-open { font-size:0.72rem; font-weight:700; display:flex; align-items:center; gap:5px; letter-spacing:0.04em; }
-
-    /* Colour themes */
-    .t-gold   .card-icon-wrap { background:rgba(201,168,76,0.12); }
-    .t-gold   .card-tag       { background:rgba(201,168,76,0.15); color:var(--gold4); }
-    .t-gold   .card-open      { color:var(--gold4); }
-    .t-gold:hover             { border-color:var(--gold); }
-
-    .t-navy   .card-icon-wrap { background:rgba(12,30,60,0.07); }
-    .t-navy   .card-tag       { background:rgba(12,30,60,0.09); color:var(--navy2); }
-    .t-navy   .card-open      { color:var(--navy); }
-    .t-navy:hover             { border-color:var(--navy); }
-
-    .t-green  .card-icon-wrap { background:var(--green2); }
-    .t-green  .card-tag       { background:var(--green2); color:var(--green); }
-    .t-green  .card-open      { color:var(--green); }
-    .t-green:hover            { border-color:var(--green); }
-
-    .t-blue   .card-icon-wrap { background:var(--blue2); }
-    .t-blue   .card-tag       { background:var(--blue2); color:var(--blue); }
-    .t-blue   .card-open      { color:var(--blue); }
-    .t-blue:hover             { border-color:var(--blue); }
-
-    .t-orange .card-icon-wrap { background:var(--orange2); }
-    .t-orange .card-tag       { background:var(--orange2); color:var(--orange); }
-    .t-orange .card-open      { color:var(--orange); }
-    .t-orange:hover           { border-color:var(--orange); }
-
-    .t-purple .card-icon-wrap { background:var(--purple2); }
-    .t-purple .card-tag       { background:var(--purple2); color:var(--purple); }
-    .t-purple .card-open      { color:var(--purple); }
-    .t-purple:hover           { border-color:var(--purple); }
-
-    .t-teal   .card-icon-wrap { background:var(--teal2); }
-    .t-teal   .card-tag       { background:var(--teal2); color:var(--teal); }
-    .t-teal   .card-open      { color:var(--teal); }
-    .t-teal:hover             { border-color:var(--teal); }
-
-    .t-red    .card-icon-wrap { background:var(--red2); }
-    .t-red    .card-tag       { background:var(--red2); color:var(--red); }
-    .t-red    .card-open      { color:var(--red); }
-    .t-red:hover              { border-color:var(--red); }
-
-    /* Audience chips */
-    .aud-public   { background:var(--green2);  color:var(--green); }
-    .aud-trustee  { background:rgba(201,168,76,0.12); color:var(--gold4); }
-    .aud-exco     { background:var(--navy);     color:var(--gold2); }
-    .aud-member   { background:var(--blue2);    color:var(--blue); }
-    .aud-team     { background:var(--purple2);  color:var(--purple); }
-
-    /* NEW badge */
-    .new-badge { display:inline-block; background:var(--red); color:var(--white); font-size:0.55rem; font-weight:800; padding:2px 6px; border-radius:6px; letter-spacing:0.08em; margin-left:6px; vertical-align:middle; animation:new-pulse 2s ease-in-out infinite; }
-    @keyframes new-pulse { 0%,100%{opacity:1;} 50%{opacity:0.65;} }
-
-    /* No-results */
-    .no-results { text-align:center; padding:48px 20px; color:var(--muted); display:none; }
-    .no-results.show { display:block; }
-    .no-results p { font-size:0.9rem; }
-
-    /* Quick copy banner */
-    .copy-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--navy); color:var(--white); padding:11px 22px; border-radius:30px; font-size:0.82rem; font-weight:600; z-index:999; transition:transform 0.3s ease; box-shadow:0 6px 24px rgba(12,30,60,0.3); pointer-events:none; }
-    .copy-toast.show { transform:translateX(-50%) translateY(0); }
-
-    /* Hosting guide CTA */
-    .hosting-cta { background:linear-gradient(135deg,var(--navy),var(--navy2)); border-radius:16px; padding:22px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:36px; }
-    .hc-text h3 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--white); margin-bottom:4px; }
-    .hc-text p { font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.5; }
-    .hc-btn { padding:12px 22px; border-radius:10px; background:linear-gradient(135deg,var(--gold),#b0882a); border:none; color:var(--navy); font-family:'Outfit',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; white-space:nowrap; text-decoration:none; display:inline-block; }
-    .hc-btn:hover { opacity:0.88; }
-
-    /* Footer */
-    footer { background:var(--navy); color:rgba(255,255,255,0.4); text-align:center; padding:26px 20px; font-size:0.74rem; line-height:1.9; }
-    footer a { color:var(--gold); text-decoration:none; }
-
-    @media(max-width:500px) {
-      .header-stats { flex-wrap:wrap; }
-      .hs-item { padding:8px 14px; }
-      .hc-btn { width:100%; text-align:center; }
-    }
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Digital Resource Hub — St. Thomas Mar Thoma Church, Vancouver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0c1e3c;--gold:#b8923a;--gold2:#d4a84b;--gold3:#f0cc78;--cream:#faf6ee;--white:#fff;--muted:#7a8aaa;--border:#ddd3b8;--soft:#f4ede0;--green:#155c35;--green-bg:#e8f5ee;--red:#8a1818;--blue:#1a3d7a;--blue-bg:#eaf0fa;--ink:#1c2640;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;}
+/* HEADER */
+.hdr{background:linear-gradient(168deg,#040d1e,#0c1e3c,#192f55);position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;inset:0;opacity:0.04;background:repeating-linear-gradient(62deg,transparent 0,transparent 38px,var(--gold) 38px,var(--gold) 39px);}
+.hdr-in{position:relative;z-index:1;text-align:center;padding:36px 20px 26px;}
+.cross{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;background:rgba(184,146,58,0.1);border:1.5px solid rgba(184,146,58,0.35);display:flex;align-items:center;justify-content:center;}
+.cross svg{width:32px;height:32px;}
+.jub{display:inline-flex;align-items:center;gap:7px;background:rgba(184,146,58,0.14);border:1px solid rgba(184,146,58,0.3);border-radius:28px;padding:4px 14px;margin-bottom:11px;}
+.jub-n{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:800;background:linear-gradient(135deg,#8a5c00,var(--gold2),var(--gold3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.jub-t{font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold3);}
+.hdr-ch{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,4vw,2rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:4px;}
+.hdr-ch em{font-style:italic;color:var(--gold3);}
+.hdr-sub{font-size:0.67rem;color:rgba(255,255,255,0.38);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.hdr-desc{font-size:0.76rem;color:rgba(255,255,255,0.46);max-width:500px;margin:0 auto;}
+.dioc-strip{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;background:rgba(5,10,25,0.7);border-top:1px solid rgba(184,146,58,0.15);padding:8px 16px;font-size:0.63rem;color:rgba(255,255,255,0.4);}
+.ds-l{color:var(--gold3);font-weight:700;margin-right:3px;}
+.gold-rule{height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold3),var(--gold2),transparent);}
+/* WRAP */
+.wrap{max-width:980px;margin:0 auto;padding:22px 14px 64px;}
+/* QUICK ACTIONS */
+.qa-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+.qa-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:all .15s;}
+.qa-btn:active{transform:scale(0.96);}
+.qa-p{background:linear-gradient(135deg,var(--gold2),#9a7020);color:var(--navy);box-shadow:0 4px 12px rgba(184,146,58,0.22);}
+.qa-s{background:var(--white);color:var(--navy);border:1.5px solid var(--border);}
+.qa-g{background:var(--green);color:#fff;}
+.qa-b{background:var(--blue);color:#fff;}
+/* SEARCH */
+.search-wrap{margin-bottom:18px;position:relative;}
+.search-wrap input{width:100%;padding:11px 14px 11px 40px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.86rem;background:var(--white);outline:none;transition:border-color .15s,box-shadow .15s;}
+.search-wrap input:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(184,146,58,0.1);}
+.search-wrap .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:0.9rem;pointer-events:none;}
+/* SECTION HEADERS */
+.sh{display:flex;align-items:center;gap:9px;margin:22px 0 12px;}
+.sh-ic{font-size:1rem;}
+.sh-tx h2{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);}
+.sh-tx p{font-size:0.63rem;color:var(--muted);}
+/* CARDS GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:0;}
+.file-card{background:var(--white);border-radius:12px;border:1.5px solid var(--border);overflow:hidden;transition:box-shadow .18s,transform .18s;display:flex;flex-direction:column;}
+.file-card:hover{box-shadow:0 6px 22px rgba(12,30,60,0.1);transform:translateY(-2px);}
+.fc-hd{padding:13px 14px 10px;display:flex;align-items:flex-start;gap:11px;}
+.fc-ic{width:40px;height:40px;flex-shrink:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.fc-meta h3{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:2px;line-height:1.25;}
+.fc-meta p{font-size:0.66rem;color:var(--muted);line-height:1.5;}
+.fc-badges{display:flex;flex-wrap:wrap;gap:4px;padding:0 14px 10px;}
+.badge{padding:2px 8px;border-radius:10px;font-size:0.57rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;}
+.b-mem{background:rgba(21,92,53,0.1);color:var(--green);border:1px solid rgba(21,92,53,0.2);}
+.b-trst{background:rgba(184,146,58,0.1);color:#8a6010;border:1px solid rgba(184,146,58,0.2);}
+.b-exco{background:rgba(26,61,122,0.1);color:var(--blue);border:1px solid rgba(26,61,122,0.2);}
+.b-pub{background:var(--soft);color:var(--ink);border:1px solid var(--border);}
+.b-new{background:rgba(220,50,50,0.1);color:var(--red);border:1px solid rgba(220,50,50,0.2);}
+.b-live{background:rgba(21,92,53,0.1);color:var(--green);border:1px solid rgba(21,92,53,0.2);}
+.fc-ft{margin-top:auto;padding:9px 14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.fc-lk{color:var(--gold);font-size:0.73rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:4px;}
+.fc-lk:hover{color:var(--navy);}
+.fc-sz{font-size:0.6rem;color:var(--muted);}
+/* NOTICE */
+.notice{background:var(--blue-bg);border:1.5px solid rgba(26,61,122,0.18);border-radius:10px;padding:13px 15px;margin-bottom:18px;display:flex;gap:10px;}
+.n-ic{font-size:1.1rem;flex-shrink:0;}
+.n-tx h3{font-size:0.72rem;font-weight:700;color:var(--blue);margin-bottom:2px;}
+.n-tx p{font-size:0.69rem;color:#334d8a;line-height:1.6;}
+/* STATS ROW */
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;}
+.stat{background:var(--white);border:1.5px solid var(--border);border-radius:9px;padding:12px 14px;flex:1;min-width:120px;text-align:center;}
+.stat-v{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy);}
+.stat-l{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-top:2px;}
+/* COLOR DOTS */
+.c-navy{background:rgba(12,30,60,0.08);}
+.c-gold{background:rgba(184,146,58,0.1);}
+.c-green{background:rgba(21,92,53,0.1);}
+.c-blue{background:rgba(26,61,122,0.1);}
+.c-red{background:rgba(138,24,24,0.08);}
+.c-dark{background:rgba(17,24,39,0.06);}
+@media(max-width:560px){.qa-row{flex-direction:column;}.stats{grid-template-columns:1fr 1fr;}}
+</style>
 </head>
 <body>
-
-<!-- ── TOAST ── -->
-<div class="copy-toast" id="toast">✓ Link copied to clipboard!</div>
-
-<!-- ── HEADER ── -->
-<header class="header">
-  <div class="particles" id="particles"></div>
-  <div class="header-inner">
-    <div class="header-emblem">
-      <svg viewBox="0 0 44 44" fill="none">
-        <rect x="19.5" y="3" width="5" height="38" rx="2.2" fill="#c9a84c"/>
-        <rect x="3" y="14" width="38" height="5" rx="2.2" fill="#c9a84c"/>
-        <circle cx="22" cy="22" r="20" stroke="#c9a84c" stroke-width="1.2" fill="none" opacity="0.4"/>
-      </svg>
-    </div>
-    <div class="jubilee-pill">
-      <span class="jp-num">25</span>
-      <span class="jp-text">Silver Jubilee 2025</span>
-    </div>
-    <h1>St. Thomas Mar Thoma Church<br/><em>Vancouver — Project Hub</em></h1>
-    <h2>Diocese of North America &amp; Europe</h2>
-    <p class="header-sub">Surrey, British Columbia · All Files &amp; Systems</p>
-    <div class="header-stats">
-      <div class="hs-item"><div class="hs-val">9</div><div class="hs-lbl">Files</div></div>
-      <div class="hs-item"><div class="hs-val">3</div><div class="hs-lbl">Systems</div></div>
-      <div class="hs-item"><div class="hs-val">$50K</div><div class="hs-lbl">Target</div></div>
-      <div class="hs-item"><div class="hs-val">2025</div><div class="hs-lbl">Jubilee</div></div>
-    </div>
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="cross"><svg viewBox="0 0 38 38" fill="none"><rect x="16.5" y="2" width="5" height="34" rx="2" fill="#d4a84b"/><rect x="2" y="12" width="34" height="5" rx="2" fill="#d4a84b"/><circle cx="19" cy="19" r="17" stroke="#d4a84b" stroke-width="1" fill="none" opacity="0.35"/></svg></div>
+    <div class="jub"><span class="jub-n">&#10022; 25 &#10022;</span><span class="jub-t">Silver Jubilee 2025</span></div>
+    <div class="hdr-ch">St. Thomas Mar Thoma Church <em>Vancouver</em></div>
+    <div class="hdr-sub">10787 128 Street, Surrey, BC V3T 3A2 &nbsp;&#183;&nbsp; Holy Qurbana every Sunday 4:00 PM PST</div>
+    <div class="hdr-desc">Digital Resource Hub &mdash; Contributions, Parish Directory &amp; Live Membership Portal for the Executive Committee</div>
   </div>
-</header>
-<div class="gold-bar"></div>
-
-<!-- ── SEARCH ── -->
-<div class="search-bar-wrap">
-  <div class="search-bar">
-    <span style="font-size:1rem;color:var(--muted);">🔍</span>
-    <input type="text" id="search" placeholder="Search files… e.g. directory, contribution, kiosk" oninput="doSearch()"/>
-    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  <div class="dioc-strip">
+    <span><span class="ds-l">Diocese:</span>Diocese of North America</span>
+    <span><span class="ds-l">Bishop:</span>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</span>
+    <span><span class="ds-l">Metropolitan:</span>Most Rev. Dr. Theodosius Mar Thoma (22nd)</span>
+    <span><span class="ds-l">Parish:</span>vancouvermarthomachurch.com</span>
   </div>
 </div>
+<div class="gold-rule"></div>
 
-<!-- ── MAIN ── -->
-<main class="main" id="main">
+<div class="wrap">
+  <!-- QUICK ACTIONS -->
+  <div class="qa-row" style="margin-top:6px;">
+    <a class="qa-btn qa-p" href="membership-portal.html">&#127760; Live Membership Portal</a>
+    <a class="qa-btn qa-p" href="directory-registration-form.html">&#128203; Family Directory Form</a>
+    <a class="qa-btn qa-g" href="directory-proposal.html">&#9997; ExCo Proposal</a>
+    <a class="qa-btn qa-s" href="church-directory-portal.html">&#128214; Directory Browse</a>
+    <a class="qa-btn qa-b" href="contribution.html">&#128176; Contributions</a>
+    <a class="qa-btn qa-s" href="integrated-dashboard.html">&#128187; Trustee Dashboard</a>
+  </div>
 
-  <!-- HOSTING GUIDE CTA -->
-  <div class="hosting-cta">
-    <div class="hc-text">
-      <h3>📡 Need to share as a live link?</h3>
-      <p>Follow our step-by-step guide to host these files online and share them with the Executive Committee in minutes.</p>
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <span class="si">&#128269;</span>
+    <input type="text" id="srch" placeholder="Search all documents (e.g. contributions, directory, portal, ExCo)&#8230;" oninput="doSearch(this.value)"/>
+  </div>
+
+  <div class="notice">
+    <div class="n-ic">&#128161;</div>
+    <div class="n-tx"><h3>New in this update (March 2026)</h3><p>Three new documents have been added: the <strong>Live Membership Portal</strong> with mandatory three-approver workflow, the fully updated <strong>Family Directory Information Form</strong> (Parts A&#8211;K, incorporating all Diocese of North America and Dubai Mar Thoma Parish standard fields including Home Parish, blood groups, and civil/church authorities), and the updated <strong>Executive Committee Proposal</strong> with approved authorities list and portal specification. All files are listed below.</p></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-v">11</div><div class="stat-l">Total Documents</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--green);">3</div><div class="stat-l">New / Updated (Mar 2026)</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--gold);">4</div><div class="stat-l">Contribution Tools</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--blue);">4</div><div class="stat-l">Directory &amp; Portal Files</div></div>
+  </div>
+
+  <!-- DIRECTORY & PORTAL SECTION -->
+  <div class="sh"><span class="sh-ic">&#127963;</span><div class="sh-tx"><h2>Church Directory &amp; Live Membership Portal</h2><p>Silver Jubilee 2025 &mdash; Family registration, ExCo proposal, and member portal</p></div></div>
+  <div class="grid" id="grid-dir">
+
+    <div class="file-card" data-kw="membership portal login approval workflow three approver live secure">
+      <div class="fc-hd">
+        <div class="fc-ic c-green">&#127760;</div>
+        <div class="fc-meta"><h3>Live Membership Portal</h3><p>Secure online platform for family registration, profile updates, and directory management. Four views: Public, Login, Member Profile, Admin Queue with 7-step three-approver workflow.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-new">&#9679; New</span><span class="badge b-live">3-Approver Rule</span><span class="badge b-mem">Members</span><span class="badge b-exco">ExCo</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="membership-portal.html">Open Portal &#8594;</a><span class="fc-sz">HTML</span></div>
     </div>
-    <a href="how-to-share.html" class="hc-btn">View Sharing Guide →</a>
+
+    <div class="file-card" data-kw="directory registration form family information home parish idavaka blood group children spouse exco approval">
+      <div class="fc-hd">
+        <div class="fc-ic c-navy">&#128203;</div>
+        <div class="fc-meta"><h3>Family Directory Information Form</h3><p>Complete 11-part registration form (Parts A&#8211;K). Head of family, spouse, up to 4 children, Home Parish India, civil authorities, listing preferences, ExCo approval block with interactive vote.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-new">&#9679; Updated</span><span class="badge b-mem">Members</span><span class="badge b-exco">ExCo Approval</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="directory-registration-form.html">Open Form &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="proposal executive committee directory exco resolutions approval diocesan authorities premier mp mla fire chief">
+      <div class="fc-hd">
+        <div class="fc-ic c-blue">&#9997;</div>
+        <div class="fc-meta"><h3>Executive Committee Proposal</h3><p>Formal church proposal for ExCo review. Includes Diocesan alignment (Diocese of North America), civil authorities table, revenue model (CAD $50,000 target), Live Portal spec, six resolutions, and approval note.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-new">&#9679; Updated</span><span class="badge b-exco">ExCo Only</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="directory-proposal.html">Open Proposal &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="directory portal browse search prayer group registration public silver jubilee">
+      <div class="fc-hd">
+        <div class="fc-ic c-gold">&#128214;</div>
+        <div class="fc-meta"><h3>Parish Directory Portal</h3><p>Public-facing directory with family search, prayer group filter, sponsorship tiers, live fundraising progress bar, and family registration. Powered by localStorage. Pre-loaded with sample families.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-pub">Public</span><span class="badge b-mem">Members</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="church-directory-portal.html">Open Portal &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+  </div>
+
+  <!-- CONTRIBUTIONS SECTION -->
+  <div class="sh" style="margin-top:22px;"><span class="sh-ic">&#128176;</span><div class="sh-tx"><h2>Contribution System</h2><p>Four channels for collecting offerings &amp; contributions — website, Facebook, WhatsApp, and tablet kiosk</p></div></div>
+  <div class="grid" id="grid-con">
+
+    <div class="file-card" data-kw="contribution website paypal interac online 15 categories">
+      <div class="fc-hd">
+        <div class="fc-ic c-navy">&#128176;</div>
+        <div class="fc-meta"><h3>Online Contribution Form</h3><p>Website version. 15 contribution categories, auto-calculating CAD totals, PayPal + Interac e-Transfer + cheque payment. Three-step flow. Print receipt.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-pub">Website</span><span class="badge b-mem">Members</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="contribution.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="facebook social media contribution share open graph post">
+      <div class="fc-hd">
+        <div class="fc-ic c-blue">&#128084;</div>
+        <div class="fc-meta"><h3>Facebook Share Page</h3><p>Open Graph-optimised contribution page for Facebook sharing. Includes animated hero, ready-to-copy post text with Scripture (2 Cor 9:7), and all 15 categories.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-pub">Facebook</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="contribution-facebook.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="whatsapp share chat contribution wa link copy message">
+      <div class="fc-hd">
+        <div class="fc-ic c-green">&#128172;</div>
+        <div class="fc-meta"><h3>WhatsApp Share Page</h3><p>WhatsApp-styled contribution page. Pre-formatted message with WA markdown, copy-to-clipboard and direct wa.me deep link buttons. Church green branding.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-pub">WhatsApp</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="contribution-whatsapp.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="kiosk tablet pin lock church entrance contribution session log trustee">
+      <div class="fc-hd">
+        <div class="fc-ic c-dark">&#128083;</div>
+        <div class="fc-meta"><h3>Tablet Kiosk</h3><p>PIN-locked full-screen kiosk for the church entrance tablet. 15 category tiles, session log, running totals, trustee notes, and print report. Default PIN: 1234.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-trst">Trustees</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="contribution-tablet-kiosk.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+  </div>
+
+  <!-- MANAGEMENT SECTION -->
+  <div class="sh" style="margin-top:22px;"><span class="sh-ic">&#128187;</span><div class="sh-tx"><h2>Church Management &amp; Operations</h2><p>Trustee dashboard, operations guide, and hosting instructions</p></div></div>
+  <div class="grid" id="grid-mgmt">
+
+    <div class="file-card" data-kw="dashboard trustee pin statistics chart csv export all contributions google sheets">
+      <div class="fc-hd">
+        <div class="fc-ic c-navy">&#128187;</div>
+        <div class="fc-meta"><h3>Integrated Trustee Dashboard</h3><p>PIN-protected (1234) consolidated dashboard for all 4 contribution channels. Live stats, category bar chart, CSV export, Google Sheets sync configuration, settings panel.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-trst">Trustees</span><span class="badge b-exco">Finance</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="integrated-dashboard.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="trustee operations guide google sheets apps script sop security pipeda">
+      <div class="fc-hd">
+        <div class="fc-ic c-gold">&#128218;</div>
+        <div class="fc-meta"><h3>Trustee Operations Guide</h3><p>System architecture, 7-step Google Sheets setup, Apps Script code, 4 SOPs, channel comparison, PIPEDA guidance.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-trst">Trustees</span><span class="badge b-exco">Admin</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="trustee-operations-guide.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
+    <div class="file-card" data-kw="hosting share netlify github qr code deploy godaddy exco share">
+      <div class="fc-hd">
+        <div class="fc-ic c-blue">&#127760;</div>
+        <div class="fc-meta"><h3>Hosting &amp; Sharing Guide</h3><p>Step-by-step instructions for Netlify Drop, GitHub Pages, GoDaddy, and Google Drive hosting. QR code generation and ExCo email template included.</p></div>
+      </div>
+      <div class="fc-badges"><span class="badge b-exco">Admin</span></div>
+      <div class="fc-ft"><a class="fc-lk" href="how-to-share.html">Open &#8594;</a><span class="fc-sz">HTML</span></div>
+    </div>
+
   </div>
 
   <!-- NO RESULTS -->
-  <div class="no-results" id="no-results">
-    <p>🔍 No files found. Try a different search term.</p>
-  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:30px;color:var(--muted);font-size:0.85rem;">No matching documents found. Try a different keyword.</div>
 
-  <!-- ═══ CATEGORY: SILVER JUBILEE DIRECTORY ═══ -->
-  <div class="cat-section" id="cat-directory">
-    <div class="cat-label">
-      <h2>✝ Silver Jubilee Parish Directory</h2>
-      <span class="cat-count">2 files</span>
-    </div>
-    <div class="cards-grid">
-
-      <a class="card t-gold" href="church-directory-portal.html" target="_blank"
-         data-title="Parish Directory Portal"
-         data-keywords="directory portal register family silver jubilee photo listing sponsorship public">
-        <div class="card-header">
-          <div class="card-icon-wrap">📖</div>
-          <div class="card-meta">
-            <div class="card-tag">Public Portal</div>
-            <div class="card-title">Silver Jubilee Parish Directory<span class="new-badge">NEW</span></div>
-            <div class="card-subtitle">church-directory-portal.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Live registration portal for families. Silver Jubilee hero, 6-step family registration, family photo upload, sponsorship packages ($200–$2,500), live fundraising progress toward CAD $50,000.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-public">All Members</span>
-            <span class="aud-chip aud-member">Families</span>
-            <span class="aud-chip aud-trustee">Trustees</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-      <a class="card t-navy" href="directory-proposal.html" target="_blank"
-         data-title="Executive Committee Proposal"
-         data-keywords="proposal executive committee general body resolution north american standard directory jubilee exco">
-        <div class="card-header">
-          <div class="card-icon-wrap">📜</div>
-          <div class="card-meta">
-            <div class="card-tag">ExCo Document</div>
-            <div class="card-title">Executive Committee Proposal<span class="new-badge">NEW</span></div>
-            <div class="card-subtitle">directory-proposal.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Formal proposal for GB approval. North American directory standard, 400–500 page structure, revenue model ($57,400 projected), 8-milestone timeline, 7 formal resolutions with signature blocks.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-exco">ExCo</span>
-            <span class="aud-chip aud-trustee">Trustees</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
+  <!-- PENDING ACTIONS -->
+  <div style="background:var(--white);border-radius:12px;border:1.5px solid var(--border);padding:16px;margin-top:22px;">
+    <div style="font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:12px;">&#128204; Pending Actions for Church Administration</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--red);">&#128204; Replace <code>XXXXXXXXX</code> in contribution files with real PayPal hosted_button_id</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--red);">&#128204; Replace <code>[PASTE LINK HERE]</code> in Facebook/WhatsApp files with hosted URL</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--gold);">&#9997; Fill in Vicar&#8217;s name in ExCo vote table (directory-registration-form.html Part K)</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--gold);">&#9997; Fill in Anglican Bishop name placeholder in directory-proposal.html Section 3</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--blue);">&#128274; Change default kiosk &amp; dashboard PIN from 1234 after first admin login</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--blue);">&#128274; Deploy Live Membership Portal with real back-end database (engage web developer)</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--green);">&#10013; Present ExCo Proposal at next Executive Committee meeting</div>
+      <div style="font-size:0.7rem;padding:7px 10px;background:var(--soft);border-radius:6px;border-left:3px solid var(--green);">&#10013; Upload all files to Netlify Drop or GoDaddy; share link with ExCo</div>
     </div>
   </div>
 
-  <!-- ═══ CATEGORY: CONTRIBUTION SYSTEM ═══ -->
-  <div class="cat-section" id="cat-contribution">
-    <div class="cat-label">
-      <h2>💳 Online Contribution System</h2>
-      <span class="cat-count">3 files</span>
-    </div>
-    <div class="cards-grid">
-
-      <a class="card t-blue" href="contribution.html" target="_blank"
-         data-title="Website Contribution Page"
-         data-keywords="contribution donation website paypal interac payment form">
-        <div class="card-header">
-          <div class="card-icon-wrap">🌐</div>
-          <div class="card-meta">
-            <div class="card-tag">Website · Public</div>
-            <div class="card-title">Contribution Form — Website</div>
-            <div class="card-subtitle">contribution.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">3-step contribution form for the church website. All 15 categories, auto-calculating total, PayPal button, Interac e-Transfer, Cheque/Cash options. Navy/gold brand.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-public">All Members</span>
-            <span class="aud-chip aud-member">Website</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-      <a class="card t-purple" href="contribution-facebook.html" target="_blank"
-         data-title="Facebook Contribution Page"
-         data-keywords="facebook contribution donation social media post link">
-        <div class="card-header">
-          <div class="card-icon-wrap">📘</div>
-          <div class="card-meta">
-            <div class="card-tag">Facebook · Social</div>
-            <div class="card-title">Contribution Form — Facebook</div>
-            <div class="card-subtitle">contribution-facebook.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Facebook-optimised version with Open Graph meta tags for rich link preview in church group. Ready-to-copy post text with Scripture, emoji formatting, and all 15 contribution categories.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-public">All Members</span>
-            <span class="aud-chip aud-member">Facebook</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-      <a class="card t-green" href="contribution-whatsapp.html" target="_blank"
-         data-title="WhatsApp Contribution Page"
-         data-keywords="whatsapp contribution donation message share community">
-        <div class="card-header">
-          <div class="card-icon-wrap">💬</div>
-          <div class="card-meta">
-            <div class="card-tag">WhatsApp · Messaging</div>
-            <div class="card-title">Contribution Form — WhatsApp</div>
-            <div class="card-subtitle">contribution-whatsapp.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">WhatsApp-branded version with realistic chat bubble preview, pre-formatted WA message (bold/italic markdown), "Copy" and "Open in WhatsApp" buttons to share instantly.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-public">All Members</span>
-            <span class="aud-chip aud-member">WhatsApp</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- ═══ CATEGORY: TRUSTEE SYSTEMS ═══ -->
-  <div class="cat-section" id="cat-trustee">
-    <div class="cat-label">
-      <h2>🔐 Trustee Management Systems</h2>
-      <span class="cat-count">3 files</span>
-    </div>
-    <div class="cards-grid">
-
-      <a class="card t-orange" href="contribution-tablet-kiosk.html" target="_blank"
-         data-title="Tablet Kiosk"
-         data-keywords="kiosk tablet phone trustee in-person collection pin secure offline">
-        <div class="card-header">
-          <div class="card-icon-wrap">🖥</div>
-          <div class="card-meta">
-            <div class="card-tag">Trustee · In-Person</div>
-            <div class="card-title">Contribution Kiosk — Tablet</div>
-            <div class="card-subtitle">contribution-tablet-kiosk.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">PIN-locked tablet app for Sunday collection drives. 15-category tap tiles, live session total, running count, session log, print summary. Add to Home Screen for full-screen kiosk mode.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-trustee">Trustees Only</span>
-            <span class="aud-chip aud-team">In-Person</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-      <a class="card t-teal" href="integrated-dashboard.html" target="_blank"
-         data-title="Integrated Trustee Dashboard"
-         data-keywords="dashboard trustee integrated all channels web facebook whatsapp kiosk export csv sync google sheets">
-        <div class="card-header">
-          <div class="card-icon-wrap">📊</div>
-          <div class="card-meta">
-            <div class="card-tag">Trustee · All Channels</div>
-            <div class="card-title">Integrated Trustee Dashboard<span class="new-badge">NEW</span></div>
-            <div class="card-subtitle">integrated-dashboard.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">PIN-protected console unifying Web, Facebook, WhatsApp, and Kiosk data. Live stats, category bar chart, all-entries view, new entry form, CSV export, Google Sheets sync, and settings.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-trustee">Trustees Only</span>
-            <span class="aud-chip aud-exco">Finance</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-      <a class="card t-navy" href="trustee-operations-guide.html" target="_blank"
-         data-title="Trustee Operations Guide"
-         data-keywords="operations guide sop trustee reconciliation tax receipt pipeda google sheets sync setup">
-        <div class="card-header">
-          <div class="card-icon-wrap">📋</div>
-          <div class="card-meta">
-            <div class="card-tag">Internal Reference</div>
-            <div class="card-title">Trustee Operations Guide</div>
-            <div class="card-subtitle">trustee-operations-guide.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Complete reference document: system architecture diagram, 7-step Google Sheets setup, channel comparison table, 4 SOPs (Sunday kiosk, monthly campaign, reconciliation, tax receipts), PIPEDA compliance notes.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-trustee">Trustees</span>
-            <span class="aud-chip aud-team">Admin Team</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- ═══ CATEGORY: SETUP & SHARING ═══ -->
-  <div class="cat-section" id="cat-setup">
-    <div class="cat-label">
-      <h2>🚀 Setup &amp; Sharing</h2>
-      <span class="cat-count">1 file</span>
-    </div>
-    <div class="cards-grid">
-
-      <a class="card t-red" href="how-to-share.html" target="_blank"
-         data-title="How to Share — Hosting Guide"
-         data-keywords="hosting share netlify github godaddy google drive live link share executive committee">
-        <div class="card-header">
-          <div class="card-icon-wrap">📡</div>
-          <div class="card-meta">
-            <div class="card-tag">Setup Guide</div>
-            <div class="card-title">How to Share — Hosting Guide<span class="new-badge">NEW</span></div>
-            <div class="card-subtitle">how-to-share.html</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Step-by-step guide for getting files online as a live link. Covers Netlify Drop (2 min, free), GitHub Pages, Google Drive, and GoDaddy upload. Includes sample ExCo email template and QR code instructions.</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-audience">
-            <span class="aud-chip aud-team">Admin Team</span>
-            <span class="aud-chip aud-trustee">Trustees</span>
-          </div>
-          <span class="card-open">Open ↗</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- QUICK ACTIONS ROW -->
-  <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 3px 18px rgba(12,30,60,0.08);border:1.5px solid var(--border);padding:22px;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:16px;">⚡ Quick Actions for the Team</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
-      <button onclick="copyAll()" style="padding:12px 16px;border-radius:10px;background:var(--navy);color:var(--white);border:none;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center;">📋 Copy All File Names</button>
-      <a href="how-to-share.html" target="_blank" style="padding:12px 16px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#b0882a);color:var(--navy);border:none;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center;text-decoration:none;">🚀 Go Live in 2 Minutes</a>
-      <button onclick="printIndex()" style="padding:12px 16px;border-radius:10px;background:var(--soft);color:var(--navy);border:1.5px solid var(--border);font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center;">🖨 Print This Index</button>
-      <a href="mailto:vancouvermarthoma@gmail.com?subject=St. Thomas MTC Vancouver — Project Files&body=Hi,%0A%0APlease find the link to the Silver Jubilee project files:%0A%0A[PASTE YOUR NETLIFY LINK HERE]%0A%0AFiles included:%0A1. Parish Directory Portal%0A2. Executive Committee Proposal%0A3. Website Contribution Form%0A4. Facebook Contribution Form%0A5. WhatsApp Contribution Form%0A6. Tablet Kiosk%0A7. Integrated Trustee Dashboard%0A8. Trustee Operations Guide%0A9. Hosting Setup Guide" style="padding:12px 16px;border-radius:10px;background:var(--blue2);color:var(--blue);border:1.5px solid rgba(26,74,138,0.2);font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center;text-decoration:none;">✉ Email Team</button>
-    </div>
-  </div>
-
-</main>
-
-<div class="gold-bar"></div>
-<footer>
-  <div>✝ &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;·&nbsp; Silver Jubilee Project Hub 2025</div>
-  <div><a href="https://vancouvermarthomachurch.com/">vancouvermarthomachurch.com</a> &nbsp;·&nbsp; <a href="mailto:vancouvermarthoma@gmail.com">vancouvermarthoma@gmail.com</a></div>
-  <div>10787 128 St, Surrey, BC V3T 3A2 &nbsp;·&nbsp; Diocese of North America &amp; Europe &nbsp;·&nbsp; Mar Thoma Syrian Church</div>
-  <div style="margin-top:8px;font-size:0.68rem;color:rgba(255,255,255,0.2);">All 9 files in this project hub · Internal use</div>
+</div><!-- /wrap -->
+<div class="gold-rule"></div>
+<footer style="background:var(--navy);color:rgba(255,255,255,0.38);text-align:center;padding:20px;font-size:0.67rem;line-height:1.9;">
+  <div>&#10013; &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; Silver Jubilee 2025 &nbsp;&#183;&nbsp; Diocese of North America</div>
+  <div><a href="https://vancouvermarthomachurch.com/" style="color:var(--gold2);text-decoration:none;">vancouvermarthomachurch.com</a> &nbsp;&#183;&nbsp; <a href="mailto:vancouvermarthoma@gmail.com" style="color:var(--gold2);text-decoration:none;">vancouvermarthoma@gmail.com</a> &nbsp;&#183;&nbsp; <a href="https://marthomana.org/" style="color:var(--gold2);text-decoration:none;">marthomana.org</a></div>
+  <div style="margin-top:3px;font-size:0.59rem;">For internal use by the Executive Committee &nbsp;&#183;&nbsp; Private circulation only &nbsp;&#183;&nbsp; Not for public distribution</div>
 </footer>
-
 <script>
-/* Particles */
-const pc = document.getElementById('particles');
-for(let i=0;i<20;i++){
-  const p=document.createElement('div'); p.className='particle';
-  p.style.cssText=`left:${Math.random()*100}%;top:${60+Math.random()*40}%;animation-delay:${Math.random()*6}s;animation-duration:${4+Math.random()*4}s;`;
-  pc.appendChild(p);
-}
-
-/* Search */
-function doSearch() {
-  const q = document.getElementById('search').value.toLowerCase().trim();
-  document.getElementById('search-clear').style.display = q ? 'block' : 'none';
-  let visible = 0;
-  document.querySelectorAll('.card').forEach(c => {
-    const haystack = (c.dataset.keywords||'') + ' ' + (c.dataset.title||'');
-    const show = !q || haystack.includes(q);
-    c.style.display = show ? '' : 'none';
-    if(show) visible++;
-  });
-  // Hide/show cat sections
-  document.querySelectorAll('.cat-section').forEach(sec => {
-    const anyVisible = [...sec.querySelectorAll('.card')].some(c=>c.style.display!=='none');
-    sec.style.display = anyVisible ? '' : 'none';
-  });
-  document.getElementById('no-results').classList.toggle('show', visible===0 && q!=='');
-}
-function clearSearch() {
-  document.getElementById('search').value='';
-  document.getElementById('search-clear').style.display='none';
-  document.querySelectorAll('.card').forEach(c=>c.style.display='');
-  document.querySelectorAll('.cat-section').forEach(s=>s.style.display='');
-  document.getElementById('no-results').classList.remove('show');
-}
-
-/* Toast */
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2400);
-}
-
-/* Quick actions */
-function copyAll() {
-  const files = [
-    'church-directory-portal.html  — Silver Jubilee Directory Portal',
-    'directory-proposal.html       — Executive Committee Proposal',
-    'contribution.html             — Website Contribution Form',
-    'contribution-facebook.html    — Facebook Contribution Form',
-    'contribution-whatsapp.html    — WhatsApp Contribution Form',
-    'contribution-tablet-kiosk.html— Tablet Kiosk (In-Person)',
-    'integrated-dashboard.html     — Integrated Trustee Dashboard',
-    'trustee-operations-guide.html — Trustee Operations Guide',
-    'how-to-share.html             — Hosting & Sharing Guide',
-    'index.html                    — This Project Hub'
-  ].join('\n');
-  navigator.clipboard.writeText(files).then(()=>showToast('✓ All file names copied!')).catch(()=>showToast('Select and copy manually'));
-}
-function printIndex() { window.print(); }
+function doSearch(q){const kw=q.toLowerCase().trim();const cards=document.querySelectorAll('.file-card');let found=0;cards.forEach(c=>{const k=(c.dataset.kw||'')+' '+(c.querySelector('h3')?.textContent||'')+' '+(c.querySelector('p')?.textContent||'');const show=!kw||k.toLowerCase().includes(kw);c.style.display=show?'':'none';if(show)found++;});document.getElementById('no-results').style.display=found?'none':'block';}
 </script>
 </body>
 </html>

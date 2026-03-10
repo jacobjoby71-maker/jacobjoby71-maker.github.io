@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Live Membership Portal — St. Thomas Mar Thoma Church, Vancouver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0c1e3c;--gold:#b8923a;--gold2:#d4a84b;--gold3:#f0cc78;--cream:#faf6ee;--white:#fff;--muted:#7a8aaa;--border:#ddd3b8;--soft:#f4ede0;--green:#155c35;--green2:#1e7a48;--green-bg:#e8f5ee;--red:#8a1818;--red-bg:#fdeaea;--blue:#1a3d7a;--blue-bg:#eaf0fa;--orange:#8a4010;--ink:#1c2640;
+--status-pending:rgba(184,146,58,0.12);--status-approved:rgba(21,92,53,0.12);--status-rejected:rgba(138,24,24,0.1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;}
+/* HEADER */
+.hdr{background:linear-gradient(165deg,#050f22,#0c1e3c,#182e54);position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;inset:0;opacity:0.04;background:repeating-linear-gradient(60deg,transparent 0,transparent 38px,var(--gold) 38px,var(--gold) 39px);}
+.hdr-in{position:relative;z-index:1;text-align:center;padding:32px 20px 24px;}
+.cross{width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:rgba(184,146,58,0.1);border:1.5px solid rgba(184,146,58,0.35);display:flex;align-items:center;justify-content:center;}
+.cross svg{width:28px;height:28px;}
+.hdr-ch{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,4vw,1.7rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:3px;}
+.hdr-ch em{font-style:italic;color:var(--gold3);}
+.hdr-sub{font-size:0.67rem;color:rgba(255,255,255,0.38);letter-spacing:0.1em;text-transform:uppercase;}
+.badge-row{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:12px;}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:18px;font-size:0.62rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.badge-live{background:rgba(50,200,100,0.14);color:#5de896;border:1px solid rgba(50,200,100,0.25);}
+.badge-secure{background:rgba(26,61,122,0.35);color:#90b4f8;border:1px solid rgba(26,61,122,0.4);}
+.badge-3a{background:rgba(184,146,58,0.14);color:var(--gold3);border:1px solid rgba(184,146,58,0.25);}
+.dioc-strip{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;background:rgba(5,10,25,0.7);border-top:1px solid rgba(184,146,58,0.15);padding:8px 16px;font-size:0.64rem;color:rgba(255,255,255,0.4);}
+.ds{display:flex;gap:4px;}.ds-l{color:var(--gold3);font-weight:700;}
+.gold-rule{height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold3),var(--gold2),transparent);}
+/* NAV TABS */
+.tab-nav{background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:40;box-shadow:0 2px 8px rgba(12,30,60,0.07);}
+.tab-nav-in{display:flex;overflow-x:auto;max-width:980px;margin:0 auto;gap:0;}
+.tn{display:flex;align-items:center;gap:6px;padding:13px 16px;font-size:0.78rem;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;cursor:pointer;transition:color .15s,border-color .15s;}
+.tn:hover{color:var(--navy);}
+.tn.active{color:var(--navy);border-bottom-color:var(--gold2);}
+.tn-ic{font-size:1rem;}
+/* WRAP */
+.wrap{max-width:980px;margin:0 auto;padding:20px 14px 60px;}
+/* PAGES */
+.pg{display:none;}.pg.active{display:block;}
+/* CARDS */
+.card{background:var(--white);border-radius:12px;overflow:hidden;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(12,30,60,0.06);margin-bottom:16px;}
+.ch{padding:11px 16px;display:flex;align-items:center;gap:9px;}
+.hn{background:var(--navy);}.hg{background:linear-gradient(135deg,var(--gold),#9a7020);}.hgr{background:var(--green);}.hb{background:var(--blue);}
+.hr{background:var(--red);}.hd{background:#111827;}
+.ch-ti{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
+.hg .ch-ti{color:var(--navy);}
+.ch-su{font-size:0.6rem;color:rgba(255,255,255,0.45);margin-top:1px;}
+.hg .ch-su{color:rgba(12,30,60,0.45);}
+.ch-i{font-size:0.95rem;flex-shrink:0;}
+.cb{padding:16px;}
+.fg{margin-bottom:11px;}.fg:last-child{margin-bottom:0;}
+.fg>label{display:block;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
+.req{color:var(--red);}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:0.84rem;color:var(--ink);background:var(--soft);outline:none;transition:border-color .15s,box-shadow .15s;}
+.fg input:focus,.fg select:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(184,146,58,0.1);background:var(--white);}
+.fn{font-size:0.63rem;color:var(--muted);margin-top:3px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+/* BUTTONS */
+.btn{padding:10px 18px;border-radius:7px;border:none;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;display:inline-flex;align-items:center;gap:6px;}
+.btn:active{transform:scale(0.97);}
+.btn-p{background:linear-gradient(135deg,var(--gold2),#9a7020);color:var(--navy);box-shadow:0 4px 12px rgba(184,146,58,0.25);}
+.btn-s{background:var(--soft);color:var(--ink);border:1.5px solid var(--border);}
+.btn-g{background:var(--green);color:#fff;}
+.btn-r{background:var(--red);color:#fff;}
+.btn-b{background:var(--blue);color:#fff;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+/* NOTE */
+.note{background:var(--blue-bg);border:1.5px solid rgba(26,61,122,0.18);border-radius:9px;padding:11px 13px;margin-bottom:14px;display:flex;gap:9px;}
+.note.warn{background:rgba(184,146,58,0.08);border-color:rgba(184,146,58,0.25);}
+.note-ic{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.note-tx h3{font-size:0.72rem;font-weight:700;color:var(--blue);margin-bottom:2px;}
+.note.warn .note-tx h3{color:var(--orange);}
+.note-tx p{font-size:0.69rem;color:#334d8a;line-height:1.6;}
+.note.warn .note-tx p{color:var(--orange);}
+/* ---- PUBLIC PAGE ---- */
+.hero{background:linear-gradient(160deg,#050f22,#0d1c3a,#132550);border-radius:14px;padding:28px 20px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;opacity:0.05;background:radial-gradient(circle at 70% 30%,var(--gold3) 0,transparent 60%);}
+.hero-ic{font-size:2rem;margin-bottom:10px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,4vw,1.75rem);color:#fff;margin-bottom:6px;}
+.hero p{font-size:0.79rem;color:rgba(255,255,255,0.56);max-width:520px;margin:0 auto 16px;line-height:1.7;}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.feat{background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:14px;display:flex;gap:11px;align-items:flex-start;}
+.feat-ic{font-size:1.3rem;flex-shrink:0;}
+.feat h3{font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.feat p{font-size:0.68rem;color:var(--muted);line-height:1.6;}
+/* WORKFLOW */
+.wf-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.wf-step{display:flex;gap:13px;padding-bottom:20px;position:relative;}
+.wf-step:last-child{padding-bottom:0;}
+.wf-line{position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--border);}
+.wf-step:last-child .wf-line{display:none;}
+.wf-num{width:32px;height:32px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;position:relative;z-index:1;}
+.wf-n1{background:var(--blue-bg);color:var(--blue);border:2px solid var(--blue);}
+.wf-n2{background:var(--green-bg);color:var(--green);border:2px solid var(--green);}
+.wf-n3{background:rgba(184,146,58,0.1);color:var(--gold);border:2px solid var(--gold);}
+.wf-n4{background:rgba(138,24,24,0.08);color:var(--red);border:2px solid var(--red);}
+.wf-n5{background:rgba(26,61,122,0.1);color:var(--blue);border:2px solid var(--blue);}
+.wf-n6{background:var(--green-bg);color:var(--green2);border:2px solid var(--green2);}
+.wf-n7{background:var(--soft);color:var(--muted);border:2px solid var(--border);}
+.wf-txt h3{font-size:0.79rem;font-weight:700;color:var(--ink);margin-bottom:3px;padding-top:5px;}
+.wf-txt p{font-size:0.69rem;color:var(--muted);line-height:1.6;}
+.wf-txt strong{color:var(--navy);}
+/* ---- LOGIN PAGE ---- */
+.login-box{max-width:400px;margin:0 auto;}
+.role-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.role-chip{padding:5px 13px;border-radius:18px;border:1.5px solid var(--border);background:var(--soft);font-size:0.72rem;font-weight:600;cursor:pointer;transition:all .14s;}
+.role-chip.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+.divider{display:flex;align-items:center;gap:9px;margin:14px 0;font-size:0.66rem;color:var(--muted);}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+/* ---- DASHBOARD ---- */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px;}
+.stat{background:var(--white);border:1.5px solid var(--border);border-radius:9px;padding:13px 14px;text-align:center;}
+.stat-v{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--navy);}
+.stat-v.gn{color:var(--green);}.stat-v.gd{color:var(--gold);}
+.stat-l{font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:2px;}
+/* QUEUE */
+.queue-item{background:var(--white);border-radius:9px;border:1.5px solid var(--border);padding:13px 14px;margin-bottom:10px;transition:box-shadow .15s;}
+.queue-item:hover{box-shadow:0 3px 14px rgba(12,30,60,0.1);}
+.qi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.qi-id{font-family:'Playfair Display',serif;font-size:0.82rem;font-weight:700;color:var(--navy);}
+.qi-nm{font-size:0.78rem;color:var(--ink);margin-top:1px;}
+.qi-dt{font-size:0.6rem;color:var(--muted);}
+.st-badge{padding:3px 9px;border-radius:14px;font-size:0.59rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;}
+.st-pend{background:rgba(184,146,58,0.12);color:#8a6010;border:1px solid rgba(184,146,58,0.22);}
+.st-appr{background:rgba(21,92,53,0.1);color:var(--green);border:1px solid rgba(21,92,53,0.22);}
+.st-rej{background:rgba(138,24,24,0.1);color:var(--red);border:1px solid rgba(138,24,24,0.22);}
+.st-3a{background:rgba(26,61,122,0.1);color:var(--blue);border:1px solid rgba(26,61,122,0.2);}
+.qi-dets{display:flex;flex-wrap:wrap;gap:7px;font-size:0.65rem;color:var(--muted);}
+.qi-det{display:flex;gap:3px;}<div class="qi-det-l">{font-weight:700;color:var(--navy);}
+.approvers{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0;}
+.ap-chip{padding:3px 9px;border-radius:14px;font-size:0.62rem;font-weight:700;display:flex;align-items:center;gap:3px;}
+.ap-y{background:#e8f5ee;color:var(--green);border:1px solid rgba(21,92,53,0.2);}
+.ap-n{background:#fdeaea;color:var(--red);border:1px solid rgba(138,24,24,0.2);}
+.ap-w{background:var(--soft);color:var(--muted);border:1px solid var(--border);}
+.qi-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+/* ROLES TABLE */
+.roles-tbl{width:100%;border-collapse:collapse;}
+.roles-tbl th{font-size:0.59rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);padding:7px 10px;border-bottom:1.5px solid var(--border);text-align:left;background:var(--soft);}
+.roles-tbl td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:0.76rem;vertical-align:top;}
+.roles-tbl tr:last-child td{border-bottom:none;}
+.perm-y{color:var(--green);font-weight:700;}
+.perm-n{color:var(--red);}
+.perm-m{color:var(--gold);font-weight:700;}
+/* AUDIT LOG */
+.audit-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
+.audit-item:last-child{border-bottom:none;}
+.audit-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.ad-appr{background:var(--green);}
+.ad-rej{background:var(--red);}
+.ad-sub{background:var(--blue);}
+.ad-upd{background:var(--gold);}
+.audit-tx{font-size:0.72rem;color:var(--ink);line-height:1.5;}
+.audit-tx .ax{font-size:0.6rem;color:var(--muted);}
+/* MEMBER PROFILE */
+.profile-hd{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#f9f3e8,#fff);border-radius:10px;padding:14px;border:1.5px solid var(--border);margin-bottom:14px;}
+.profile-av{width:52px;height:52px;border-radius:50%;background:var(--navy);color:var(--gold3);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;flex-shrink:0;}
+.profile-nm{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--navy);}
+.profile-sub{font-size:0.65rem;color:var(--muted);margin-top:1px;}
+.profile-st{margin-left:auto;text-align:right;}
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:11px 16px;border-radius:9px;font-size:0.79rem;font-weight:600;z-index:9999;display:none;align-items:center;gap:8px;box-shadow:0 6px 22px rgba(12,30,60,0.25);border:1px solid rgba(184,146,58,0.2);}
+.toast.show{display:flex;}
+@media(max-width:580px){.g2,.g3{grid-template-columns:1fr;}.feat-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="cross"><svg viewBox="0 0 38 38" fill="none"><rect x="16.5" y="2" width="5" height="34" rx="2" fill="#d4a84b"/><rect x="2" y="12" width="34" height="5" rx="2" fill="#d4a84b"/><circle cx="19" cy="19" r="17" stroke="#d4a84b" stroke-width="1" fill="none" opacity="0.35"/></svg></div>
+    <div class="hdr-ch">St. Thomas Mar Thoma Church <em>Vancouver</em></div>
+    <div class="hdr-sub">10787 128 Street, Surrey, BC V3T 3A2 &nbsp;&#183;&nbsp; Diocese of North America</div>
+    <div class="badge-row">
+      <span class="badge badge-live">&#9679; Live Membership Portal</span>
+      <span class="badge badge-secure">&#128274; Secure &amp; PIPEDA-Compliant</span>
+      <span class="badge badge-3a">&#10003; 3-Approver Workflow</span>
+    </div>
+  </div>
+  <div class="dioc-strip">
+    <div class="ds"><span class="ds-l">Diocese:</span><span>Diocese of North America</span></div>
+    <div class="ds"><span class="ds-l">Bishop:</span><span>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</span></div>
+    <div class="ds"><span class="ds-l">Metropolitan:</span><span>Most Rev. Dr. Theodosius Mar Thoma (22nd)</span></div>
+  </div>
+</div>
+<div class="gold-rule"></div>
+
+<!-- NAV TABS -->
+<div class="tab-nav">
+  <div class="tab-nav-in">
+    <div class="tn active" id="tab-pub" onclick="showPg('pub')"><span class="tn-ic">&#127968;</span> Public</div>
+    <div class="tn" id="tab-login" onclick="showPg('login')"><span class="tn-ic">&#128274;</span> Login</div>
+    <div class="tn" id="tab-member" onclick="showPg('member')"><span class="tn-ic">&#128100;</span> Member Profile</div>
+    <div class="tn" id="tab-admin" onclick="showPg('admin')"><span class="tn-ic">&#9997;</span> Admin Queue</div>
+    <div class="tn" id="tab-roles" onclick="showPg('roles')"><span class="tn-ic">&#128221;</span> Roles</div>
+    <div class="tn" id="tab-audit" onclick="showPg('audit')"><span class="tn-ic">&#128202;</span> Audit Log</div>
+  </div>
+</div>
+
+<div class="wrap">
+<!-- ========== PUBLIC PAGE ========== -->
+<div class="pg active" id="pg-pub">
+  <div class="hero">
+    <div class="hero-ic">&#127963;</div>
+    <h2>Live Membership Portal &mdash; Silver Jubilee 2025</h2>
+    <p>A secure online portal for families to submit membership information, update contact details, and register for the Silver Jubilee Parish Directory. All updates require at least three human approvals before going live.</p>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn btn-p" onclick="showPg('login')">&#128274; Member Login</button>
+      <button class="btn btn-s" onclick="showPg('login')">&#128203; New Family Registration</button>
+    </div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-ic">&#128100;</div><div><h3>Family Registration</h3><p>Submit your family details online for the Silver Jubilee Directory. All 15 fields per the Diocese of North America standard.</p></div></div>
+    <div class="feat"><div class="feat-ic">&#128274;</div><div><h3>Secure Login</h3><p>Existing members log in to view and update their own records. Changes require ExCo approval before publishing.</p></div></div>
+    <div class="feat"><div class="feat-ic">&#9997;</div><div><h3>3-Approver Rule</h3><p>No data goes live without three human approvals: President/Vicar plus two authorised approvers. Hardcoded. Cannot be bypassed.</p></div></div>
+    <div class="feat"><div class="feat-ic">&#128202;</div><div><h3>Full Audit Trail</h3><p>Every submission, approval, rejection, and edit is time-stamped and logged. Accessible to the Administrator and Vicar.</p></div></div>
+    <div class="feat"><div class="feat-ic">&#127758;</div><div><h3>PIPEDA-Compliant</h3><p>Private data is visible only to logged-in members and the church office. The public directory shows only approved, non-sensitive fields.</p></div></div>
+    <div class="feat"><div class="feat-ic">&#128248;</div><div><h3>Photo Upload</h3><p>Upload your family photograph securely. Reviewed by the Directory Committee before inclusion in the printed directory.</p></div></div>
+  </div>
+
+  <!-- APPROVAL WORKFLOW SECTION -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#8594;</span><div><div class="ch-ti">Approval Workflow &mdash; How Your Information Goes Live</div><div class="ch-su">Seven-step mandatory process. Minimum three human approvals required before any data is published.</div></div></div>
+    <div class="cb">
+      <div class="wf-steps">
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n1">1</div><div class="wf-txt"><h3>Member Submits or Updates Information</h3><p>Family submits registration form or logs in to update existing record. System assigns a reference number and timestamps the submission. Member is shown a confirmation screen.</p></div></div>
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n2">2</div><div class="wf-txt"><h3>Automatic Acknowledgement</h3><p>An automated email is sent to the member&#8217;s primary email address confirming receipt. The email includes the reference number and a note that the submission is <strong>pending approval</strong>.</p></div></div>
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n3">3</div><div class="wf-txt"><h3>Designated Approvers Notified</h3><p>The church Secretary, President/Vicar, and all Trustees receive an email notification with a link to the Admin Review Queue. Approvers may act in any order.</p></div></div>
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n4">4</div><div class="wf-txt"><h3>Minimum Three Human Approvals Required</h3><p>The following combinations are the <strong>only valid</strong> approval paths:</p>
+          <ul style="margin-top:6px;list-style:none;">
+            <li style="font-size:0.7rem;color:var(--muted);padding:2px 0 2px 10px;border-left:2px solid var(--gold2);">&#10003; <strong>President/Vicar</strong> + any <strong>two Trustees</strong></li>
+            <li style="font-size:0.7rem;color:var(--muted);padding:2px 0 2px 10px;border-left:2px solid var(--gold2);">&#10003; <strong>President/Vicar</strong> + one <strong>Trustee</strong> + <strong>Secretary</strong></li>
+            <li style="font-size:0.7rem;color:var(--muted);padding:2px 0 2px 10px;border-left:2px solid var(--gold2);">&#10003; <strong>President/Vicar</strong> + <strong>Secretary</strong> + one other <strong>authorised ExCo member</strong></li>
+          </ul>
+          <p style="margin-top:6px;">The <strong>Administrator cannot bypass</strong> this rule. The system enforces it automatically.</p>
+        </div></div>
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n5">5</div><div class="wf-txt"><h3>Directory &amp; Portal Updated</h3><p>Once the third qualifying approval is recorded, the central directory database is updated. The member portal shows the new approved data. The printed directory queue is updated.</p></div></div>
+        <div class="wf-step"><div class="wf-line"></div><div class="wf-num wf-n6">6</div><div class="wf-txt"><h3>Changes Requested or Rejected</h3><p>If any approver clicks <em>Request Changes</em> or <em>Reject</em>, an automated email is sent to the member with the approver&#8217;s comments. The submission remains in <strong>Pending</strong> status until the member resubmits and the approval process restarts.</p></div></div>
+        <div class="wf-step"><div class="wf-num wf-n7">7</div><div class="wf-txt"><h3>Audit Log Updated</h3><p>Every event — submission, approval, rejection, comment, and publication — is written to a permanent, tamper-resistant audit log with the approver name, role, and timestamp. Visible to Administrator and Vicar only.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOGIN PAGE ========== -->
+<div class="pg" id="pg-login">
+  <div class="login-box">
+    <div class="card">
+      <div class="ch hn"><span class="ch-i">&#128274;</span><div><div class="ch-ti">Secure Login &mdash; Membership Portal</div><div class="ch-su">St. Thomas Mar Thoma Church, Vancouver</div></div></div>
+      <div class="cb">
+        <div class="note warn">
+          <div class="note-ic">&#128274;</div>
+          <div class="note-tx"><h3>Login as:</h3><p>Select your role to proceed. In the live system, credentials are verified by the church office.</p></div>
+        </div>
+        <div class="role-chips">
+          <div class="role-chip on" onclick="selRole(this,'member')">&#128100; Member</div>
+          <div class="role-chip" onclick="selRole(this,'admin')">&#128187; Administrator</div>
+          <div class="role-chip" onclick="selRole(this,'vicar')">&#9995; Vicar / President</div>
+          <div class="role-chip" onclick="selRole(this,'trustee')">&#128218; Trustee</div>
+          <div class="role-chip" onclick="selRole(this,'secretary')">&#9997;&#65039; Secretary</div>
+          <div class="role-chip" onclick="selRole(this,'convenor')">&#128203; Convenor</div>
+        </div>
+        <div class="fg"><label>Email Address <span class="req">*</span></label><input type="email" id="login-em" placeholder="yourname@email.com"/></div>
+        <div class="fg"><label>Password <span class="req">*</span></label><input type="password" id="login-pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"/><div class="fn">Password set by the church Secretary when your record is approved.</div></div>
+        <div class="divider">or register a new family</div>
+        <div class="btn-row" style="flex-direction:column;">
+          <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doLogin()">&#128274; Login Securely</button>
+          <button class="btn btn-s" style="width:100%;justify-content:center;" onclick="goRegister()">&#128203; Submit New Family Registration</button>
+          <button class="btn btn-s" style="width:100%;justify-content:center;font-weight:500;color:var(--muted);">Forgot password? Contact the church secretary</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:0.65rem;color:var(--muted);margin-top:10px;line-height:1.9;">
+      All logins are logged and audited &nbsp;&#183;&nbsp; PIPEDA-compliant &nbsp;&#183;&nbsp; Sensitive data is never shared publicly<br/>
+      <a href="mailto:vancouvermarthoma@gmail.com" style="color:var(--gold);text-decoration:none;">vancouvermarthoma@gmail.com</a> &nbsp;&#183;&nbsp; <a href="https://vancouvermarthomachurch.com/" style="color:var(--gold);text-decoration:none;">vancouvermarthomachurch.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MEMBER PROFILE PAGE ========== -->
+<div class="pg" id="pg-member">
+  <div class="profile-hd">
+    <div class="profile-av">TV</div>
+    <div>
+      <div class="profile-nm">Thomas K. Varghese</div>
+      <div class="profile-sub">&#127968; Bethel Prayer Group &nbsp;&#183;&nbsp; Member since 2012 &nbsp;&#183;&nbsp; Family ID: TMC-0042</div>
+      <div class="profile-sub" style="margin-top:2px;">Home Parish: St. Thomas MTC, Ranny, Pathanamthitta, Kerala</div>
+    </div>
+    <div class="profile-st">
+      <span class="st-badge st-appr">&#10003; Active Member</span>
+      <div style="font-size:0.59rem;color:var(--muted);margin-top:4px;">Last updated: 14 Feb 2025</div>
+    </div>
+  </div>
+  <div class="note">
+    <div class="note-ic">&#8505;&#65039;</div>
+    <div class="note-tx"><h3>Your data is private</h3><p>Only you, the church Secretary, Administrator, and authorised ExCo members can view sensitive contact information. The public directory shows only the fields you approved in Part H of your registration form.</p></div>
+  </div>
+  <div class="card">
+    <div class="ch hb"><span class="ch-i">&#128100;</span><div><div class="ch-ti">Your Family Record</div><div class="ch-su">View and request updates to your information</div></div></div>
+    <div class="cb">
+      <div class="g2">
+        <div class="fg"><label>Head of Family</label><input type="text" value="Thomas K. Varghese" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+        <div class="fg"><label>Spouse</label><input type="text" value="Mary T. Varghese" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+        <div class="fg"><label>Mobile (Primary)</label><input type="text" value="+1 (604) 555-0142" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+        <div class="fg"><label>Email (Primary)</label><input type="email" value="thomas.varghese@email.com" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+        <div class="fg"><label>Prayer Group</label><input type="text" value="Bethel" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+        <div class="fg"><label>Home Parish</label><input type="text" value="St. Thomas MTC, Ranny, Kerala" readonly style="cursor:not-allowed;opacity:.7;"/></div>
+      </div>
+      <div class="note warn" style="margin-top:12px;">
+        <div class="note-ic">&#128276;</div>
+        <div class="note-tx"><h3>Want to update your information?</h3><p>Click <em>Request Update</em> below. Your request will be reviewed by the Executive Committee. Updates require three approvals before going live.</p></div>
+      </div>
+      <div class="btn-row" style="margin-top:4px;">
+        <button class="btn btn-p" onclick="toast('Update request submitted. Awaiting three approvals (Vicar/President + 2 others) before going live.')">&#9997; Request Update</button>
+        <button class="btn btn-s">&#128214; View Full Record</button>
+        <button class="btn btn-s">&#128248; Update Photo</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch hgr"><span class="ch-i">&#128202;</span><div><div class="ch-ti">My Submission History</div></div></div>
+    <div class="cb">
+      <div class="queue-item">
+        <div class="qi-top"><div><div class="qi-id">TMC-DIR-2025-0042</div><div class="qi-nm">Initial directory registration</div></div><span class="st-badge st-appr">&#10003; Approved &amp; Live</span></div>
+        <div class="qi-dets"><span>Submitted: 14 Jan 2025</span><span>Approved: 20 Jan 2025</span><span>Approved by: Rev. Thomas (Vicar), Sec. James, Trustee Philip</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ADMIN QUEUE PAGE ========== -->
+<div class="pg" id="pg-admin">
+  <div class="note">
+    <div class="note-ic">&#128274;</div>
+    <div class="note-tx"><h3>Admin Review Queue &mdash; Three-Approver Rule Active</h3><p>This page is accessible only to the Administrator, Vicar/President, Secretary, and Trustees. The system will not publish any submission until the required three approvals are on record. Administrator cannot bypass this rule.</p></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="stat-v gd">8</div><div class="stat-l">Pending Review</div></div>
+    <div class="stat"><div class="stat-v gn">24</div><div class="stat-l">Approved &amp; Live</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--red);">2</div><div class="stat-l">Rejected / Returned</div></div>
+    <div class="stat"><div class="stat-v">34</div><div class="stat-l">Total Submissions</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ch hd"><span class="ch-i">&#8987;</span><div><div class="ch-ti">Pending Submissions &mdash; Awaiting Approval</div><div class="ch-su">Each submission requires three qualifying approvals before publishing</div></div></div>
+    <div class="cb">
+      <!-- Item 1 -->
+      <div class="queue-item">
+        <div class="qi-top"><div><div class="qi-id">TMC-DIR-2025-0051</div><div class="qi-nm">George &amp; Annamma Mathew</div><div class="qi-dt">Submitted: 3 Mar 2025 &nbsp;&#183;&nbsp; Bethel Group &nbsp;&#183;&nbsp; Home Parish: St. Mary&#8217;s MTC, Thiruvalla</div></div><span class="st-badge st-pend">&#9203; Pending</span></div>
+        <div class="qi-dets"><span>&#128247; Photo submitted</span><span>&#128214; Standard Listing ($40)</span><span>Children: 2</span></div>
+        <div class="approvers">
+          <span class="ap-chip ap-y">&#10003; Vicar</span>
+          <span class="ap-chip ap-y">&#10003; Secretary</span>
+          <span class="ap-chip ap-w">&#9203; Trustee 1 (pending)</span>
+        </div>
+        <div style="font-size:0.65rem;color:var(--green);font-weight:700;">2 of 3 approvals received. One more required.</div>
+        <div class="qi-acts"><button class="btn btn-g" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Approval recorded. 3 of 3 approvals complete. Submission is now LIVE.')">&#10003; Approve</button><button class="btn btn-s" style="padding:6px 13px;font-size:0.72rem;">&#128065; Review</button><button class="btn btn-r" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Submission returned to member with comments.')">&#10007; Request Changes</button></div>
+      </div>
+      <!-- Item 2 -->
+      <div class="queue-item">
+        <div class="qi-top"><div><div class="qi-id">TMC-DIR-2025-0052</div><div class="qi-nm">Philip &amp; Susan Thomas</div><div class="qi-dt">Submitted: 5 Mar 2025 &nbsp;&#183;&nbsp; Sharon Group &nbsp;&#183;&nbsp; Home Parish: St. Thomas MTC, Ranny</div></div><span class="st-badge st-3a">&#9203; 1 of 3</span></div>
+        <div class="approvers">
+          <span class="ap-chip ap-y">&#10003; President</span>
+          <span class="ap-chip ap-w">&#9203; Vicar (pending)</span>
+          <span class="ap-chip ap-w">&#9203; Trustee 2 (pending)</span>
+        </div>
+        <div class="qi-acts"><button class="btn btn-g" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Your approval recorded. 2 of 3 now complete.')">&#10003; Approve</button><button class="btn btn-s" style="padding:6px 13px;font-size:0.72rem;">&#128065; Review</button><button class="btn btn-r" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Returned to member.')">&#10007; Return</button></div>
+      </div>
+      <!-- Item 3 (new family) -->
+      <div class="queue-item">
+        <div class="qi-top"><div><div class="qi-id">TMC-DIR-2025-0053</div><div class="qi-nm">NEW FAMILY &mdash; Jacob &amp; Leena Varkey</div><div class="qi-dt">Submitted: 7 Mar 2025 &nbsp;&#183;&nbsp; Emmanuel Group &nbsp;&#183;&nbsp; Home Parish: Sharon MTC, Punalur</div></div><span class="st-badge st-pend">&#9203; 0 of 3</span></div>
+        <div class="approvers">
+          <span class="ap-chip ap-w">&#9203; Vicar (pending)</span>
+          <span class="ap-chip ap-w">&#9203; President (pending)</span>
+          <span class="ap-chip ap-w">&#9203; Trustee (pending)</span>
+        </div>
+        <div class="qi-acts"><button class="btn btn-g" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Your approval recorded. 1 of 3 received.')">&#10003; Approve</button><button class="btn btn-s" style="padding:6px 13px;font-size:0.72rem;">&#128065; Review</button><button class="btn btn-r" style="padding:6px 13px;font-size:0.72rem;" onclick="toast('Returned to family.')">&#10007; Return</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ROLES PAGE ========== -->
+<div class="pg" id="pg-roles">
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128221;</span><div><div class="ch-ti">Role-Based Access Control</div><div class="ch-su">Defined by the Executive Committee &mdash; Diocese of North America standard</div></div></div>
+    <div class="cb">
+      <table class="roles-tbl">
+        <thead><tr><th>Role</th><th>View Own Record</th><th>Edit Own Record</th><th>Approve Submissions</th><th>Counts Toward 3-Approver Rule</th><th>View All Records</th><th>Manage System</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Member</strong><br/><span style="font-size:0.62rem;color:var(--muted);">Registered family</span></td><td class="perm-y">&#10003;</td><td class="perm-m">&#8594; Submits for approval</td><td class="perm-n">&#10007;</td><td class="perm-n">&#10007;</td><td class="perm-n">&#10007;</td><td class="perm-n">&#10007;</td></tr>
+          <tr><td><strong>Vicar / President</strong><br/><span style="font-size:0.62rem;color:var(--muted);">Mandatory approver</span></td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003; Mandatory</td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td></tr>
+          <tr><td><strong>Secretary</strong></td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td></tr>
+          <tr><td><strong>Trustee</strong></td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td></tr>
+          <tr><td><strong>Directory Convenor</strong><br/><span style="font-size:0.62rem;color:var(--muted);">Review only</span></td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td><td class="perm-m">Review &amp; Recommend only</td><td class="perm-n">&#10007; Does NOT count</td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td></tr>
+          <tr><td><strong>Administrator</strong><br/><span style="font-size:0.62rem;color:var(--muted);">Cannot bypass 3-approver rule</span></td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td><td class="perm-n">&#10007;</td><td class="perm-n">&#10007; <strong>Cannot override</strong></td><td class="perm-y">&#10003;</td><td class="perm-y">&#10003;</td></tr>
+        </tbody>
+      </table>
+      <div class="fn" style="margin-top:10px;">The three-approver rule is enforced at the system level. No single role or user can bypass it, including the Administrator.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== AUDIT LOG PAGE ========== -->
+<div class="pg" id="pg-audit">
+  <div class="card">
+    <div class="ch hd"><span class="ch-i">&#128202;</span><div><div class="ch-ti">Audit Log</div><div class="ch-su">All events are permanently logged &mdash; Visible to Administrator and Vicar only</div></div></div>
+    <div class="cb">
+      <div class="audit-item"><div class="audit-dot ad-appr"></div><div class="audit-tx">Submission <strong>TMC-DIR-2025-0051</strong> approved by <strong>Rev. Abraham Thomas (Vicar)</strong> — Approval 1 of 3<div class="ax">9 Mar 2025, 14:32:08 PST &nbsp;&#183;&nbsp; Role: Vicar</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-appr"></div><div class="audit-tx">Submission <strong>TMC-DIR-2025-0051</strong> approved by <strong>James Kurian (Secretary)</strong> — Approval 2 of 3<div class="ax">9 Mar 2025, 16:10:44 PST &nbsp;&#183;&nbsp; Role: Secretary</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-sub"></div><div class="audit-tx">New family registration submitted: <strong>Philip &amp; Susan Thomas</strong> (TMC-DIR-2025-0052)<div class="ax">5 Mar 2025, 10:04:22 PST &nbsp;&#183;&nbsp; Role: Member (self-service)</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-appr"></div><div class="audit-tx">Submission <strong>TMC-DIR-2025-0052</strong> approved by <strong>George Varghese (President)</strong> — Approval 1 of 3<div class="ax">6 Mar 2025, 09:17:55 PST &nbsp;&#183;&nbsp; Role: President</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-rej"></div><div class="audit-tx">Submission <strong>TMC-DIR-2025-0049</strong> returned by <strong>Rev. Abraham Thomas (Vicar)</strong> — Reason: Home Parish address incomplete<div class="ax">1 Mar 2025, 11:55:30 PST &nbsp;&#183;&nbsp; Role: Vicar</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-upd"></div><div class="audit-tx">Member record <strong>TMC-0042 (Thomas K. Varghese)</strong> — Contact update request submitted<div class="ax">28 Feb 2025, 18:44:12 PST &nbsp;&#183;&nbsp; Role: Member (self-service)</div></div></div>
+      <div class="audit-item"><div class="audit-dot ad-appr"></div><div class="audit-tx">Submission <strong>TMC-DIR-2025-0042</strong> — <strong>PUBLISHED TO LIVE DIRECTORY</strong> (3 of 3 approvals complete)<div class="ax">20 Jan 2025, 12:00:00 PST &nbsp;&#183;&nbsp; Approved by: Vicar + Secretary + Trustee 1</div></div></div>
+      <div style="text-align:center;margin-top:10px;"><button class="btn btn-s" style="font-size:0.72rem;" onclick="toast('Full audit log downloaded as CSV.')">&#128202; Export Full Audit Log (CSV)</button></div>
+    </div>
+  </div>
+</div>
+</div><!-- /wrap -->
+
+<div class="gold-rule"></div>
+<footer style="background:var(--navy);color:rgba(255,255,255,0.38);text-align:center;padding:18px;font-size:0.67rem;line-height:1.9;">
+  <div>&#10013; &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; Diocese of North America &nbsp;&#183;&nbsp; Silver Jubilee 2025</div>
+  <div><a href="https://vancouvermarthomachurch.com/" style="color:var(--gold2);text-decoration:none;">vancouvermarthomachurch.com</a> &nbsp;&#183;&nbsp; <a href="mailto:vancouvermarthoma@gmail.com" style="color:var(--gold2);text-decoration:none;">vancouvermarthoma@gmail.com</a> &nbsp;&#183;&nbsp; <a href="https://marthomana.org/" style="color:var(--gold2);text-decoration:none;">marthomana.org</a></div>
+  <div style="margin-top:4px;font-size:0.59rem;">This portal specification is for the Executive Committee. Live implementation requires a web developer and back-end database. Contact the Directory Committee for next steps.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let selRoleVal='member';
+function showPg(pg){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tn').forEach(t=>t.classList.remove('active'));document.getElementById('pg-'+pg).classList.add('active');document.getElementById('tab-'+pg).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function selRole(el,r){document.querySelectorAll('.role-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');selRoleVal=r;}
+function doLogin(){const em=document.getElementById('login-em').value.trim();if(!em){alert('Please enter your email address.');return;}if(selRoleVal==='admin'||selRoleVal==='vicar'||selRoleVal==='trustee'||selRoleVal==='secretary'){showPg('admin');}else{showPg('member');}toast('Welcome back! Logged in as '+selRoleVal+'.');}
+function goRegister(){window.location.href='directory-registration-form.html';}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3800);}
+</script>
+</body>
+</html>

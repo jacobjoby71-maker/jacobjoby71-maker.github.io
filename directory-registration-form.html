@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Family Directory Information Form — St. Thomas Mar Thoma Church, Vancouver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0c1e3c;--gold:#b8923a;--gold2:#d4a84b;--gold3:#f0cc78;--cream:#faf6ee;--white:#fff;--muted:#7a8aaa;--border:#ddd3b8;--soft:#f4ede0;--green:#155c35;--green-bg:#e8f5ee;--red:#8a1818;--blue:#1a3d7a;--blue-bg:#eaf0fa;--orange:#8a4010;--ink:#1c2640;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;}
+/* HEADER */
+.hdr{background:linear-gradient(170deg,#050f22,#0c1e3c,#182e54);padding:0;overflow:hidden;position:relative;}
+.hdr::after{content:'';position:absolute;inset:0;z-index:0;opacity:0.04;background:repeating-linear-gradient(65deg,transparent 0,transparent 40px,var(--gold) 40px,var(--gold) 41px);}
+.hdr-in{position:relative;z-index:1;text-align:center;padding:36px 20px 0;}
+.cross{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;background:rgba(184,146,58,0.1);border:1.5px solid rgba(184,146,58,0.35);display:flex;align-items:center;justify-content:center;}
+.cross svg{width:32px;height:32px;}
+.jub{display:inline-flex;align-items:center;gap:7px;background:rgba(184,146,58,0.14);border:1px solid rgba(184,146,58,0.3);border-radius:28px;padding:4px 14px;margin-bottom:12px;}
+.jub-n{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;background:linear-gradient(135deg,#8a5c00,var(--gold2),var(--gold3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.jub-t{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold3);}
+.hdr-ch{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,4vw,1.85rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:4px;}
+.hdr-ch em{font-style:italic;color:var(--gold3);}
+.hdr-sub{font-size:0.68rem;color:rgba(255,255,255,0.38);letter-spacing:0.1em;text-transform:uppercase;}
+.hdr-ft{display:inline-block;margin:14px auto 0;font-family:'Playfair Display',serif;font-size:clamp(0.85rem,2vw,1rem);font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:0.04em;border-bottom:1.5px solid rgba(184,146,58,0.4);padding-bottom:4px;}
+.dioc-strip{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;background:rgba(10,20,50,0.65);border-top:1px solid rgba(184,146,58,0.18);padding:9px 16px;margin-top:18px;font-size:0.66rem;color:rgba(255,255,255,0.45);}
+.ds{display:flex;gap:4px;}.ds-l{color:var(--gold3);font-weight:700;}
+.gold-rule{height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold3),var(--gold2),transparent);}
+/* LAYOUT */
+.wrap{max-width:920px;margin:0 auto;padding:22px 14px 72px;}
+.note{background:var(--blue-bg);border:1.5px solid rgba(26,61,122,0.2);border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;gap:10px;}
+.note-ic{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+.note-tx h3{font-size:0.78rem;font-weight:700;color:var(--blue);margin-bottom:2px;}
+.note-tx p{font-size:0.72rem;color:#334d8a;line-height:1.6;}
+.card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(12,30,60,0.07);border:1.5px solid var(--border);margin-bottom:16px;}
+.ch{padding:11px 16px;display:flex;align-items:center;gap:9px;}
+.hn{background:var(--navy);}.hg{background:linear-gradient(135deg,var(--gold),#9a7020);}.hgr{background:var(--green);}.hb{background:var(--blue);}.hr{background:var(--red);}.ho{background:var(--orange);}.hd{background:#111827;}
+.ch-i{font-size:1rem;flex-shrink:0;}.ch-t{flex:1;}
+.ch-ti{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#fff;letter-spacing:0.04em;}
+.hg .ch-ti{color:var(--navy);}
+.ch-su{font-size:0.61rem;color:rgba(255,255,255,0.5);}
+.hg .ch-su{color:rgba(12,30,60,0.5);}
+.ch-ba{font-size:0.58rem;font-weight:800;padding:3px 9px;border-radius:18px;letter-spacing:0.07em;text-transform:uppercase;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.65);border:1px solid rgba(255,255,255,0.15);white-space:nowrap;}
+.cb{padding:16px;}
+.fg{margin-bottom:11px;}.fg:last-child{margin-bottom:0;}
+.fg>label,.fg>.lb{display:block;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
+.req{color:var(--red);margin-left:1px;}.opt{font-weight:400;font-size:0.56rem;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:3px;}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--ink);background:var(--soft);outline:none;-webkit-appearance:none;transition:border-color .18s,box-shadow .18s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(184,146,58,0.12);background:var(--white);}
+.fg textarea{min-height:65px;resize:vertical;line-height:1.5;}
+.fn{font-size:0.64rem;color:var(--muted);margin-top:3px;line-height:1.5;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;}
+.pg-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.pgc{padding:6px 13px;border-radius:18px;border:1.5px solid var(--border);background:var(--soft);font-size:0.77rem;font-weight:600;color:var(--ink);cursor:pointer;transition:all .15s;}
+.pgc.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+/* AUTHORITIES */
+.auth-tbl{width:100%;border-collapse:collapse;}
+.auth-tbl th{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);padding:7px 10px;border-bottom:1.5px solid var(--border);text-align:left;background:var(--soft);}
+.auth-tbl td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:0.82rem;vertical-align:top;}
+.auth-tbl tr:last-child td{border-bottom:none;}
+.auth-tbl tr:hover td{background:var(--gold-light,#fdf5e0);}
+.auth-lv{font-weight:700;color:var(--navy);font-size:0.73rem;}
+.auth-nm{color:var(--ink);font-weight:600;}
+.auth-nm .placeholder{color:var(--muted);font-style:italic;font-weight:400;}
+.auth-role{font-size:0.67rem;color:var(--muted);}
+/* CHILDREN */
+.cblk{background:var(--soft);border:1.5px solid var(--border);border-radius:9px;padding:12px;margin-bottom:10px;}
+.cblk:last-child{margin-bottom:0;}
+.cbhd{display:flex;align-items:center;justify-content:space-between;}
+.cbpill{background:var(--navy);color:var(--gold3);font-size:0.6rem;font-weight:800;padding:3px 10px;border-radius:18px;letter-spacing:0.07em;}
+.cbtog{background:transparent;border:1.5px solid var(--border);border-radius:18px;padding:4px 12px;font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;}
+.cbtog.open{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.cbflds{display:none;margin-top:12px;}.cbflds.show{display:block;}
+/* CONSENT */
+.cl{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.ci{display:flex;gap:9px;align-items:flex-start;}
+.ci input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--navy);cursor:pointer;}
+.ci label{font-size:0.77rem;color:var(--ink);line-height:1.6;cursor:pointer;}
+/* SIGNATURE BLOCKS */
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:6px;}
+.sig{border-top:1.5px solid var(--border);padding-top:8px;}
+.sig-line{height:44px;border-bottom:1.5px solid var(--ink);margin-bottom:6px;}
+.sig-nm{font-size:0.75rem;font-weight:700;color:var(--ink);}
+.sig-rl{font-size:0.62rem;color:var(--muted);margin-top:2px;}
+.sig-dt{font-size:0.6rem;color:var(--muted);margin-top:8px;}
+/* TOTAL */
+.tot-row{background:var(--navy);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:7px;}
+.tot-l{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);}
+.tot-a{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--gold3);}
+.tot-r{font-size:0.67rem;color:rgba(255,255,255,0.38);text-align:right;line-height:1.6;}
+.btn-row{display:flex;gap:8px;}
+.btn{flex:1;padding:12px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;}
+.btn:active{transform:scale(0.97);}
+.bg{background:var(--soft);color:var(--ink);border:1.5px solid var(--border);max-width:140px;font-size:0.78rem;}
+.bp{background:linear-gradient(135deg,var(--gold2),#9a7020);color:var(--navy);box-shadow:0 4px 14px rgba(184,146,58,0.28);}
+/* APPROVAL BLOCK */
+.appr{background:linear-gradient(160deg,#070f22,#0d1c3a,#13264c);border-radius:14px;overflow:hidden;border:1px solid rgba(184,146,58,0.2);margin-bottom:20px;}
+.appr-hd{padding:17px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(184,146,58,0.18);}
+.appr-em{width:48px;height:48px;flex-shrink:0;border-radius:50%;background:rgba(184,146,58,0.1);border:1.5px solid rgba(184,146,58,0.35);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.appr-ht h2{font-family:'Playfair Display',serif;font-size:0.93rem;font-weight:700;color:var(--gold3);}
+.appr-ht p{font-size:0.6rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px;}
+.appr-body{padding:20px;}
+.astat{border-radius:8px;padding:10px 14px;text-align:center;font-size:0.8rem;font-weight:700;margin-bottom:16px;}
+.asp{background:rgba(184,146,58,0.1);color:var(--gold3);border:1px solid rgba(184,146,58,0.22);}
+.asa{background:rgba(50,180,100,0.12);color:#5de896;border:1px solid rgba(50,180,100,0.22);}
+.asr{background:rgba(220,80,80,0.12);color:#f08080;border:1px solid rgba(220,80,80,0.22);}
+.appr-resolutions{background:rgba(255,255,255,0.04);border:1px solid rgba(184,146,58,0.15);border-radius:8px;padding:14px;margin-bottom:16px;}
+.res-t{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold3);margin-bottom:10px;}
+.ri{display:flex;gap:8px;margin-bottom:7px;font-size:0.76rem;}
+.ri:last-child{margin-bottom:0;}
+.rn{width:18px;height:18px;flex-shrink:0;margin-top:1px;background:var(--gold2);color:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:800;}
+.rtx{color:rgba(255,255,255,0.7);line-height:1.6;}.rtx strong{color:var(--gold3);}
+/* VOTE TABLE */
+.vtbl{width:100%;border-collapse:collapse;margin-bottom:14px;}
+.vtbl th{font-size:0.59rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:7px 9px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);}
+.vtbl td{padding:8px 9px;vertical-align:middle;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.77rem;}
+.vtbl tr:last-child td{border-bottom:none;}
+.vn2{color:#fff;font-weight:600;}.vr2{color:rgba(255,255,255,0.35);font-size:0.65rem;margin-top:1px;}
+.vv{display:flex;gap:5px;}
+.vb{padding:3px 10px;border-radius:14px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:0.64rem;font-weight:700;cursor:pointer;background:transparent;transition:all .15s;}
+.vy{color:#5de896;border-color:#5de896;}.vno{color:#f08080;border-color:#f08080;}.vab{color:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.15);}
+.vb.sy{background:#5de896;color:#062010;}.vb.sn{background:#f08080;color:#200a0a;}.vb.sa{background:rgba(255,255,255,0.13);color:#fff;}
+.vi{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:5px;padding:4px 7px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.68rem;width:100%;outline:none;}
+.vi::placeholder{color:rgba(255,255,255,0.18);}
+.tally{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
+.ti{background:rgba(255,255,255,0.04);border-radius:7px;padding:10px;text-align:center;}
+.tv{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;}
+.tvy{color:#5de896;}.tvn{color:#f08080;}.tva{color:rgba(255,255,255,0.3);}
+.tl{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.25);margin-top:2px;}
+.exr{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:10px 12px;width:100%;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.79rem;outline:none;min-height:70px;resize:vertical;line-height:1.5;}
+.exr::placeholder{color:rgba(255,255,255,0.15);}
+.dec{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;}
+.db{flex:1;min-width:110px;padding:10px;border-radius:7px;border:none;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;}
+.dba{background:#5de896;color:#062010;}.dbr{background:#f08080;color:#200a0a;}
+.dbd{background:rgba(184,146,58,0.18);color:var(--gold3);border:1px solid rgba(184,146,58,0.28);}
+.dbp{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.58);border:1px solid rgba(255,255,255,0.1);}
+.appr-sig{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:18px;}
+.as{border-top:1.5px solid rgba(184,146,58,0.3);padding-top:8px;}
+.as-l{height:34px;border-bottom:1px solid rgba(255,255,255,0.16);margin-bottom:6px;}
+.as-n{font-size:0.74rem;font-weight:700;color:rgba(255,255,255,0.72);}
+.as-r{font-size:0.6rem;color:rgba(255,255,255,0.28);margin-top:1px;}
+.as-d{font-size:0.59rem;color:rgba(255,255,255,0.16);margin-top:4px;}
+.appr-ft{margin-top:18px;text-align:center;font-size:0.59rem;color:rgba(255,255,255,0.16);letter-spacing:0.06em;line-height:1.9;}
+/* SUCCESS */
+#success{display:none;}#success.show{display:block;}
+.sc{background:var(--white);border-radius:14px;padding:30px 20px;text-align:center;max-width:480px;margin:16px auto 42px;box-shadow:0 8px 36px rgba(12,30,60,0.1);}
+.si{width:58px;height:58px;margin:0 auto 14px;background:rgba(21,92,53,0.1);border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;animation:pop .4s ease;}
+@keyframes pop{from{transform:scale(0.4);opacity:0;}to{transform:scale(1);opacity:1;}}
+.sc h2{font-family:'Playfair Display',serif;font-size:1.55rem;margin-bottom:7px;}
+.sc p{font-size:0.81rem;color:var(--muted);margin-bottom:12px;line-height:1.7;}
+.sref{background:var(--soft);border-radius:8px;padding:12px;font-size:0.79rem;line-height:1.9;margin-bottom:16px;text-align:left;}
+.sbtns{display:flex;gap:8px;}
+.sbb{flex:1;padding:11px;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;}
+.sbg{background:var(--soft);color:var(--muted);border:1.5px solid var(--border);}
+.sbp{background:linear-gradient(135deg,var(--gold2),#9a7020);color:var(--navy);}
+@media print{body{background:#fff;}.hdr,.ch{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.btn-row,.note{display:none;}.appr-body button{display:none;}}
+@media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr;}.sig-grid{grid-template-columns:1fr;}.dec{flex-direction:column;}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="cross"><svg viewBox="0 0 38 38" fill="none"><rect x="16.5" y="2" width="5" height="34" rx="2" fill="#d4a84b"/><rect x="2" y="12" width="34" height="5" rx="2" fill="#d4a84b"/><circle cx="19" cy="19" r="17" stroke="#d4a84b" stroke-width="1" fill="none" opacity="0.35"/></svg></div>
+    <div class="jub"><span class="jub-n">&#10022; 25 &#10022;</span><span class="jub-t">Silver Jubilee 2025</span></div>
+    <div class="hdr-ch">St. Thomas Mar Thoma Church <em>Vancouver</em></div>
+    <div class="hdr-sub">10787 128 Street, Surrey, BC V3T 3A2 &nbsp;&#183;&nbsp; Holy Qurbana every Sunday 4:00 PM PST</div>
+    <div class="hdr-ft">Family Directory Information Form &mdash; Silver Jubilee Parish Directory 2025</div>
+  </div>
+  <div class="dioc-strip">
+    <div class="ds"><span class="ds-l">Diocese:</span><span>Diocese of North America</span></div>
+    <div class="ds"><span class="ds-l">Bishop:</span><span>Rt. Rev. Dr. Abraham Mar Paulos Episcopa</span></div>
+    <div class="ds"><span class="ds-l">Metropolitan:</span><span>Most Rev. Dr. Theodosius Mar Thoma (22nd)</span></div>
+    <div class="ds"><span class="ds-l">Diocesan HQ:</span><span>Sinai Mar Thoma Centre, Merrick, New York</span></div>
+  </div>
+</div>
+<div class="gold-rule"></div>
+
+<div class="wrap">
+  <div class="note" style="margin-top:18px;">
+    <div class="note-ic">&#128203;</div>
+    <div class="note-tx">
+      <h3>For approval by the Executive Committee of St. Thomas Mar Thoma Church, Vancouver</h3>
+      <p>This form is modelled on the <strong>Diocese of North America</strong> directory standard (marthomana.org) and the <strong>Mar Thoma Parish Dubai</strong> active membership portal (marthomaparishdubai.org, 2,400+ families). Fields marked <strong style="color:var(--red)">*</strong> are required. Up to four children may be added. Home Parish captures your registered Kerala/India Idavaka — standard in every Mar Thoma directory worldwide. All data is handled under Canadian privacy law (PIPEDA).</p>
+    </div>
+  </div>
+
+  <!-- PART A: PARISH ADMIN -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128203;</span><div class="ch-t"><div class="ch-ti">Part A &mdash; Parish Administration Details</div><div class="ch-su">Register number, prayer group, and member status (for office use)</div></div><span class="ch-ba">Section A</span></div>
+    <div class="cb">
+      <div class="g3">
+        <div class="fg"><label>Family ID / Register No.<span class="req">*</span></label><input type="text" id="fam-id" placeholder="To be filled by office"/><div class="fn">Assigned by church secretary on receipt of this form.</div></div>
+        <div class="fg"><label>Date Received</label><input type="date" id="rec-dt"/></div>
+        <div class="fg"><label>Member Since (Year)</label><input type="number" id="mem-yr" placeholder="e.g. 2010" min="1999" max="2025"/></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Member Status<span class="req">*</span></label><select id="mem-st"><option value="">&#8212; Select &#8212;</option><option>Full Member</option><option>Associate Member</option><option>New Member (2024&#8211;2025)</option></select></div>
+        <div class="fg"><label>House / Family Name (Tharavad)<span class="opt">Optional</span></label><input type="text" id="house" placeholder="e.g. Vattoly House, Karickathra"/></div>
+      </div>
+      <div class="fg"><label>Prayer Group<span class="req">*</span></label>
+        <div class="pg-wrap">
+          <div class="pgc" onclick="selPG(this)">Bethel</div><div class="pgc" onclick="selPG(this)">Emmanuel</div>
+          <div class="pgc" onclick="selPG(this)">Sharon</div><div class="pgc" onclick="selPG(this)">Zion</div>
+          <div class="pgc" onclick="selPG(this)">Calvary</div><div class="pgc" onclick="selPG(this)">Carmel</div>
+          <div class="pgc" onclick="selPG(this)">Horeb</div><div class="pgc" onclick="selPG(this)">Moriah</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART B: FAMILY DETAILS -->
+  <div class="card">
+    <div class="ch hb"><span class="ch-i">&#127968;</span><div class="ch-t"><div class="ch-ti">Part B &mdash; Family &amp; Contact Details</div><div class="ch-su">Residential address and primary contact information</div></div><span class="ch-ba">Section B</span></div>
+    <div class="cb">
+      <div class="g2">
+        <div class="fg"><label>Family Surname<span class="req">*</span></label><input type="text" id="fam-sn" placeholder="e.g. Varghese"/></div>
+        <div class="fg"><label>Present Parish (pre-filled)</label><input type="text" value="St. Thomas Mar Thoma Church, Vancouver" readonly style="cursor:not-allowed;opacity:.72;"/></div>
+      </div>
+      <div class="fg"><label>Residential Address (Full mailing address)<span class="req">*</span></label><input type="text" id="res-addr" placeholder="e.g. 12345 128 Street, Surrey, BC V3T 1A1"/></div>
+      <div class="g3">
+        <div class="fg"><label>Home Phone</label><input type="tel" id="ph-home" placeholder="+1 (604) 000-0000"/></div>
+        <div class="fg"><label>Mobile (Primary)<span class="req">*</span></label><input type="tel" id="mob-p" placeholder="+1 (604) 000-0000"/></div>
+        <div class="fg"><label>Mobile (Secondary)<span class="opt">Optional</span></label><input type="tel" id="mob-s" placeholder="+1 (604) 000-0000"/></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Email (Primary)<span class="req">*</span></label><input type="email" id="em-p" placeholder="family@email.com"/></div>
+        <div class="fg"><label>Email (Secondary)<span class="opt">Optional</span></label><input type="email" id="em-s" placeholder="spouse@email.com"/></div>
+      </div>
+      <div class="fg"><label>Preferred Language(s) for Communication<span class="req">*</span></label>
+        <div class="pg-wrap" id="langw">
+          <div class="pgc" onclick="selLang(this)">English</div>
+          <div class="pgc" onclick="selLang(this)">Malayalam</div>
+          <div class="pgc" onclick="selLang(this)">Both</div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>WhatsApp Number (for church communications)</label><input type="tel" id="wa" placeholder="+1 (604) 000-0000"/></div>
+        <div class="fg"><label>Emergency Contact Name &amp; Phone</label><input type="text" id="emg-n" placeholder="e.g. Mary Thomas" style="margin-bottom:7px;"/><input type="tel" id="emg-p" placeholder="+1 (604) 000-0000"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART C: HEAD OF FAMILY -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128100;</span><div class="ch-t"><div class="ch-ti">Part C &mdash; Head of Family</div><div class="ch-su">Primary registered member of the household</div></div><span class="ch-ba">Section C</span></div>
+    <div class="cb">
+      <div class="g4">
+        <div class="fg"><label>Prefix<span class="req">*</span></label><select id="h-pfx"><option value="">&#8212;</option><option>Mr.</option><option>Mrs.</option><option>Ms.</option><option>Rev.</option><option>Dr.</option><option>M/s</option></select></div>
+        <div class="fg" style="grid-column:span 2;"><label>Full Name<span class="req">*</span></label><input type="text" id="h-nm" placeholder="e.g. Thomas Kurian Varghese"/></div>
+        <div class="fg"><label>Gender<span class="req">*</span></label><select id="h-gen"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Name as it should appear in Directory<span class="req">*</span></label><input type="text" id="h-dn" placeholder="e.g. Thomas K. Varghese"/></div>
+        <div class="fg"><label>Name in Malayalam<span class="opt">Optional</span></label><input type="text" id="h-mal" placeholder="&#3374;&#3378;&#3375;&#3390;&#3379;&#3384; &#3384;&#3375;&#3370;&#3405;"/></div>
+      </div>
+      <div class="g4">
+        <div class="fg"><label>Date of Birth</label><input type="date" id="h-dob"/></div>
+        <div class="fg"><label>Blood Group</label><select id="h-bg"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+        <div class="fg"><label>Marital Status</label><select id="h-mar"><option value="">&#8212;</option><option>Married</option><option>Unmarried</option><option>Widowed</option><option>Widower</option></select></div>
+        <div class="fg"><label>Wedding Anniversary</label><input type="date" id="h-ann"/></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Occupation / Employer</label><input type="text" id="h-occ" placeholder="e.g. Registered Nurse, BC Health Authority"/></div>
+        <div class="fg"><label>Ministry / Parish Role<span class="opt">If any</span></label><input type="text" id="h-role" placeholder="e.g. Deacon, Trustee, Edavaka Mission"/></div>
+      </div>
+      <div class="fg"><label>Baptism / Parish details<span class="opt">Optional — as noted in baptismal certificate</span></label><input type="text" id="h-bap" placeholder="e.g. Baptised at St. Thomas MTC Ranny, 15 April 1978, Rev. K.M. Thomas"/></div>
+    </div>
+  </div>
+
+  <!-- PART D: SPOUSE -->
+  <div class="card">
+    <div class="ch hn"><span class="ch-i">&#128145;</span><div class="ch-t"><div class="ch-ti">Part D &mdash; Spouse</div><div class="ch-su">Leave blank if not applicable</div></div><span class="ch-ba">Section D</span></div>
+    <div class="cb">
+      <div class="g4">
+        <div class="fg"><label>Prefix</label><select id="s-pfx"><option value="">&#8212;</option><option>Mr.</option><option>Mrs.</option><option>Ms.</option><option>Dr.</option></select></div>
+        <div class="fg" style="grid-column:span 2;"><label>Full Name</label><input type="text" id="s-nm" placeholder="e.g. Mary Thomas Varghese"/></div>
+        <div class="fg"><label>Gender</label><select id="s-gen"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Name as it should appear in Directory</label><input type="text" id="s-dn" placeholder="e.g. Mary T. Varghese"/></div>
+        <div class="fg"><label>Name in Malayalam<span class="opt">Optional</span></label><input type="text" id="s-mal" placeholder="&#3374;&#3378;&#3375;&#3390;&#3379;&#3384; &#3384;&#3375;&#3370;&#3405;"/></div>
+      </div>
+      <div class="g4">
+        <div class="fg"><label>Date of Birth</label><input type="date" id="s-dob"/></div>
+        <div class="fg"><label>Blood Group</label><select id="s-bg"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+        <div class="fg"><label>Occupation / Employer</label><input type="text" id="s-occ" placeholder="e.g. Teacher"/></div>
+        <div class="fg"><label>Mobile</label><input type="tel" id="s-mob" placeholder="+1 (604)&#8230;"/></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Email</label><input type="email" id="s-em" placeholder="spouse@email.com"/></div>
+        <div class="fg"><label>Ministry / Parish Role<span class="opt">If any</span></label><input type="text" id="s-role" placeholder="e.g. Sevika Sangham President"/></div>
+      </div>
+      <div class="fg"><label>Baptism / Parish details<span class="opt">Optional</span></label><input type="text" id="s-bap" placeholder="e.g. Baptised at Sharon MTC Punalur, 2 Jan 1981, Rev. T.P. Varghese"/></div>
+    </div>
+  </div>
+
+  <!-- PART E: HOME PARISH -->
+  <div class="card">
+    <div class="ch hb"><span class="ch-i">&#9962;</span><div class="ch-t"><div class="ch-ti">Part E &mdash; Home Parish in India (Idavaka)</div><div class="ch-su">Registered Kerala/India parish &mdash; standard in every Mar Thoma directory worldwide (Dubai, North America, UK)</div></div><span class="ch-ba">Section E</span></div>
+    <div class="cb">
+      <div class="note" style="margin-bottom:14px;">
+        <div class="note-ic">&#8505;&#65039;</div>
+        <div class="note-tx"><h3>What is the Home Parish (Idavaka)?</h3><p>Every Mar Thoma family, whether in Kerala or the diaspora, retains formal membership in a <em>Home Parish</em> (Idavaka) in Kerala/India. This is captured in every Mar Thoma directory worldwide including Dubai (marthomaparishdubai.org) and the Diocese of North America (marthomana.org). It is a record of spiritual heritage and family identity.</p></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Home Parish Name<span class="req">*</span></label><input type="text" id="hp-nm" placeholder="e.g. St. Thomas Mar Thoma Church, Tiruvalla"/></div>
+        <div class="fg"><label>Home Parish Register No.<span class="opt">If known</span></label><input type="text" id="hp-reg" placeholder="e.g. Family No. 39"/></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>Home Diocese (India)<span class="req">*</span></label>
+          <select id="hp-dio">
+            <option value="">&#8212; Select &#8212;</option>
+            <optgroup label="Kerala Dioceses">
+              <option>Kottayam-Kochi Diocese</option><option>Pathanamthitta Diocese</option>
+              <option>Tiruvalla Diocese</option><option>Thiruvananthapuram-Kollam Diocese</option>
+              <option>Malabar Diocese</option><option>Kottayam Diocese</option>
+              <option>Ankamali Diocese</option><option>Adoor Diocese</option>
+            </optgroup>
+            <optgroup label="Other Indian Dioceses">
+              <option>North India Diocese</option><option>South India Diocese</option>
+              <option>Karnataka-Goa Diocese</option><option>Tamil Nadu Diocese</option>
+              <option>Bombay Diocese</option><option>Northeast India Diocese</option>
+            </optgroup>
+            <option>Middle East Diocese</option><option>Other (specify in notes)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Parish Centre / Administrative Area</label><input type="text" id="hp-ctr" placeholder="e.g. Tiruvalla Centre, Kottayam Centre"/></div>
+      </div>
+      <div class="g3">
+        <div class="fg"><label>Village / Town</label><input type="text" id="hp-vl" placeholder="e.g. Ranny, Mundanthuruth"/></div>
+        <div class="fg"><label>Kerala District</label>
+          <select id="hp-dist">
+            <option value="">&#8212;</option>
+            <option>Thiruvananthapuram</option><option>Kollam</option><option>Pathanamthitta</option>
+            <option>Alappuzha</option><option>Kottayam</option><option>Idukki</option>
+            <option>Ernakulam</option><option>Thrissur</option><option>Palakkad</option>
+            <option>Malappuram</option><option>Kozhikode</option><option>Wayanad</option>
+            <option>Kannur</option><option>Kasaragod</option>
+            <option>Outside Kerala (India)</option><option>Outside India</option>
+          </select>
+        </div>
+        <div class="fg"><label>PIN Code (India)</label><input type="text" id="hp-pin" placeholder="e.g. 689501" maxlength="7"/></div>
+      </div>
+      <div class="fg"><label>Home Parish Address<span class="req">*</span></label><textarea id="hp-addr" placeholder="e.g. St. Thomas Mar Thoma Church, Mampuzha P.O., Ranny, Pathanamthitta Dist., Kerala &#8211; 689 678"></textarea></div>
+      <div class="g2">
+        <div class="fg"><label>Home Parish Vicar (if known)</label><input type="text" id="hp-vic" placeholder="e.g. Rev. Thomas Kurian"/></div>
+        <div class="fg"><label>Home Parish Contact Phone</label><input type="tel" id="hp-ph" placeholder="+91 469 000 0000"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART F: CHILDREN -->
+  <div class="card">
+    <div class="ch hgr"><span class="ch-i">&#128103;</span><div class="ch-t"><div class="ch-ti">Part F &mdash; Children (Up to 4)</div><div class="ch-su">Blood group, DOB, school and Sunday School class for each child &mdash; per Diocese of North America &amp; Dubai Mar Thoma directory standard</div></div><span class="ch-ba">Section F</span></div>
+    <div class="cb">
+      <!-- Child 1 -->
+      <div class="cblk">
+        <div class="cbhd"><span class="cbpill">Child 1</span><button class="cbtog" id="ct1" onclick="tgC(1)">+ Add Child</button></div>
+        <div class="cbflds" id="cf1">
+          <div class="g4"><div class="fg"><label>Prefix</label><select id="c1p"><option value="">&#8212;</option><option>Master</option><option>Miss</option><option>Mr.</option><option>Ms.</option></select></div><div class="fg" style="grid-column:span 2;"><label>Full Name<span class="req">*</span></label><input type="text" id="c1n" placeholder="e.g. Jijo Thomas"/></div><div class="fg"><label>Relationship</label><select id="c1r"><option value="">&#8212;</option><option>Son</option><option>Daughter</option><option>Son in Law</option><option>Daughter in Law</option><option>Grand Son</option><option>Grand Daughter</option></select></div></div>
+          <div class="g4"><div class="fg"><label>Date of Birth<span class="req">*</span></label><input type="date" id="c1d"/></div><div class="fg"><label>Gender</label><select id="c1g"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div><div class="fg"><label>Blood Group</label><select id="c1b"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="fg"><label>Baptism / Confirmation<span class="opt">Optional</span></label><input type="text" id="c1bp" placeholder="e.g. 14 April 2005"/></div></div>
+          <div class="g2"><div class="fg"><label>School / College (Current)</label><input type="text" id="c1s" placeholder="e.g. Grade 7 &#8212; Fleetwood Park Secondary"/></div><div class="fg"><label>Sunday School Class<span class="opt">If attending</span></label><input type="text" id="c1ss" placeholder="e.g. Class 5, Bethel Group"/></div></div>
+        </div>
+      </div>
+      <!-- Child 2 -->
+      <div class="cblk">
+        <div class="cbhd"><span class="cbpill">Child 2</span><button class="cbtog" id="ct2" onclick="tgC(2)">+ Add Child</button></div>
+        <div class="cbflds" id="cf2">
+          <div class="g4"><div class="fg"><label>Prefix</label><select id="c2p"><option value="">&#8212;</option><option>Master</option><option>Miss</option><option>Mr.</option><option>Ms.</option></select></div><div class="fg" style="grid-column:span 2;"><label>Full Name<span class="req">*</span></label><input type="text" id="c2n" placeholder="e.g. Elsa Thomas"/></div><div class="fg"><label>Relationship</label><select id="c2r"><option value="">&#8212;</option><option>Son</option><option>Daughter</option><option>Son in Law</option><option>Daughter in Law</option><option>Grand Son</option><option>Grand Daughter</option></select></div></div>
+          <div class="g4"><div class="fg"><label>Date of Birth<span class="req">*</span></label><input type="date" id="c2d"/></div><div class="fg"><label>Gender</label><select id="c2g"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div><div class="fg"><label>Blood Group</label><select id="c2b"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="fg"><label>Baptism / Confirmation<span class="opt">Optional</span></label><input type="text" id="c2bp" placeholder="e.g. 3 June 2009"/></div></div>
+          <div class="g2"><div class="fg"><label>School / College (Current)</label><input type="text" id="c2s" placeholder="e.g. Grade 4 &#8212; Sullivan Elementary"/></div><div class="fg"><label>Sunday School Class<span class="opt">If attending</span></label><input type="text" id="c2ss" placeholder="e.g. Class 2, Sharon Group"/></div></div>
+        </div>
+      </div>
+      <!-- Child 3 -->
+      <div class="cblk">
+        <div class="cbhd"><span class="cbpill">Child 3</span><button class="cbtog" id="ct3" onclick="tgC(3)">+ Add Child</button></div>
+        <div class="cbflds" id="cf3">
+          <div class="g4"><div class="fg"><label>Prefix</label><select id="c3p"><option value="">&#8212;</option><option>Master</option><option>Miss</option><option>Mr.</option><option>Ms.</option></select></div><div class="fg" style="grid-column:span 2;"><label>Full Name<span class="req">*</span></label><input type="text" id="c3n" placeholder="e.g. Joel Thomas"/></div><div class="fg"><label>Relationship</label><select id="c3r"><option value="">&#8212;</option><option>Son</option><option>Daughter</option><option>Son in Law</option><option>Daughter in Law</option><option>Grand Son</option><option>Grand Daughter</option></select></div></div>
+          <div class="g4"><div class="fg"><label>Date of Birth<span class="req">*</span></label><input type="date" id="c3d"/></div><div class="fg"><label>Gender</label><select id="c3g"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div><div class="fg"><label>Blood Group</label><select id="c3b"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="fg"><label>Baptism / Confirmation<span class="opt">Optional</span></label><input type="text" id="c3bp" placeholder="e.g. 19 Jan 2012"/></div></div>
+          <div class="g2"><div class="fg"><label>School / College (Current)</label><input type="text" id="c3s" placeholder="e.g. SFU &#8212; Engineering Year 2"/></div><div class="fg"><label>Sunday School Class<span class="opt">If attending</span></label><input type="text" id="c3ss" placeholder="e.g. Youth Group, Zion"/></div></div>
+        </div>
+      </div>
+      <!-- Child 4 -->
+      <div class="cblk" style="margin-bottom:0;">
+        <div class="cbhd"><span class="cbpill">Child 4</span><button class="cbtog" id="ct4" onclick="tgC(4)">+ Add Child</button></div>
+        <div class="cbflds" id="cf4">
+          <div class="g4"><div class="fg"><label>Prefix</label><select id="c4p"><option value="">&#8212;</option><option>Master</option><option>Miss</option><option>Mr.</option><option>Ms.</option></select></div><div class="fg" style="grid-column:span 2;"><label>Full Name<span class="req">*</span></label><input type="text" id="c4n" placeholder="e.g. Anna Thomas"/></div><div class="fg"><label>Relationship</label><select id="c4r"><option value="">&#8212;</option><option>Son</option><option>Daughter</option><option>Son in Law</option><option>Daughter in Law</option><option>Grand Son</option><option>Grand Daughter</option></select></div></div>
+          <div class="g4"><div class="fg"><label>Date of Birth<span class="req">*</span></label><input type="date" id="c4d"/></div><div class="fg"><label>Gender</label><select id="c4g"><option value="">&#8212;</option><option>Male</option><option>Female</option></select></div><div class="fg"><label>Blood Group</label><select id="c4b"><option value="">&#8212;</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="fg"><label>Baptism / Confirmation<span class="opt">Optional</span></label><input type="text" id="c4bp" placeholder="e.g. 5 May 2015"/></div></div>
+          <div class="g2"><div class="fg"><label>School / College (Current)</label><input type="text" id="c4s" placeholder="e.g. UBC &#8212; Medicine Year 1"/></div><div class="fg"><label>Sunday School Class<span class="opt">If attending</span></label><input type="text" id="c4ss" placeholder="e.g. Senior Youth, Moriah"/></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART G: AUTHORITIES -->
+  <div class="card">
+    <div class="ch hd"><span class="ch-i">&#127963;</span><div class="ch-t"><div class="ch-ti">Part G &mdash; Church &amp; Civil Authorities (Reference Section)</div><div class="ch-su">For inclusion in the introductory pages of the Silver Jubilee Directory &mdash; verified March 2026</div></div><span class="ch-ba">Section G</span></div>
+    <div class="cb">
+      <div class="note" style="margin-bottom:14px;"><div class="note-ic">&#128269;</div><div class="note-tx"><h3>Researched &amp; Verified (March 2026)</h3><p>All authority names below have been verified from official sources. Placeholders are clearly marked where the specific detail needs to be confirmed by the church office. The church at 10787 128 Street, Surrey lies within the <strong>Surrey-Fleetwood</strong> BC provincial riding and the <strong>Surrey-Centre</strong> federal riding.</p></div></div>
+      <table class="auth-tbl">
+        <thead><tr><th>Level</th><th>Role / Authority</th><th>Name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="auth-lv">Church &#8212; Universal</span></td><td class="auth-role">Malankara Metropolitan</td><td class="auth-nm">Most Rev. Dr. Theodosius Mar Thoma</td><td class="auth-role">22nd Malankara Metropolitan · Mar Thoma Syrian Church of Malabar · Thiruvalla, Kerala</td></tr>
+          <tr><td><span class="auth-lv">Church &#8212; Diocesan</span></td><td class="auth-role">Diocesan Bishop, Diocese of North America</td><td class="auth-nm">Rt. Rev. Dr. Abraham Mar Paulos Episcopa</td><td class="auth-role">Sinai Mar Thoma Centre, 2320 South Merrick Ave, Merrick, NY 11566 · Consecrated 2024</td></tr>
+          <tr><td><span class="auth-lv">Church &#8212; Parish</span></td><td class="auth-role">Vicar, St. Thomas Mar Thoma Church, Vancouver</td><td class="auth-nm placeholder">[Name of Vicar]</td><td class="auth-role">10787 128 Street, Surrey, BC V3T 3A2 · vancouvermarthomachurch.com</td></tr>
+          <tr><td><span class="auth-lv">Federal</span></td><td class="auth-role">Member of Parliament, Surrey-Centre</td><td class="auth-nm">Hon. Randeep Sarai, MP</td><td class="auth-role">Liberal Party · Secretary of State (International Development) as of May 2025 · 170&#8211;10362 King George Blvd, Surrey</td></tr>
+          <tr><td><span class="auth-lv">Provincial</span></td><td class="auth-role">Premier of British Columbia</td><td class="auth-nm">Hon. David Eby</td><td class="auth-role">BC NDP · 37th Premier since November 18, 2022 · Victoria, BC</td></tr>
+          <tr><td><span class="auth-lv">Provincial</span></td><td class="auth-role">Member of the Legislative Assembly, Surrey-Fleetwood</td><td class="auth-nm">Jagrup Brar, MLA</td><td class="auth-role">BC NDP · Re-elected October 19, 2024 · Surrey-Fleetwood encompasses 128 Street / 107A Ave area</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td class="auth-role">Mayor of Surrey</td><td class="auth-nm">Mayor Brenda Locke</td><td class="auth-role">Surrey Connect · Elected October 15, 2022 · Surrey City Hall, 13450 104 Ave, Surrey</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td class="auth-role">Surrey City Councillors (2022&#8211;2026)</td><td class="auth-nm">Linda Annis &nbsp;&#183;&nbsp; Harry Bains &nbsp;&#183;&nbsp; Mike Bose<br/>Doug Elford &nbsp;&#183;&nbsp; Gordon Hepner &nbsp;&#183;&nbsp; Pardeep Kooner<br/>Mandeep Nagra &nbsp;&#183;&nbsp; Rob Stutt</td><td class="auth-role">Eight councillors elected October 15, 2022. Next election October 2026.</td></tr>
+          <tr><td><span class="auth-lv">Municipal</span></td><td class="auth-role">Surrey Fire Chief</td><td class="auth-nm">Fire Chief Jason Cairney</td><td class="auth-role">Appointed June 2024 · Surrey Fire Services · 1st Vice President, Fire Chiefs&#8217; Assoc. of BC (2025)</td></tr>
+          <tr><td><span class="auth-lv">Ecumenical</span></td><td class="auth-role">Bishop, Anglican Diocese of New Westminster</td><td class="auth-nm placeholder">[Name of Anglican Bishop]</td><td class="auth-role">Anglican Diocese of New Westminster encompasses Surrey. Confirm name with church office.</td></tr>
+        </tbody>
+      </table>
+      <div class="fn" style="margin-top:10px;">&#128204; Sources: marthomana.org, marthomachurch.in, ourcommons.ca, leg.bc.ca, surrey.ca, news.gov.bc.ca (March 2026). Items marked as placeholders require confirmation by the church office before printing.</div>
+    </div>
+  </div>
+
+  <!-- PART H: DIRECTORY LISTING -->
+  <div class="card">
+    <div class="ch ho"><span class="ch-i">&#128214;</span><div class="ch-t"><div class="ch-ti">Part H &mdash; Directory Listing Preferences</div><div class="ch-su">Select listing type and privacy preferences for the printed/online directory</div></div><span class="ch-ba">Section H</span></div>
+    <div class="cb">
+      <div class="g2">
+        <div class="fg"><label>Listing Type<span class="req">*</span></label><select id="lst-type" onchange="updTot()"><option value="40">Standard Listing &#8212; CAD $40</option><option value="100">Gold Listing &#8212; CAD $100</option><option value="200">Platinum Listing &#8212; CAD $200</option></select></div>
+        <div class="fg"><label>Additional Sponsorship<span class="opt">Optional</span></label><select id="add-sp" onchange="updTot()"><option value="0">None &#8212; listing fee only</option><option value="250">Heritage Tribute Page &#8212; $250</option><option value="500">Prayer Group Patron &#8212; $500</option><option value="200">Quarter-Page Ad &#8212; $200</option><option value="400">Silver Half-Page Ad &#8212; $400</option><option value="750">Gold Full-Page Ad &#8212; $750</option><option value="1500">Platinum Full-Page Ad &#8212; $1,500</option><option value="2500">Back Cover Exclusive &#8212; $2,500</option></select></div>
+      </div>
+      <div class="g3">
+        <div class="fg"><label>Phone display</label><select id="pf-ph"><option>Show full number</option><option>First 7 digits only</option><option>Do not display</option></select></div>
+        <div class="fg"><label>Email display</label><select id="pf-em"><option>Show email</option><option>Do not display</option></select></div>
+        <div class="fg"><label>Address display</label><select id="pf-ad"><option>City &amp; Province only</option><option>Full street address</option><option>Do not display</option></select></div>
+      </div>
+      <div class="fg"><label>Dedication / Special Message<span class="opt">Gold &amp; Platinum only &#8212; max 50 words</span></label><textarea id="ded" placeholder="e.g. We give thanks to God for 25 years of St. Thomas Mar Thoma Church, Vancouver."></textarea></div>
+    </div>
+  </div>
+
+  <!-- PART I: PHOTO -->
+  <div class="card">
+    <div class="ch hg"><span class="ch-i">&#128247;</span><div class="ch-t"><div class="ch-ti">Part I &mdash; Family Photograph</div><div class="ch-su">Required for both printed and digital directory editions</div></div><span class="ch-ba" style="color:var(--navy);border-color:rgba(12,30,60,0.2);">Section I</span></div>
+    <div class="cb">
+      <div style="border:2px dashed var(--border);border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;position:relative;background:var(--soft);" onclick="document.getElementById('ph-in').click()">
+        <input type="file" id="ph-in" accept="image/jpeg,image/png" onchange="hdPh(this)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;"/>
+        <div id="ph-ic" style="font-size:1.8rem;margin-bottom:6px;">&#128247;</div>
+        <div id="ph-tt" style="font-size:0.87rem;font-weight:700;color:var(--ink);margin-bottom:3px;">Click here or drag your family photo</div>
+        <div style="font-size:0.68rem;color:var(--muted);">JPEG or PNG &nbsp;&#183;&nbsp; Max 10 MB &nbsp;&#183;&nbsp; All family members visible</div>
+        <img id="ph-pv" style="width:100%;max-height:160px;object-fit:contain;border-radius:7px;margin-top:10px;display:none;" alt="preview"/>
+      </div>
+      <div style="background:rgba(184,146,58,0.07);border:1px solid rgba(184,146,58,0.2);border-radius:7px;padding:11px 13px;margin-top:11px;">
+        <div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:5px;">Photo Guidelines &#8212; Silver Jubilee Directory</div>
+        <ul style="list-style:none;"><li style="font-size:0.69rem;color:var(--muted);padding:2px 0;display:flex;gap:5px;"><span style="color:var(--green);font-weight:700;">&#10003;</span>Recent portrait &#8212; taken within the last 2 years preferred</li><li style="font-size:0.69rem;color:var(--muted);padding:2px 0;display:flex;gap:5px;"><span style="color:var(--green);font-weight:700;">&#10003;</span>Minimum 800 &#215; 600 pixels; higher resolution strongly preferred for print</li><li style="font-size:0.69rem;color:var(--muted);padding:2px 0;display:flex;gap:5px;"><span style="color:var(--green);font-weight:700;">&#10003;</span>All immediate family members clearly visible; semi-formal attire recommended</li><li style="font-size:0.69rem;color:var(--muted);padding:2px 0;display:flex;gap:5px;"><span style="color:var(--green);font-weight:700;">&#10003;</span>If no photo available now, the Directory Committee will contact you by email</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART J: DECLARATION & CONSENT -->
+  <div class="card">
+    <div class="ch hr"><span class="ch-i">&#9997;&#65039;</span><div class="ch-t"><div class="ch-ti">Part J &mdash; Declaration, Consent &amp; Signatures</div><div class="ch-su">All four consent boxes must be ticked &mdash; Signatures required from Head of Family and Spouse</div></div><span class="ch-ba">Section J</span></div>
+    <div class="cb">
+      <ul class="cl">
+        <li class="ci"><input type="checkbox" id="cn1"/><label for="cn1">I confirm that the information provided in this form is accurate and may be published in the <strong>Silver Jubilee Parish Directory of St. Thomas Mar Thoma Church, Vancouver</strong>, subject to the privacy preferences I have indicated in Part H.</label></li>
+        <li class="ci"><input type="checkbox" id="cn2"/><label for="cn2">I consent to my family&#8217;s data (name, contact details, home parish information, and photograph) being stored securely by the Directory Committee for directory purposes, in compliance with Canadian privacy law (PIPEDA / Bill C-27).</label></li>
+        <li class="ci"><input type="checkbox" id="cn3"/><label for="cn3">I consent to receiving church communications via email, WhatsApp, and SMS, including Sunday bulletins, prayer meeting notices, and church announcements from St. Thomas Mar Thoma Church, Vancouver.</label></li>
+        <li class="ci"><input type="checkbox" id="cn4"/><label for="cn4">I confirm the uploaded family photograph belongs to our family, we own the rights to the image, and we consent to it being printed in the Parish Directory and any official church publications.</label></li>
+      </ul>
+      <div class="g2" style="margin-top:14px;">
+        <div class="fg"><label>Name of person completing this form<span class="req">*</span></label><input type="text" id="submitter" placeholder="Your full name"/></div>
+        <div class="fg"><label>Relationship to Head of Family<span class="req">*</span></label><select id="sub-rel"><option value="">&#8212;</option><option>Head of Family (self)</option><option>Spouse</option><option>Adult child</option><option>Church Secretary (on behalf)</option><option>Directory Committee member</option></select></div>
+      </div>
+      <!-- Signature blocks -->
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:9px;padding:14px;margin-top:14px;">
+        <div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);margin-bottom:14px;">&#9997; Signatures</div>
+        <div class="sig-grid">
+          <div class="sig"><div class="sig-line"></div><div class="sig-nm">Head of Family</div><div class="sig-rl">Full Name: ___________________________</div><div class="sig-dt">Date: _______________</div></div>
+          <div class="sig"><div class="sig-line"></div><div class="sig-nm">Spouse</div><div class="sig-rl">Full Name: ___________________________</div><div class="sig-dt">Date: _______________</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="card" style="border-color:transparent;">
+    <div class="cb">
+      <div class="tot-row">
+        <div><div class="tot-l">Total Amount Payable</div><div class="tot-a" id="tot-disp">CAD $40.00</div></div>
+        <div class="tot-r">Listing: <span id="tot-l">Standard &#8212; $40</span><br/>Sponsorship: <span id="tot-s">None</span><br/>Payment arranged with Directory Committee</div>
+      </div>
+      <div id="submit-area">
+        <div class="btn-row">
+          <button class="btn bg" onclick="saveDraft()">&#128190; Save Draft</button>
+          <button class="btn bp" onclick="submitForm()">&#10013; Submit Registration &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success">
+    <div class="sc">
+      <div class="si">&#128591;</div>
+      <h2>Registration Submitted!</h2>
+      <p>Praise God! Your family has been registered for the Silver Jubilee Parish Directory. The Directory Committee will contact you within 3 business days to confirm your listing and arrange payment.</p>
+      <div class="sref"><strong>Reference: <span id="r-ref">&#8212;</span></strong><br/>Family: <span id="r-nm">&#8212;</span><br/>Home Parish: <span id="r-hp">&#8212;</span><br/>Prayer Group: <span id="r-pg">&#8212;</span><br/>Total: <span id="r-tot">&#8212;</span></div>
+      <div class="sbtns"><button class="sbb sbg" onclick="location.reload()">+ Register Another Family</button><button class="sbb sbp" onclick="shareWA()">&#128172; Share via WhatsApp</button></div>
+    </div>
+  </div>
+
+  <!-- PART K: EXCO APPROVAL BLOCK -->
+  <div class="appr">
+    <div class="appr-hd">
+      <div class="appr-em">&#9963;</div>
+      <div class="appr-ht">
+        <h2>Part K &mdash; Executive Committee Approval Block</h2>
+        <p>For Official Use Only &nbsp;&#183;&nbsp; St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; Silver Jubilee Directory 2025</p>
+      </div>
+    </div>
+    <div class="appr-body">
+      <div class="astat asp" id="astat">&#9203; &nbsp; STATUS: PENDING EXECUTIVE COMMITTEE REVIEW</div>
+      <div style="background:rgba(26,61,122,0.22);border:1px solid rgba(100,140,220,0.2);border-radius:7px;padding:9px 12px;margin-bottom:15px;font-size:0.7rem;color:#90b4f8;line-height:1.6;">
+        <strong style="color:var(--gold3);">Three-Approver Rule (Mandatory)</strong> &mdash; Minimum three human approvals required before any family data is published. Acceptable combinations: <strong>President/Vicar + any two Trustees</strong>, or <strong>President/Vicar + one Trustee + Secretary</strong>, or <strong>President/Vicar + Secretary + one other authorized ExCo member</strong>. This rule cannot be overridden by any single approver, including the Administrator.
+      </div>
+      <div class="appr-resolutions">
+        <div class="res-t">&#128220; Resolutions Placed Before the Executive Committee</div>
+        <div class="ri"><div class="rn">1</div><div class="rtx">That the Executive Committee approves the <strong>Silver Jubilee Parish Directory 2025</strong> as a formal church project to be ratified by the General Body (Edavaka Sangham).</div></div>
+        <div class="ri"><div class="rn">2</div><div class="rtx">That this <strong>Family Directory Information Form</strong> (modelled on the Diocese of North America and Mar Thoma Parish Dubai standards) is adopted as the standard registration instrument.</div></div>
+        <div class="ri"><div class="rn">3</div><div class="rtx">That the <strong>fundraising target of CAD $50,000</strong> from listing fees and sponsorship revenue is approved for Silver Jubilee celebrations and directory production.</div></div>
+        <div class="ri"><div class="rn">4</div><div class="rtx">That the <strong>Live Membership Portal</strong> (as described in the Director Proposal document) is approved for development, with a mandatory three-approver workflow before any data goes live.</div></div>
+        <div class="ri"><div class="rn">5</div><div class="rtx">That the directory be produced to the <strong>North American standard of 8.5&#34; &#215; 11&#34; Letter format</strong>, in 250 copies, for distribution to member families and the Diocese of North America.</div></div>
+        <div class="ri"><div class="rn">6</div><div class="rtx">That this proposal be <strong>forwarded to the General Body</strong> for final ratification and a copy submitted to the Diocese of North America.</div></div>
+      </div>
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-bottom:8px;">Executive Committee Vote</div>
+      <table class="vtbl">
+        <thead><tr><th>Name</th><th>Role</th><th>Vote</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><div class="vn2">Rev. _______________</div><div class="vr2">Vicar (Chair) &mdash; Mandatory</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">President &mdash; Mandatory</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">Secretary</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">Trustee 1</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">Trustee 2</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">ExCo Member</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+          <tr><td><div class="vn2">_______________</div><div class="vr2">ExCo Member</div></td><td></td><td><div class="vv"><button class="vb vy" onclick="cv(this,'y')">&#10003; Aye</button><button class="vb vno" onclick="cv(this,'n')">&#10007; Nay</button><button class="vb vab" onclick="cv(this,'a')">&#8212; Abstain</button></div></td><td><input class="vi" type="text" placeholder="Remarks&#8230;"/></td></tr>
+        </tbody>
+      </table>
+      <div class="tally">
+        <div class="ti"><div class="tv tvy" id="ty">0</div><div class="tl">In Favour</div></div>
+        <div class="ti"><div class="tv tvn" id="tn">0</div><div class="tl">Against</div></div>
+        <div class="ti"><div class="tv tva" id="ta">0</div><div class="tl">Abstain</div></div>
+      </div>
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;">ExCo Official Remarks &amp; Conditions of Approval</div>
+      <textarea class="exr" rows="3" placeholder="Record any conditions, amendments, or formal remarks&#8230;"></textarea>
+      <div class="dec">
+        <button class="db dba" onclick="dcd('approved')">&#10003; Approved</button>
+        <button class="db dbr" onclick="dcd('rejected')">&#10007; Not Approved</button>
+        <button class="db dbd" onclick="dcd('deferred')">&#8617; Defer to Next Meeting</button>
+        <button class="db dbp" onclick="window.print()">&#128424; Print</button>
+      </div>
+      <div class="appr-sig">
+        <div class="as"><div class="as-l"></div><div class="as-n">Vicar</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">President, Executive Committee</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">Secretary, Executive Committee</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+        <div class="as"><div class="as-l"></div><div class="as-n">Directory Committee Chairperson</div><div class="as-r">St. Thomas Mar Thoma Church, Vancouver</div><div class="as-d">Date: _______________</div></div>
+      </div>
+      <div class="appr-ft">
+        MALANKARA MAR THOMA SYRIAN CHURCH &nbsp;&#183;&nbsp; DIOCESE OF NORTH AMERICA<br/>
+        Sinai Mar Thoma Centre, 2320 South Merrick Avenue, Merrick, New York 11566 &nbsp;&#183;&nbsp; marthomana.org<br/>
+        Diocesan Bishop: Rt. Rev. Dr. Abraham Mar Paulos Episcopa &nbsp;&#183;&nbsp; Metropolitan: Most Rev. Dr. Theodosius Mar Thoma (22nd)<br/>
+        Parish: St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; vancouvermarthomachurch.com &nbsp;&#183;&nbsp; Founded 2000 A.D.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+<div class="gold-rule"></div>
+<footer style="background:var(--navy);color:rgba(255,255,255,0.38);text-align:center;padding:20px;font-size:0.69rem;line-height:1.9;">
+  <div>&#10013; &nbsp;St. Thomas Mar Thoma Church, Vancouver &nbsp;&#183;&nbsp; Silver Jubilee 2025 &nbsp;&#183;&nbsp; Diocese of North America</div>
+  <div><a href="https://vancouvermarthomachurch.com/" style="color:var(--gold2);text-decoration:none;">vancouvermarthomachurch.com</a> &nbsp;&#183;&nbsp; <a href="mailto:vancouvermarthoma@gmail.com" style="color:var(--gold2);text-decoration:none;">vancouvermarthoma@gmail.com</a> &nbsp;&#183;&nbsp; <a href="https://marthomana.org/" style="color:var(--gold2);text-decoration:none;">marthomana.org</a></div>
+</footer>
+<script>
+document.getElementById('rec-dt').value=new Date().toISOString().split('T')[0];
+let pg='',langs=[];
+function selPG(el){document.querySelectorAll('.pgc').forEach(c=>c.classList.remove('on'));el.classList.add('on');pg=el.textContent;}
+function selLang(el){el.classList.toggle('on');langs=Array.from(document.querySelectorAll('#langw .pgc.on')).map(e=>e.textContent);}
+function tgC(n){const f=document.getElementById('cf'+n),t=document.getElementById('ct'+n);const o=!f.classList.contains('show');f.classList.toggle('show',o);t.textContent=o?'&#8722; Collapse':'+ Add Child';t.classList.toggle('open',o);}
+let loPrice=40;
+function updTot(){const lt=parseInt(document.getElementById('lst-type').value)||40;const sp=parseInt(document.getElementById('add-sp').value)||0;loPrice=lt;const tot=lt+sp;document.getElementById('tot-disp').textContent='CAD $'+tot.toFixed(2);document.getElementById('tot-l').textContent=document.getElementById('lst-type').options[document.getElementById('lst-type').selectedIndex].text;const se=document.getElementById('add-sp');document.getElementById('tot-s').textContent=sp?se.options[se.selectedIndex].text:'None';}
+function hdPh(inp){const file=inp.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{document.getElementById('ph-pv').src=e.target.result;document.getElementById('ph-pv').style.display='block';document.getElementById('ph-ic').textContent='&#9989;';document.getElementById('ph-tt').textContent='Photo uploaded!';};r.readAsDataURL(file);}
+function submitForm(){const nm=document.getElementById('h-nm').value.trim();const em=document.getElementById('em-p').value.trim();const mob=document.getElementById('mob-p').value.trim();const hp=document.getElementById('hp-nm').value.trim();if(!nm){alert('Please enter the head of family name in Part C.');return;}if(!em||!mob){alert('Please enter primary email and mobile in Part B.');return;}if(!pg){alert('Please select a Prayer Group in Part A.');return;}if(!hp){alert('Please enter your Home Parish name in Part E.');return;}if(![1,2,3,4].every(i=>document.getElementById('cn'+i).checked)){alert('Please tick all four consent boxes in Part J before submitting.');return;}const ref='TMC-DIR-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);const sp=parseInt(document.getElementById('add-sp').value)||0;document.getElementById('r-ref').textContent=ref;document.getElementById('r-nm').textContent=nm;document.getElementById('r-hp').textContent=hp;document.getElementById('r-pg').textContent=pg;document.getElementById('r-tot').textContent='CAD $'+(loPrice+sp).toFixed(2);document.getElementById('submit-area').innerHTML='<div style="padding:11px;background:var(--green-bg);border-radius:7px;font-size:0.8rem;color:var(--green);font-weight:600;text-align:center;">&#9989; Submitted successfully &mdash; reference shown below. Pending Directory Committee approval.</div>';document.getElementById('success').classList.add('show');document.getElementById('success').scrollIntoView({behavior:'smooth',block:'start'});}
+function saveDraft(){alert('Draft saved. Return any time to continue.');}
+function shareWA(){const ref=document.getElementById('r-ref').textContent;const nm=document.getElementById('r-nm').textContent;const msg='&#128591; *Silver Jubilee Parish Directory &#8212; St. Thomas MTC Vancouver*\n\nFamily *'+nm+'* has registered!\nReference: *'+ref+'*\n\n&#128214; Register your family:\n[PASTE LINK HERE]\n\n_Diocese of North America \u00b7 Mar Thoma Syrian Church_';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function cv(btn,type){btn.closest('tr').querySelectorAll('.vb').forEach(b=>{b.classList.remove('sy','sn','sa');});btn.classList.add(type==='y'?'sy':type==='n'?'sn':'sa');document.getElementById('ty').textContent=document.querySelectorAll('.vb.sy').length;document.getElementById('tn').textContent=document.querySelectorAll('.vb.sn').length;document.getElementById('ta').textContent=document.querySelectorAll('.vb.sa').length;}
+function dcd(d){const s=document.getElementById('astat');if(d==='approved'){s.className='astat asa';s.textContent='&#9989;  APPROVED BY EXECUTIVE COMMITTEE &#8212; To be presented to the General Body (Edavaka Sangham)';}else if(d==='rejected'){s.className='astat asr';s.textContent='&#10007;  NOT APPROVED &#8212; Returned to Directory Committee for revision';}else{s.className='astat';s.style.background='rgba(100,140,220,0.12)';s.style.color='#90b4f8';s.style.border='1px solid rgba(100,140,220,0.22)';s.textContent='&#8617;  DEFERRED &#8212; To be reviewed at the next Executive Committee meeting';}}
+</script>
+</body>
+</html>
